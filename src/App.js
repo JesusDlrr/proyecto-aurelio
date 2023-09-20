@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import './App.css';
-import { LogInForm } from './features/login_form/LogInForm';
+import { LogInForm } from './features/login_form/LoginForm';
 import { SignUpForm } from './features/signup_form/SignUpForm';
 
 function App() {
