@@ -1,3 +1,4 @@
+/*Importes*/
 import { auth } from '../../firebase';
 import React, { useState, useTransition } from 'react';
 import { signInWithEmailAndPassword } from 'firebase/auth';
@@ -6,7 +7,7 @@ import { useDispatch } from 'react-redux';
 import boxicons from 'boxicons';
 import styles from "./login.module.css";
 
-
+/*Constante LogInForm*/
 export const LogInForm = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -30,8 +31,9 @@ export const LogInForm = () => {
 
   return (
     <>
+    {/*Seccion para iniciar sesion*/}
       <section className={styles.wrapper}>
-        <p>WECOME BACK</p>
+        <p className={styles.pText}>WECOME BACK</p>
         <div className={styles.inputBox}>
           <input className={styles.input} type="text" placeholder="Email" onChange={(e) => { setEmail(e.target.value) }} />
           <box-icon className={styles.box} type='solid' name='user'></box-icon>
@@ -44,6 +46,9 @@ export const LogInForm = () => {
         <br />
         <button type="button" className='btn btn-secondary' value="Log In" onClick={() => { logIn(email, password) }}>Login</button>
 
+        <div className={styles.signup}>
+            <h5>No tienes una cuenta? <a href="/signup">SignUp</a></h5>
+        </div>
       </section>
     </>
   );

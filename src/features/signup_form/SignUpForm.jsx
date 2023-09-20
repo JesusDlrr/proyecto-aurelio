@@ -1,10 +1,12 @@
+/*Importes*/
 import { auth } from '../../firebase';
 import React, { useState, useTransition } from 'react';
 import { createUserWithEmailAndPassword } from 'firebase/auth';
 import { setUserInfo, printInfo } from '../../slices/userSlice';
 import { useDispatch } from 'react-redux';
+import styles from './signup.module.css'
 
-
+/*Constante SignUpForm*/
 export const SignUpForm = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -27,16 +29,22 @@ export const SignUpForm = () => {
 
   return (
     <>
-      <div>
-        <p>CREATE ACCOUNT</p>
-        <div>
-        <input type="text" placeholder="Email" onChange={(e) => {setEmail(e.target.value)}} />
-        <br/>
-        <input type="password" placeholder="Password" onChange={(e) => {setPassword(e.target.value)}}/>
-        <br/>
-        <input type="button" value="Create account" onClick={() => { signUp(email, password) }} />
-        </div>
+    {/*Seccion para el registro de los usuarios*/}
+    <section className={styles.wrapper}>
+      <p>SIGN UP</p>
+      <div className={styles.inputBox}>
+        <input className={styles.input} type="text" placeholder="Email" onChange={(e) => { setEmail(e.target.value) }} />
+        <box-icon className={styles.box} type='solid' name='user'></box-icon>
       </div>
-    </>
+      <br />
+      <div className={styles.inputBox}>
+        <input className={styles.input} type="password" placeholder="Password" onChange={(e) => { setPassword(e.target.value) }} />
+        <box-icon className={styles.box} name='lock-alt' type='solid' ></box-icon>
+      </div>
+      <br />
+      <button type="button" className='btn btn-secondary' value="Create account" onClick={() => { signUp(email, password) }}>Login</button>
+
+    </section>
+  </>
   );
 }

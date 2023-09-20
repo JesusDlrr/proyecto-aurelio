@@ -72,18 +72,3 @@ button {
     font-weight: 600;
 }
 
-.wrapper .signup{
-    font-size: 14.5px;
-    text-align: center;
-    margin-top: 20px;
-}
-
-.signup h5 a{
-    color: #FFFFFF;
-    text-decoration: none;
-    font-weight: 600;
-}
-
-.signup h5 a:hover{
-    text-decoration: underline;
-}
