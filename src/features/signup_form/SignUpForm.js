@@ -1,18 +1,17 @@
 import { auth } from '../../firebase';
 import React, { useState, useTransition } from 'react';
-import { signInWithEmailAndPassword  } from 'firebase/auth';
+import { createUserWithEmailAndPassword } from 'firebase/auth';
 import { setUserInfo, printInfo } from '../../slices/userSlice';
 import { useDispatch } from 'react-redux';
 
 
-export const LogInForm = () => {
+export const SignUpForm = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const dispatch = useDispatch();
-  const logIn = (email, password) => {
-    signInWithEmailAndPassword(auth, email, password)
+  const signUp = (email, password) => {
+    createUserWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {
-        console.log("Successful login");
         dispatch(setUserInfo({
           uid: userCredential.user.uid,
           name: userCredential.user.displayName,
@@ -29,13 +28,13 @@ export const LogInForm = () => {
   return (
     <>
       <div>
-        <p>WECOME BACK</p>
+        <p>CREATE ACCOUNT</p>
         <div>
         <input type="text" placeholder="Email" onChange={(e) => {setEmail(e.target.value)}} />
         <br/>
         <input type="password" placeholder="Password" onChange={(e) => {setPassword(e.target.value)}}/>
         <br/>
-        <input type="button" value="Log In" onClick={() => { logIn(email, password) }} />
+        <input type="button" value="Create account" onClick={() => { signUp(email, password) }} />
         </div>
       </div>
     </>
