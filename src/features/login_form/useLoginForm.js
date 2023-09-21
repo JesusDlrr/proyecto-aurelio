@@ -7,11 +7,13 @@ import { useDispatch } from 'react-redux';
 const useLoginForm = () => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
+
     const dispatch = useDispatch();
     const logIn = (email, password) => {
       signInWithEmailAndPassword(auth, email, password)
         .then((userCredential) => {
           console.log("Successful login");
+          window.location="/"
           dispatch(setUserInfo({
             uid: userCredential.user.uid,
             name: userCredential.user.displayName,
@@ -29,7 +31,7 @@ const useLoginForm = () => {
         email, password, 
         setEmail, 
         setPassword, 
-        logIn
+        logIn,
     };
 
 }
