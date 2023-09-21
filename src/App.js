@@ -1,5 +1,5 @@
 /*Importes*/
-import React, { useState } from 'react';
+import React from 'react';
 import './App.css';
 import {BrowserRouter as Router, Route, Routes} from "react-router-dom";
 import { LogInForm } from './features/login_form/LoginForm';
@@ -16,9 +16,9 @@ function App() {
       </Routes>
     </Router>
     {/*Usuario Prueba*/}
-      <p>Test account: a@gmail.com | a123456</p>
+    <p>Test account: a@gmail.com | a123456</p>
     </>
-  );
+  )
 }
 
 export default App;
