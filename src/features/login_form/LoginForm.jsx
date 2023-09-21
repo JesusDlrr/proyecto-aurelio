@@ -1,33 +1,15 @@
 /*Importes*/
-import { auth } from '../../firebase';
-import React, { useState, useTransition } from 'react';
-import { signInWithEmailAndPassword } from 'firebase/auth';
-import { setUserInfo, printInfo } from '../../slices/userSlice';
-import { useDispatch } from 'react-redux';
+import React from 'react';
 import boxicons from 'boxicons';
 import styles from "./login.module.css";
+import useLoginForm from './useLoginForm';
 
 /*Constante LogInForm*/
 export const LogInForm = () => {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const dispatch = useDispatch();
-  const logIn = (email, password) => {
-    signInWithEmailAndPassword(auth, email, password)
-      .then((userCredential) => {
-        console.log("Successful login");
-        dispatch(setUserInfo({
-          uid: userCredential.user.uid,
-          name: userCredential.user.displayName,
-          email: userCredential.user.email
-        }));
-      })
-      .catch((error) => {
-        const errorCode = error.code;
-        const errorMessage = error.message;
-        console.log(errorMessage)
-      });
-  }
+  const {
+    email, password,
+    setEmail, setPassword, logIn, 
+  } = useLoginForm();
 
   return (
     <>
