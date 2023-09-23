@@ -1,7 +1,6 @@
 /*Importes*/
 import {React, useState} from 'react';
-import boxicons from 'boxicons';
-import styles from "./login.module.css";
+import styles from "./logIn.module.css";
 import useLoginForm from './useLoginForm';
 
 

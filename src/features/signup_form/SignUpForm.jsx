@@ -1,6 +1,6 @@
 /*Importes*/
 import React, { useState, useTransition } from 'react';
-import styles from './signup.module.css'
+import styles from './signUp.module.css'
 import useSignUpForm from './useSignUpForm';
 
 /*Constante SignUpForm*/
