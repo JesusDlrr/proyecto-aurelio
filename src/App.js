@@ -10,10 +10,13 @@ function App() {
   return (
     <>
     {/*Navegacion por las rutas de la pagina*/}
+    <h1 className="text-3xl font-bold underline">
+      Hello world!
+    </h1>
     <Router>
       <Routes>
-        <Route exact path="/" Component={Home}/>
-        <Route exact path="/login" Component={LogInForm}/>
+        <Route exact path="/" Component={LogInForm}/>
+        <Route exact path="/login" Component={Home}/>
         <Route exact path="/signup" Component={SignUpForm}/>
       </Routes>
     </Router>
