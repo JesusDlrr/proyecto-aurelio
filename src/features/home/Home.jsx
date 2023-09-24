@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import useHome from "./useHome";
+import homeStyles from "./home.module.css";
 
 export const Home = () => {
     const [post_message, setPostMessage] = useState("");
