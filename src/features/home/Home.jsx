@@ -12,13 +12,14 @@ export const Home = () => {
 
     return (
         <>
-            <div className="h-screen bg-slate-400 p-10 grid grid-cols-4 grid-rows-4 gap-6">
-                {/* Header */}
-                <div className="bg-green-700 text-white text-center text-5xl py-4 rounded-lg col-span-4">
-                <box-icon name='search-alt' color='#ffffff' ></box-icon>
+            {/* Header */}
+            <div className="bg-green-700 text-white text-center text-5xl py-4 col-span-4">
+                <i><box-icon name='search-alt' color='#ffffff' ></box-icon></i>
                 <box-icon name='home' color='#ffffff' ></box-icon>
                 <box-icon name='log-out-circle' color='#ffffff' ></box-icon>
-                </div>
+            </div>
+            <div className="h-screen bg-slate-400 p-10 grid grid-cols-4 grid-rows-4 gap-6">
+
                 {/* Profile */}
                 <div className="bg-white text-white text-center text-3xl py-2 rounded-lg row-span-3 sm:row-span-3 md:row-span-3 ">
                     <div className="p-16 bg-white sticky top-0">
@@ -38,11 +39,11 @@ export const Home = () => {
                 {/* Quick Thought */}
                 <div className="bg-white text-center text-3xl rounded-lg col-span-2">
                     <input placeholder="Quick thought..." className="bg-white w-full rounded-lg shadow border-t-2 p-2" onChange={(e) => { setPostMessage(e.target.value) }} />
-                    <button className="py-2 px-4 rounded-full mr-10 absolute -translate-x-20 m-1" value="POST" onClick={() => { post(post_message) }} >
+                    <button className="py-2 px-4 rounded-full mr-10 absolute -translate-x-40 m-1" value="POST" onClick={() => { post(post_message) }} >
                         <box-icon className=" hover:bg-gray-300" name='send' type='solid' color='#397850'></box-icon>
                         {posts.map((post) => {
                             return (<>
-                                <div>{post.texto}</div>
+                                <div className="">{post.texto}</div>
                             </>);
                         })}
                     </button>
@@ -59,7 +60,7 @@ export const Home = () => {
                     </div>
                 </div>
                 {/* Feed */}
-                <div className="bg-blue-500 text-white text-center text-3xl py-2 rounded-lg col-span-2 sm:row-span-2 md:row-span-5 ">Feed</div>
+                <div className="bg-white text-black text-center text-3xl py-2 rounded-lg col-span-2 sm:row-span-2 md:row-span-5 ">Feed</div>
             </div>
         </>
     )
