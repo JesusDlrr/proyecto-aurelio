@@ -1,6 +1,6 @@
 /*Importes*/
 import { React, useState } from 'react';
-import loginStyles from "./logIn.module.css";
+import loginStyles from "./login.module.css";
 import useLoginForm from './useLoginForm';
 
 
