@@ -18,7 +18,7 @@ export const Home = () => {
     return (
         <>
             <NavBar />
-            <div className="h-full w-screen bg-gray-400 p-10 grid grid-cols-4 grid-rows-4 gap-3 m-auto">
+            <div className="h-auto w-auto bg-gray-400 p-10 grid grid-cols-4 grid-rows-1 gap-3">
                 <Profile />
                 <Quick_Thought />
                 <Suggestions />

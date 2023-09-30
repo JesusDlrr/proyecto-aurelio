@@ -15,6 +15,21 @@ import { Quick_Thought } from './features/quick_thought/Quick_thought';
 function App() {
   return (
     <>
+{/*       <div className="h-screen w-screen bg-gray-400 p-10 grid grid-cols-4 grid-rows-4 gap-3 m-auto">
+        <div>
+          <Profile />
+        </div>
+        <div>
+          <Quick_Thought />
+        </div>
+        <div>
+          <Feed />
+        </div>
+        <div>
+          <Suggestions />
+        </div>
+
+      </div> */}
       {/*Navegacion por las rutas de la pagina*/}
       <Router>
         <Routes>
