@@ -1,19 +1,22 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { collection, addDoc, getDocs } from "firebase/firestore";
 import { db } from "../../firebase";
 
 const useHome = () => {
     const [posts, setPosts] = useState([]);
 
-    const getPosts = async () => {
+    const getPosts = async () => 
+    {
         const docSnap = await getDocs(collection(db, "publicaciones"));
 
         setPosts(docSnap.docs.map((doc) => {
             return doc.data();
         }));
+        console.log("a");
     }
     
-    const post = async (message) => {
+    const post = async (message) => 
+    {
         try {
             const docRef = await addDoc(collection(db, "publicaciones"), {
                 hora: "Ada",
@@ -27,7 +30,9 @@ const useHome = () => {
         }
     }
 
-    getPosts();
+    useEffect(()=>{
+        getPosts();
+    }, []);
 
     return {
         post,
