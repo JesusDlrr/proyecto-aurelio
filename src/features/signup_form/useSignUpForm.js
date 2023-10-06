@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { auth } from '../../firebase';
 import { createUserWithEmailAndPassword } from 'firebase/auth';
-import { setUserInfo, printInfo } from '../../slices/userSlice';
+import { setUserData } from '../../slices/userSlice';
 import { useDispatch } from 'react-redux';
 
 const useSignUpForm = () => {
@@ -11,7 +11,7 @@ const useSignUpForm = () => {
     const signUp = (email, password) => {
       createUserWithEmailAndPassword(auth, email, password)
         .then((userCredential) => {
-          dispatch(setUserInfo({
+          dispatch(setUserData({
             uid: userCredential.user.uid,
             name: userCredential.user.displayName,
             email: userCredential.user.email
