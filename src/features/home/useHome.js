@@ -7,7 +7,7 @@ const useHome = () => {
 
     const getPosts = async () => 
     {
-        const docSnap = await getDocs(collection(db, "publicaciones"));
+        const docSnap = await getDocs(collection(db, "posts"));
 
         setPosts(docSnap.docs.map((doc) => {
             return doc.data();
