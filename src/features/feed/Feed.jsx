@@ -1,14 +1,13 @@
 import { React, useState } from 'react';
 import { Post } from "../post/post";
-import useHome from "../home/useHome";
-
+import UseFeed from './UseFeed';
 
 export const Feed = () => {
     const [post_message, setPostMessage] = useState("");
     const {
         post,
         posts
-    } = useHome();
+    } = UseFeed();
 
     return (
         <>
