@@ -1,22 +1,23 @@
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import { auth } from '../../firebase';
 import { signInWithEmailAndPassword } from 'firebase/auth';
-import { setUserData } from '../../slices/userSlice';
-import { useDispatch } from 'react-redux';
+import { UserContext } from '../../App';
 
 const useLoginForm = () => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
+    const {user, setUser} = useContext(UserContext);
 
-    const dispatch = useDispatch();
+    console.log(user)
+
     const logIn = (email, password) => {
       signInWithEmailAndPassword(auth, email, password)
         .then((userCredential) => {
-          dispatch(setUserData({
+          setUser({
             uid: userCredential.user.uid,
             name: userCredential.user.displayName,
             email: userCredential.user.email
-          }));
+          });
           window.location="/";
         })
         .catch((error) => {

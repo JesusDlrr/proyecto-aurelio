@@ -1,7 +1,7 @@
 import {React} from 'react';
 
 
-export const Profile = () => {
+export const Profile = ({user_name}) => {
     return(
         <>
         {/* Profile */}
@@ -10,7 +10,7 @@ export const Profile = () => {
     <img className="border border-indigo-200 shadow-lg rounded-full overflow-hidden" src="http://lilithaengineering.co.za/wp-content/uploads/2017/08/person-placeholder.jpg" />
     <div className="pt-2 mt-3 w-full text-center text-xl text-gray-600">
         <h1 className="text-xl font-sembold text-black hover:underline">
-            Nombre de usuario aqui
+            {user_name}
         </h1>
     </div>
     <div className="pt-2 mt-2 w-full text-center text-xl text-gray-600 hover:underline">
