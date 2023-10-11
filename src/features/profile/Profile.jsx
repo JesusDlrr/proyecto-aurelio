@@ -1,16 +1,16 @@
 import {React} from 'react';
 
 
-export const Profile = ({user_name}) => {
+export const Profile = ({name, avatar}) => {
     return(
         <>
         {/* Profile */}
 <div className="bg-white text-white text-center text-3xl py-2 rounded-lg row-span-3 sm:row-span-3 md:row-span-3 h-screen">
 <div className="p-24 bg-white top-0">
-    <img className="border border-indigo-200 shadow-lg rounded-full overflow-hidden" src="http://lilithaengineering.co.za/wp-content/uploads/2017/08/person-placeholder.jpg" />
+    <img className="border border-indigo-200 shadow-lg rounded-full overflow-hidden" src={avatar} />
     <div className="pt-2 mt-3 w-full text-center text-xl text-gray-600">
         <h1 className="text-xl font-sembold text-black hover:underline">
-            {user_name}
+            {name}
         </h1>
     </div>
     <div className="pt-2 mt-2 w-full text-center text-xl text-gray-600 hover:underline">
