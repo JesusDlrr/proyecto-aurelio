@@ -1,6 +1,6 @@
 import {React, useState} from 'react';
 import { Post } from "../post/post";
-import useHome from "../home/useHome";
+import useHome from "../feed/UseFeed";
 
 export const Quick_Thought = () => {
 

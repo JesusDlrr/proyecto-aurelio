@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import useChat from './useChat';
+import UseChat from './UseChat';
 import './chat.modules.css';
 
 export const Chat = () => {
-  const { messages, sendMessage } = useChat();
+  const { messages, sendMessage } = UseChat();
   const [newMessage, setNewMessage] = useState('');
 
   const handleSendMessage = () => {
@@ -37,12 +37,11 @@ export const Chat = () => {
       </div>
 
       {/* Rectángulo inferior */}
-      <div className="p-4 border-t bg-blue-500 text-white">
+      <div className="p-4 border-t bg-blue-500 text-black">
         <input
           type="text"
           className="w-full py-2 px-3 rounded border border-gray-300"
           placeholder="Escribe tu mensaje..."
-          value={newMessage}
           onChange={(e) => setNewMessage(e.target.value)}
         />
         <button

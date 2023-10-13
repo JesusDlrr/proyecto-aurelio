@@ -1,46 +1,29 @@
 import { useEffect, useState } from "react";
-import { collection, addDoc, getDocs } from "firebase/firestore";
+import { useContext } from "react";
+import { UserContext } from "../../App";
 import { db } from "../../firebase";
-import { useDispatch } from "react-redux";
-import { printInfo } from "../../slices/userSlice";
-import { store } from "../../app/store";
-import { serverTimestamp } from "firebase/firestore";
+import { doc, getDoc } from "firebase/firestore";
 
-const useHome = () => {
-    const [posts, setPosts] = useState([]);
-    const dispatch = useDispatch();
-    const getPosts = async () => 
+const UseHome = () => {
+    const { user, setUser } = useContext(UserContext);
+    const [user_name, setUserName] = useState("");
+    const [user_avatar, setUserAvatar] = useState("");
+    const a = 3;
+    const getUserInfo = async() => 
     {
-        const docSnap = await getDocs(collection(db, "posts"));
-
-        setPosts(docSnap.docs.map((doc) => {
-            return doc.data();
-        }));
+        const doc_ref = doc(db, "users", user.uid);
+        const user_doc = await getDoc(doc_ref);
+        const user_data = user_doc.data();
+        setUserName(user_data.displayName);
+        setUserAvatar(user_data.avatar);
     }
+
+    useEffect(() => 
+    {
+        getUserInfo();
+    }, [])
     
-    const post = async (message) => 
-    {
-        try {
-            const docRef = await addDoc(collection(db, "posts"), {
-                date: serverTimestamp(),
-                likes: 0,
-                message: message,
-                user_id: "69"
-            });
-            console.log("Document written with ID: ", docRef.id);
-        } catch (e) {
-            console.error("Error adding document: ", e);
-        }
-    }
-
-    useEffect(()=>{
-        getPosts();
-    }, []);
-
-    return {
-        post,
-        posts
-    };
+    return({user_name, user_avatar});
 }
 
-export default useHome;
+export default UseHome;
