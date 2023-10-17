@@ -12,6 +12,7 @@ import { db } from "../../firebase";
 const useSignUpForm = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [name, setName] = useState("");
   // const dispatch = useDispatch();
   const { user, setUser } = useContext(UserContext);
 
@@ -49,7 +50,7 @@ const useSignUpForm = () => {
 
   return {
     email, password,
-    setEmail, setPassword, signUp
+    setEmail, setPassword, setName, signUp
   }
 }
 
