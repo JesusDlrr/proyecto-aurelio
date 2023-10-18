@@ -18,13 +18,12 @@ import { auth } from './firebase';
 export const UserContext = React.createContext(null);
 
 function App() {
-  const [user, setUser] = useState({uid: "UeP5s2Fy7JOcDcIYx2wbh0txU6w2", displayName: "XDDDD", email: "a@gsnail.com"});
+  const [user, setUser] = useState(null);
 
   useEffect(() => {
-    // onAuthStateChanged(auth, (user) => {
-    //   setUser(user == null ? false : user);
-    //   console.log(user);
-    // });
+    onAuthStateChanged(auth, (user) => {
+      setUser(user == null ? false : user);
+    });
   }, [])
 
   return (
@@ -44,15 +43,15 @@ function App() {
                   <Chat />
                 </PrivateRoute>
               }/>
-              <Route exact path="/login" element={
+              <Route path="/login" element={
                 // Change user to !user to make the route private
-                <PrivateRoute isAllowed={user} redirectTo='/'>
+                <PrivateRoute isAllowed={!user} redirectTo='/'>
                   <LogInForm/>
                 </PrivateRoute>
               }/>
-              <Route exact path="/signup" element={
+              <Route path="/signup" element={
                 // Change user to !user to make the route private
-                <PrivateRoute isAllowed={user} redirectTo='/'>
+                <PrivateRoute isAllowed={!user} redirectTo='/'>
                   <SignUpForm/>
                 </PrivateRoute>
               }/>

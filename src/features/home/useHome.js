@@ -14,7 +14,7 @@ const UseHome = () => {
         const doc_ref = doc(db, "users", user.uid);
         const user_doc = await getDoc(doc_ref);
         const user_data = user_doc.data();
-        setUserName(user_data.displayName);
+        setUserName(user_data.name);
         setUserAvatar(user_data.avatar);
     }
 
