@@ -12,15 +12,17 @@ import { db } from "../../firebase";
 const useSignUpForm = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [name, setName] = useState("");
   // const dispatch = useDispatch();
   const { user, setUser } = useContext(UserContext);
 
   const createUser = async (id) => {
+    console.log(name)
     try {
       const userRef = doc(db, 'users', id);
-      const docRef = await setDoc(userRef, {
+      await setDoc(userRef, {
         avatar: "",
-        displayName: "juancho",
+        name: name,
         date: serverTimestamp()
       });
       // console.log("Document written with ID: ", docRef.id);
@@ -29,27 +31,25 @@ const useSignUpForm = () => {
     }
   }
 
-  const signUp = (email, password) => {
+  const signUp = (email, password, name) => {
     createUserWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {
         createUser(userCredential.user.uid);
         setUser({
           uid: userCredential.user.uid,
-          name: userCredential.user.displayName,
-          email: userCredential.user.email
+          avatar: "",
+          name: name
         });
-        window.location = "/";
       })
       .catch((error) => {
-        // const errorCode = error.code;
         const errorMessage = error.message;
         console.log(errorMessage)
       });
   }
 
   return {
-    email, password,
-    setEmail, setPassword, signUp
+    name, email, password,
+    setEmail, setPassword, setName, signUp
   }
 }
 
