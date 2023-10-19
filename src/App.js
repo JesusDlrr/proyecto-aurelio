@@ -6,6 +6,7 @@ import { LogInForm } from './features/login_form/LoginForm';
 import { SignUpForm } from './features/signup_form/SignUpForm';
 import { Home } from './features/home/Home';
 import { Chat } from './features/chat/chat';
+import {ProfilePage} from './features/profilepage/profilepage';
 // import { NavBar } from './features/nav_bar/Navbar';
 // import { Suggestions } from './features/suggestions/Suggestions';
 // import { Feed } from './features/feed/Feed';
@@ -54,6 +55,12 @@ function App() {
                 // Change user to !user to make the route private
                 <PrivateRoute isAllowed={user} redirectTo='/'>
                   <SignUpForm/>
+                </PrivateRoute>
+              }/>
+              <Route exact path="/profilepage" element={
+                // Change user to !user to make the route private
+                <PrivateRoute isAllowed={user} redirectTo='/'>
+                  <ProfilePage/>
                 </PrivateRoute>
               }/>
             </Routes>
