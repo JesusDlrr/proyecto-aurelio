@@ -9,6 +9,7 @@
     "@testing-library/user-event": "^14.4.3",
     "boxicons": "^2.1.4",
     "firebase": "^10.4.0",
+    "firebase-admin": "^11.11.0",
     "mdb-react-ui-kit": "^6.3.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",

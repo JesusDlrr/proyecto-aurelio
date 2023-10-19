@@ -1,4 +1,4 @@
-import { React, useState } from 'react';
+import { React, useEffect, useState } from 'react';
 import { Post } from "../post/post";
 import UseFeed from './UseFeed';
 
@@ -8,6 +8,8 @@ export const Feed = () => {
         post,
         posts
     } = UseFeed();
+    
+    console.log(posts)
 
     return (
         <>

@@ -6,7 +6,7 @@ import useSignUpForm from './useSignUpForm';
 /*Constante SignUpForm*/
 export const SignUpForm = () => {
   const {
-    email, password, name,
+    name, email, password,
     setEmail, setPassword, setName, signUp
   } = useSignUpForm();
 
