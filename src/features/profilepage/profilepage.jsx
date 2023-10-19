@@ -1,4 +1,4 @@
-import {React} from "react";
+import { React } from "react";
 import { NavBar } from "../nav_bar/Navbar";
 import { Feed } from "../feed/Feed";
 import { Quick_Thought } from "../quick_thought/Quick_thought";
@@ -9,30 +9,38 @@ export const ProfilePage = ({ name, avatar }) => {
     const { user_name, user_avatar } = UseProfile();
     return (
         <>
-        <NavBar/>
-        <div className="relative w-full h-[78px] bg-cover bg-no-repeat bg-[top]"/>
-        <img className="relative rounded-full w-40 top-20 z-50 left-20 border-gray-400 border-8" src="https://districts.neocities.org/onerat.gif"/>
-        <div className="h-auto w-auto bg-gray-400 p-10 grid grid-cols-4 gap-3">
-        <div className="bg-white text-white text-center text-3xl py-2 rounded-lg row-span-3 sm:row-span-6 mt-10">
-                <div className="sticky p-5 bg-white">
-                    <div className="pt-2 mt-3 w-full text-left text-xl text-gray-600">
-                        <h1 className="text-xl font-sembold text-black">
-                            {user_name}
-                        </h1>
-                    </div>
-                    <div className="w-full text-left text-xl text-gray-600">
-                            <span className="flex items-left mt-1 space-x-2 text-gray-500 dark:text-gray-400">Numero de followers</span>
+            <NavBar />
+            <div className="bg-white h-20 w-full" />
+            <div className="sm:row-span-6 md:row-span-3">
+                    <img className="absolute rounded-full w-40 top-24 z-50 left-24 mt-2 border-gray-400 border-8 sm:row-span-6" src="https://districts.neocities.org/onerat.gif" alt="user avatar" loading="lazy"/>
+                    <div className="mx-60 px-8">
+                        <div className="absolute">
+                            <a>
+                                <h1 className="text-2xl font-sembold text-black">
+                                    Name of the person
+                                </h1>
+                            </a>
+                        </div>
+                        <span className="text-lg text-black absolute">
+                            <h1 href="" class="flex items-center mt-8 space-x-2 text-black">
+                                Followers of the person 
+                            </h1>
+                        </span>
                     </div>
                 </div>
-                <div className="w-full h-screen antialiased flex flex-col hover:cursor-pointer">
-                    <a className="hover:bg-gray-300 bg-white border-t p-3 w-full text-xl text-left text-gray-600 font-semibold" href="/dms" target="_blank"><i class="fa fa-comment text-gray-600 text-2xl pr-1 pt-1 float-right"></i>Messages</a>
-                    <a className="hover:bg-gray-300 bg-white border-t p-3 w-full text-xl text-left text-gray-600 font-semibold" href="" target="_blank"><i class="fa fa-cog text-gray-600 text-2xl pr-1 pt-1 float-right"></i>Settings</a>
+          <div className="h-auto w-auto bg-gray-400 p-10 grid grid-cols-4 gap-3 sm:row-span-6">
+                <div className="bg-white text-white text-center text-3xl rounded-lg row-span-3 mt-20 max-h-24">
+                    <div className="flex flex-col hover:cursor-pointer">
+                        <a className="hover:bg-gray-300 bg-white border-t p-3 w-full text-xl text-left text-black font-semibold rounded-lg rounded-b-none" href="/dms" target="_blank">Messages</a>
+                        <a className="hover:bg-gray-300 bg-white border-t p-3 w-full text-xl text-left text-black font-semibold rounded-lg rounded-t-none border-black" href="" target="_blank">Settings</a>
+                    </div>
+                </div>
+                <div className="col-span-3 mt-20">
+                    <Quick_Thought />
+                    <Feed />
                 </div>
             </div>
-                {/* <Quick_Thought />
-                <Feed /> */}
-            </div>
-        </>   
+        </>
     )
 }
 
