@@ -4,12 +4,12 @@ import { Suggestions } from "../suggestions/Suggestions";
 import { Feed } from "../feed/Feed";
 import { Profile } from "../profile/Profile";
 import { Quick_Thought } from "../quick_thought/Quick_thought";
-import UseHome from "./UseHome";
+import useHome from "./useHome";
 import { UserContext } from "../../App";
 
 export const Home = () => {
     const {user} = useContext(UserContext);
-    const {user_name, user_avatar} = UseHome();
+    const {user_name, user_avatar} = useHome();
     return (
         <>
             <NavBar />
