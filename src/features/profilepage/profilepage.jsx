@@ -1,4 +1,4 @@
-import { React } from "react";
+import { React, useRef, useState } from "react";
 import { NavBar } from "../nav_bar/Navbar";
 import { Feed } from "../feed/Feed";
 import { Quick_Thought } from "../quick_thought/Quick_thought";
@@ -6,29 +6,44 @@ import { UserContext } from "../../App";
 import UseProfile from "./UseProfile";
 
 export const ProfilePage = ({ name, avatar }) => {
+    const ref = useRef();
+    const handleClick = (e) => {
+        ref.current.click()
+    }
+    const handleChange = (e) => {
+        let file = e.target.files[0];
+    }
+    const [image, setImage]= useState(null);
+
     const { user_name, user_avatar } = UseProfile();
     return (
         <>
             <NavBar />
             <div className="bg-white h-20 w-full" />
+            <input className="hidden" id="default_size" ref={ref} type="file" />
             <div className="sm:row-span-6 md:row-span-3">
-                    <img className="absolute rounded-full w-40 top-24 z-50 left-24 mt-2 border-gray-400 border-8 sm:row-span-6" src="https://districts.neocities.org/onerat.gif" alt="user avatar" loading="lazy"/>
-                    <div className="mx-60 px-8">
-                        <div className="absolute">
-                            <a>
-                                <h1 className="text-2xl font-sembold text-black">
-                                    Name of the person
-                                </h1>
-                            </a>
-                        </div>
-                        <span className="text-lg text-black absolute">
-                            <h1 href="" class="flex items-center mt-8 space-x-2 text-black">
-                                Followers of the person 
-                            </h1>
-                        </span>
+                <div
+                    className="absolute cursor-pointer rounded-full h-40 w-40 top-24 z-50 left-24 mt-2 border-gray-400 border-8 sm:row-span-6 bg-[url('https://districts.neocities.org/onerat.gif')] bg-cover bg-center" onClick={handleClick} onChange={handleChange} alt="user avatar" title="Upload Image" loading="lazy">
+                    <div className="flex rounded-full justify-center h-full w-full items-center bg-gray-600/30 backdrop-brightness-75 opacity-0 hover:opacity-70">
+                        <span className="text-white text-lg text-center">Upload Image</span>
                     </div>
                 </div>
-          <div className="h-auto w-auto bg-gray-400 p-10 grid grid-cols-4 gap-3 sm:row-span-6">
+                <div className="mx-60 px-8">
+                    <div className="absolute">
+                        <a>
+                            <h1 className="text-2xl font-sembold text-black">
+                                Name of the person
+                            </h1>
+                        </a>
+                    </div>
+                    <span className="text-lg text-black absolute">
+                        <h1 href="" class="flex items-center mt-8 space-x-2 text-black">
+                            Followers of the person
+                        </h1>
+                    </span>
+                </div>
+            </div>
+            <div className="h-auto w-auto bg-gray-400 p-10 grid grid-cols-4 gap-3 sm:row-span-6">
                 <div className="bg-white text-white text-center text-3xl rounded-lg row-span-3 mt-20 max-h-24">
                     <div className="flex flex-col hover:cursor-pointer">
                         <a className="hover:bg-gray-300 bg-white border-t p-3 w-full text-xl text-left text-black font-semibold rounded-lg rounded-b-none" href="/dms" target="_blank">Messages</a>
