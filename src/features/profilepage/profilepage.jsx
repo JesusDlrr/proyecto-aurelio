@@ -1,38 +1,61 @@
-import {React} from "react";
+import { React, useRef, useState } from "react";
 import { NavBar } from "../nav_bar/Navbar";
 import { Feed } from "../feed/Feed";
 import { Quick_Thought } from "../quick_thought/Quick_thought";
 import { UserContext } from "../../App";
+import UseProfile from "./UseProfile";
 
 export const ProfilePage = ({ name, avatar }) => {
+    const ref = useRef();
+    const handleClick = (e) => {
+        ref.current.click()
+    }
+    const handleChange = (e) => {
+        let file = e.target.files[0];
+    }
+    const [image, setImage]= useState(null);
+
+    const { user_name, user_avatar } = UseProfile();
     return (
         <>
-        <NavBar/>
-        <div className="relative w-full h-[78px] bg-cover bg-no-repeat bg-[top]"/>
-        <div className="h-auto w-auto bg-gray-400 p-10 grid grid-cols-4 gap-3">
-        <div className="bg-white text-white text-center text-3xl py-2 rounded-lg row-span-3 sm:row-span-6">
-                <div className="sticky p-5 bg-white">
-                <div className="relative rounded-full bg-black h-[78px]" />
-                    {/* <img className="rounded-full" src={avatar} /> */}
-                    <div className="pt-2 mt-3 w-full text-left text-xl text-gray-600">
-                        <h1 className="text-xl font-sembold text-black">
-                            {name}
-                            Adam Wong
+            <NavBar />
+            <div className="bg-white h-20 w-full" />
+            <input className="hidden" id="default_size" ref={ref} type="file" />
+            <div className="sm:row-span-6 md:row-span-3">
+                <div
+                    className="absolute cursor-pointer rounded-full h-40 w-40 top-24 z-50 left-24 mt-2 border-gray-400 border-8 sm:row-span-6 bg-[url('https://districts.neocities.org/onerat.gif')] bg-cover bg-center" onClick={handleClick} onChange={handleChange} alt="user avatar" title="Upload Image" loading="lazy">
+                    <div className="flex rounded-full justify-center h-full w-full items-center bg-gray-600/30 backdrop-brightness-75 opacity-0 hover:opacity-70">
+                        <span className="text-white text-lg text-center">Upload Image</span>
+                    </div>
+                </div>
+                <div className="mx-60 px-8">
+                    <div className="absolute">
+                        <a>
+                            <h1 className="text-2xl font-sembold text-black">
+                                Name of the person
+                            </h1>
+                        </a>
+                    </div>
+                    <span className="text-lg text-black absolute">
+                        <h1 href="" class="flex items-center mt-8 space-x-2 text-black">
+                            Followers of the person
                         </h1>
-                    </div>
-                    <div className="w-full text-left text-xl text-gray-600">
-                            <span className="flex items-left mt-1 space-x-2 text-gray-500 dark:text-gray-400">Numero de followers</span>
-                    </div>
-                </div>
-                <div className="w-full h-screen antialiased flex flex-col hover:cursor-pointer">
-                    <a className="hover:bg-gray-300 bg-white border-t p-3 w-full text-xl text-left text-gray-600 font-semibold" href="/dms" target="_blank"><i class="fa fa-comment text-gray-600 text-2xl pr-1 pt-1 float-right"></i>Messages</a>
-                    <a className="hover:bg-gray-300 bg-white border-t p-3 w-full text-xl text-left text-gray-600 font-semibold" href="" target="_blank"><i class="fa fa-cog text-gray-600 text-2xl pr-1 pt-1 float-right"></i>Settings</a>
+                    </span>
                 </div>
             </div>
-                <Quick_Thought />
-                <Feed />
+            <div className="h-auto w-auto bg-gray-400 p-10 grid grid-cols-4 gap-3 sm:row-span-6">
+                <div className="bg-white text-white text-center text-3xl rounded-lg row-span-3 mt-20 max-h-24">
+                    <div className="flex flex-col hover:cursor-pointer">
+                        <a className="hover:bg-gray-300 bg-white border-t p-3 w-full text-xl text-left text-black font-semibold rounded-lg rounded-b-none" href="/dms" target="_blank">Messages</a>
+                        <a className="hover:bg-gray-300 bg-white border-t p-3 w-full text-xl text-left text-black font-semibold rounded-lg rounded-t-none border-black" href="" target="_blank">Settings</a>
+                    </div>
+                </div>
+                <div className="col-span-3 mt-20">
+                    <Quick_Thought />
+                    <Feed />
+                </div>
             </div>
-        </>   
+        </>
     )
 }
 
