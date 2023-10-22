@@ -14,7 +14,7 @@ export const Post = ({ post }) => {
                     {/* Div para la foto de perfil, nombre y numero de followers */}
                     <div className="cursor-pointer hover:bg-green-400 hover:rounded p-4">
                         <div className="flex items-center space-x-4">
-                            <img className="w-20 h-20 rounded-full" src="https://tailus.io/sources/blocks/grid-cards/preview/images/avatars/first_user.webp" alt="user avatar" loading="lazy"></img>
+                            <img className="w-20 h-20 rounded-full" src={post.from.avatar} alt="user avatar" loading="lazy"></img>
                             <div className="">
                                 <div>
                                     <a>
