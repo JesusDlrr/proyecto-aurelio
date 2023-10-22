@@ -11,7 +11,7 @@ export const ProfilePage = ({ name, avatar }) => {
     }
 
     const { user_name, user_avatar, updateAvatar} = UseProfile();
-    
+
     const handleChange = (e) => {
         const file = e.target.files[0];
         const file_type = file.type.split("/");
