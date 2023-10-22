@@ -21,7 +21,7 @@ const useSignUpForm = () => {
     try {
       const userRef = doc(db, 'users', id);
       await setDoc(userRef, {
-        avatar: "",
+        avatar: "https://firebasestorage.googleapis.com/v0/b/quick-11766.appspot.com/o/avatars%2Fdefault.png?alt=media&token=a6fac49b-9ee9-4850-86cd-852a31189421",
         name: name,
         date: serverTimestamp()
       });
