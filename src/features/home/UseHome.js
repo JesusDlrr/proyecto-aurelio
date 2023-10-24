@@ -5,7 +5,7 @@ import { db } from "../../firebase";
 import { doc, getDoc } from "firebase/firestore";
 
 const UseHome = () => {
-    const { user, setUser } = useContext(UserContext);
+    const { user } = useContext(UserContext);
     const [user_name, setUserName] = useState("");
     const [user_avatar, setUserAvatar] = useState("");
     const a = 3;

@@ -4,7 +4,7 @@ import { Suggestions } from "../suggestions/Suggestions";
 import { Feed } from "../feed/Feed";
 import { Profile } from "../profile/Profile";
 import { Quick_Thought } from "../quick_thought/Quick_thought";
-import useHome from "./useHome";
+import useHome from "./UseHome";
 import { UserContext } from "../../App";
 
 export const Home = () => {

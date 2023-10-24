@@ -1,4 +1,5 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 
 export const Post = ({ post }) => {
 
@@ -6,15 +7,15 @@ export const Post = ({ post }) => {
     const sec = post.date.seconds
     const out = new Date(sec * 1000)
     var time = out.toLocaleString('default')
-
+    const navigate = useNavigate();
     return (
         <>
             <div className="rounded bg-gray-50 sm:flex sm:space-x-8">
                 <div className="space-y-4 text-center sm:mt-0 sm:text-left break-all w-full">
                     {/* Div para la foto de perfil, nombre y numero de followers */}
-                    <div className="cursor-pointer hover:bg-green-400 hover:rounded p-4">
+                    <div className="cursor-pointer hover:bg-green-400 hover:rounded p-4" onClick={()=>{navigate("/profile?user="+post.from.uid)}}>
                         <div className="flex items-center space-x-4">
-                            <img className="w-20 h-20 rounded-full" src="https://tailus.io/sources/blocks/grid-cards/preview/images/avatars/first_user.webp" alt="user avatar" loading="lazy"></img>
+                            <img className="w-20 h-20 rounded-full" src={post.from.avatar} alt="user avatar" loading="lazy"></img>
                             <div className="">
                                 <div>
                                     <a>
@@ -33,7 +34,7 @@ export const Post = ({ post }) => {
                     </div>
                     {/* Seccion para el post de las personas */}
                     <div className="p-4">
-                        <p className="text-gray-600 mt-10 font-serif">{post.message}</p>
+                        <p className="text-gray-600 font-serif">{post.message}</p>
                         <div className="flex items-center space-x-4">
                             <button className="" href=""><svg class="h-6 w-6 ml-2 text-red-500 items-center" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z" /></svg></button>
                             <h1 className="text-md text-gray-500 dark:text-gray-400">

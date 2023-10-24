@@ -2,7 +2,6 @@ import { React, useRef, useState } from "react";
 import { NavBar } from "../nav_bar/Navbar";
 import { Feed } from "../feed/Feed";
 import { Quick_Thought } from "../quick_thought/Quick_thought";
-import { UserContext } from "../../App";
 import UseProfile from "./UseProfile";
 
 export const ProfilePage = ({ name, avatar }) => {
@@ -10,20 +9,26 @@ export const ProfilePage = ({ name, avatar }) => {
     const handleClick = (e) => {
         ref.current.click()
     }
-    const handleChange = (e) => {
-        let file = e.target.files[0];
-    }
-    const [image, setImage]= useState(null);
 
-    const { user_name, user_avatar } = UseProfile();
+    const { user_name, user_avatar, updateAvatar} = UseProfile();
+
+    const handleChange = (e) => {
+        const file = e.target.files[0];
+        const file_type = file.type.split("/");
+        if(file_type[0] == "image")
+        {
+            updateAvatar(new Blob([file], {type: file.type}), file_type[1]);
+        }
+    }
+    console.log(user_avatar)
     return (
         <>
             <NavBar />
             <div className="bg-white h-20 w-full" />
-            <input className="hidden" id="default_size" ref={ref} type="file" />
+            <input className="hidden" id="default_size" ref={ref} onChange={handleChange} type="file" />
             <div className="sm:row-span-6 md:row-span-3">
                 <div
-                    className="absolute cursor-pointer rounded-full h-40 w-40 top-24 z-50 left-24 mt-2 border-gray-400 border-8 sm:row-span-6 bg-[url('https://districts.neocities.org/onerat.gif')] bg-cover bg-center" onClick={handleClick} onChange={handleChange} alt="user avatar" title="Upload Image" loading="lazy">
+                    className={"absolute cursor-pointer rounded-full h-40 w-40 top-24 z-50 left-24 mt-2 border-gray-400 border-8 sm:row-span-6 bg-cover bg-center"} style={{backgroundImage: `url("${user_avatar}")`}} onClick={handleClick} onChange={handleChange} alt="user avatar" title="Upload Image" loading="lazy">
                     <div className="flex rounded-full justify-center h-full w-full items-center bg-gray-600/30 backdrop-brightness-75 opacity-0 hover:opacity-70">
                         <span className="text-white text-lg text-center">Upload Image</span>
                     </div>
@@ -32,7 +37,7 @@ export const ProfilePage = ({ name, avatar }) => {
                     <div className="absolute">
                         <a>
                             <h1 className="text-2xl font-sembold text-black">
-                                Name of the person
+                                {user_name}
                             </h1>
                         </a>
                     </div>
