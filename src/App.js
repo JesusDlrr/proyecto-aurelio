@@ -56,7 +56,7 @@ function App() {
                   <SignUpForm/>
                 </PrivateRoute>
               }/>
-              <Route exact path="/profilepage" element={
+              <Route exact path="/profile" element={
                 // Change user to !user to make the route private
                 <PrivateRoute isAllowed={user} redirectTo='/'>
                   <ProfilePage/>
