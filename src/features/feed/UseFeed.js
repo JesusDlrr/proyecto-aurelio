@@ -17,7 +17,9 @@ const UseFeed = () => {
             let post_data = post.data();
             let from_user = await getDoc(post_data.from);
 
-            post_data.from = from_user.data();
+            let user_data = from_user.data();
+            user_data.uid = post_data.from.id;
+            post_data.from = user_data;
             return post_data;
         })));
     }

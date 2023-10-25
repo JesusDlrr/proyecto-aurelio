@@ -4,15 +4,19 @@ import { UserContext } from "../../App";
 import { db, fs } from "../../firebase";
 import { doc, getDoc, updateDoc } from "firebase/firestore";
 import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
+import { useSearchParams } from "react-router-dom";
 
 const UseProfile = () => {
     const {user} = useContext(UserContext);
     const [user_name, setUserName] = useState("");
     const [user_avatar, setUserAvatar] = useState("");
+    const [search_params] = useSearchParams();
+    
+    const user_uid = search_params.get("user") != null ? search_params.get("user") : user.uid;
 
     const getUserInfo = async() => 
     {
-        const doc_ref = doc(db, "users", user.uid);
+        const doc_ref = doc(db, "users", user_uid);
         const user_doc = await getDoc(doc_ref);
         const user_data = user_doc.data();
         setUserName(user_data.name);
