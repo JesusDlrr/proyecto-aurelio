@@ -38,7 +38,7 @@ export const NavBar = () => {
                             aria-label="Search"/>
                         <a
                             className="text-white m-auto duration-200 hover:text-neutral-700 hover:ease-in-out focus:text-neutral-700 disabled:text-black/30 motion-reduce:transition-none dark:text-neutral-200 dark:hover:text-neutral-400 dark:focus:text-neutral-400 [&.active]:text-black/90 dark:[&.active]:text-neutral-400"
-                            href="#">
+                            href="/">
                             {/* Home button */}
                             <img src="./Quickk.png" className=" w-12 rounded-full"></img>
                         </a>
