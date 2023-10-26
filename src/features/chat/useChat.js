@@ -1,20 +1,40 @@
-import { useState, useEffect } from 'react';
+import { collection, addDoc, getDocs, serverTimestamp } from "firebase/firestore";
+import { db } from "../../firebase";
+import { useEffect, useState } from "react";
 
-const useChat = () => {
-  const [messages, setMessages] = useState([]);
-  
-  // Función para enviar un mensaje
-  const sendMessage = (message) => {
-    // Aquí puedes implementar la lógica para enviar un mensaje, por ejemplo, usando WebSockets o una API.
-    // Después de enviar el mensaje, actualiza el estado de los mensajes.
-    setMessages([...messages, { sender: 'Tú', text: message }]);
-  };
+const UseChat = () => 
+{
+    const [messages, setMessages] = useState([]);
+    const getMessages = async () => 
+    {
+        const docSnap = await getDocs(collection(db, "direct_messages"));
 
-  useEffect(() => {
-    // Aquí puedes implementar la lógica para recibir mensajes entrantes, si es necesario.
-  }, []);
+        setMessages(docSnap.docs.map((doc) => {
+            return doc.data();
+        }));
+    }
+    const sendMessage = async(text) => 
+    {
+        try {
+            const docRef = await addDoc(collection(db, "direct_messages"), {
+                date: serverTimestamp(),
+                from: "69",
+                to: "13",
+                text: text,
+            });
+            console.log("Document written with ID: ", docRef.id);
+        } catch (e) {
+            console.error("Error adding document: ", e);
+        }
+    }
 
-  return { messages, sendMessage };
-};
 
-export default useChat;
+    useEffect(() => 
+    {
+        getMessages();
+    }, [])
+
+    return({messages, sendMessage})
+}
+
+export default UseChat;
