@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import useChat from './useChat';
+import UseChat from './UseChat';
 import './chat.modules.css';
 import { FaPaperPlane, FaSignOutAlt } from 'react-icons/fa';
 
 export const Chat = () => {
-  const { messages, sendMessage } = useChat();
+  const { messages, sendMessage } = UseChat();
   const [newMessage, setNewMessage] = useState('');
   const [selectedChat, setSelectedChat] = useState(null);
 
@@ -96,6 +96,20 @@ export const Chat = () => {
             </div>
           </div>
 
+      {/* Rectángulo inferior */}
+      <div className="p-4 border-t bg-blue-500 text-black">
+        <input
+          type="text"
+          className="w-full py-2 px-3 rounded border border-gray-300"
+          placeholder="Escribe tu mensaje..."
+          onChange={(e) => setNewMessage(e.target.value)}
+        />
+        <button
+          className="mt-2 bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded"
+          onClick={handleSendMessage}
+        >
+          Enviar
+        </button>
           {/* Rectángulo inferior */}
           <div className="p-4 border-t bg-[#] text-gray mt-4">
             <input

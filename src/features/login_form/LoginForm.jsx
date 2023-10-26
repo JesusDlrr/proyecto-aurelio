@@ -3,7 +3,6 @@ import { React, useState } from 'react';
 import loginStyles from "./login.module.css";
 import useLoginForm from './useLoginForm';
 
-
 /*Constante LogInForm*/
 export const LogInForm = () => {
   const {
@@ -30,14 +29,12 @@ export const LogInForm = () => {
           <h1 className='text-white text-4xl font-bold text-center'>WELCOME BACK</h1>
           <form action="">
             <div className='relative my-4'>
-              <input id="email" type="text" className='block w-72 py-2.5 px-0 text-sm text-white bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:focus:border-green-400 focus:outline-none focus:ring-0 focus:text-white focus:border-green-800 peer' placeholder="" onChange={(e) => { setEmail(e.target.value) }} />
-              <label htmlFor="" className='absolute text-sm duration-300 transform -translate scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-green-800 peer-focus:dark:text-green-400 peer-placeholder-shown:scale-100 peer-focus:scale-75 peer-focus:-translate-y-6'>Email</label>
+              <input id="email" type="text" className='block w-72 py-2.5 px-0 text-sm text-white bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:focus:border-green-400 focus:outline-none focus:ring-0 focus:text-white focus:border-green-800 peer placeholder:text-slate-800' placeholder="Email" onChange={(e) => { setEmail(e.target.value) }} />
               {error ?
                 <label className='text-red-600'>Invalid email</label> : ""}
             </div>
             <div className='relative my-4'>
-              <input type="password" className='block w-72 py-2.5 px-0 text-sm text-white bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:focus:border-green-400 focus:outline-none focus:ring-0 focus:text-white focus:border-green-600 peer' placeholder="" onChange={(e) => { setPassword(e.target.value) }} />
-              <label htmlFor="" className='absolute text-sm duration-300 transform -translate scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-green-800 peer-focus:dark:text-green-400 peer-placeholder-shown:scale-100 peer-focus:scale-75 peer-focus:-translate-y-6'>Password</label>
+              <input type="password" className='block w-72 py-2.5 px-0 text-sm text-white bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:focus:border-green-400 focus:outline-none focus:ring-0 focus:text-white focus:border-green-600 peer placeholder:text-slate-800' placeholder="Password" onChange={(e) => { setPassword(e.target.value) }} />
             </div>
           </form>
           <button type="button" className='w-full mb-4 text-[18px] mt-6 rounded bg-green-400 py-2 hover:bg-green-500 transition-colors duration-300' value="Log In" onClick={() => { if (validation()) logIn(email, password) }}>Login</button>
