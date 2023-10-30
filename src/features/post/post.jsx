@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import usePost from "./UsePost";
+import usePost from "./usePost";
 
 export const Post = ({ post }) => {
 
