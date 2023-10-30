@@ -5,6 +5,7 @@ import { UserContext } from "../../App";
 import { getAuth } from "firebase/auth";
 
 const UseFeed = () => {
+    /*
     const [posts, setPosts] = useState([]);
     const {user, setUser} = useContext(UserContext);
     const loaded_users = [];
@@ -46,8 +47,10 @@ const UseFeed = () => {
 
     return {
         post,
-        posts
+        posts,
+        setPosts
     };
+    */
 }
 
 export default UseFeed;
