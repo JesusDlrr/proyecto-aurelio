@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import UseChat from './UseChat';
+import UseChat from './useChat';
 import './chat.modules.css';
 import { FaPaperPlane, FaSignOutAlt } from 'react-icons/fa';
 

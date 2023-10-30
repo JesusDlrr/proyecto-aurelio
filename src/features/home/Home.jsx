@@ -4,20 +4,33 @@ import { Suggestions } from "../suggestions/Suggestions";
 import { Feed } from "../feed/Feed";
 import { Profile } from "../profile/Profile";
 import { Quick_Thought } from "../quick_thought/Quick_thought";
+import { Post } from "../post/post";
 import useHome from "./UseHome";
-import { UserContext } from "../../App";
 
 export const Home = () => {
-    const {user} = useContext(UserContext);
-    const {user_name, user_avatar} = useHome();
+    const { 
+        user_name, 
+        user_avatar, 
+        posts, 
+        post,
+        setPosts
+    } = useHome();
     return (
         <>
             <NavBar />
             <div className="h-auto w-auto bg-gray-400 p-10 grid grid-cols-4 gap-3">
-                <Profile name={user_name} avatar={user_avatar}/>
-                <Quick_Thought />
+                <Profile name={user_name} avatar={user_avatar} />
+                <Quick_Thought makePost={post} />
                 <Suggestions />
-                <Feed />
+                <Feed>
+                {
+                    posts.sort((a, b)=>{return(b.date.seconds>a.date.seconds)}).map((post) => {
+                        return (<>
+                            <Post post={post} />
+                        </>);
+                    })
+                }
+                </Feed>
             </div>
         </>
     )
