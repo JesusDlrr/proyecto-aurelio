@@ -31,6 +31,7 @@ const UseHome = () => {
             let user_data = from_user.data();
             user_data.uid = post_data.from.id;
             post_data.from = user_data;
+            post_data.id = post.id;
             return post_data;
         })));
     }
@@ -39,25 +40,29 @@ const UseHome = () => {
     {
         try {
             const user_ref = doc(db, "users", user.uid);
-            const new_post = {
-                from: {
-                    avatar: user_avatar,
-                    name: user_name,
-                    uid: user.uid
-                },
-                message: message,
-                date: {
-                    seconds: new Date().getTime()/1000
-                },
-                likes: 0
-            }
             await addDoc(collection(db, "posts"), {
                 from: user_ref,
                 message: message,
                 date: serverTimestamp(),
                 likes: 0
-            });
-            setPosts([...posts, new_post]);
+            }).then((post_ref)=>{
+                const new_post = {
+                    id: post_ref.id,
+                    from: {
+                        id: user.uid,
+                        avatar: user_avatar,
+                        name: user_name,
+                        uid: user.uid
+                    },
+                    message: message,
+                    date: {
+                        seconds: new Date().getTime()/1000
+                    },
+                    likes: 0
+                }
+                console.log(new_post)
+                setPosts([...posts, new_post]);
+            })
         } catch (e) {
             console.error("Error adding document: ", e);
         }
@@ -74,7 +79,6 @@ const UseHome = () => {
         user_avatar,
         post,
         posts,
-        setPosts
     });
 }
 

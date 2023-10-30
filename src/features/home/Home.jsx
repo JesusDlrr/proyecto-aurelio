@@ -13,7 +13,6 @@ export const Home = () => {
         user_avatar, 
         posts, 
         post,
-        setPosts
     } = useHome();
     return (
         <>
@@ -26,7 +25,7 @@ export const Home = () => {
                 {
                     posts.sort((a, b)=>{return(b.date.seconds>a.date.seconds)}).map((post) => {
                         return (<>
-                            <Post post={post} />
+                            <Post post={post} key={post.id}/>
                         </>);
                     })
                 }
