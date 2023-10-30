@@ -16,8 +16,9 @@ const UseFeed = () => {
         setPosts(await Promise.all(docSnap.docs.map(async(post) => {
             let post_data = post.data();
             let from_user = await getDoc(post_data.from);
-
+            
             let user_data = from_user.data();
+            console.log(user_data)
             user_data.uid = post_data.from.id;
             post_data.from = user_data;
             return post_data;
