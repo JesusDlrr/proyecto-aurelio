@@ -8,29 +8,28 @@ import { Post } from "../post/post";
 import useHome from "./UseHome";
 
 export const Home = () => {
-    const { 
-        user_name, 
-        user_avatar, 
-        posts, 
-        post,
-    } = useHome();
-    return (
-        <>
-            <NavBar />
-            <div className="h-auto w-auto bg-gray-400 p-10 grid grid-cols-4 gap-3">
-                <Profile name={user_name} avatar={user_avatar} />
-                <Quick_Thought makePost={post} />
-                <Suggestions />
-                <Feed>
-                {
-                    posts.sort((a, b)=>{return(b.date.seconds>a.date.seconds)}).map((post) => {
-                        return (<>
-                            <Post post={post} key={post.id}/>
-                        </>);
-                    })
-                }
-                </Feed>
-            </div>
-        </>
-    )
-}
+  const { user_name, user_avatar, posts, post } = useHome();
+  return (
+    <>
+      <NavBar />
+      <div className="h-auto w-auto bg-gray-400 p-10 grid grid-cols-4 gap-3">
+        <Profile name={user_name} avatar={user_avatar} />
+        <Quick_Thought makePost={post} />
+        <Suggestions />
+        <Feed>
+          {posts
+            .sort((a, b) => {
+              return b.date.seconds - a.date.seconds;
+            })
+            .map((post) => {
+              return (
+                <>
+                  <Post post={post} key={post.id} />
+                </>
+              );
+            })}
+        </Feed>
+      </div>
+    </>
+  );
+};
