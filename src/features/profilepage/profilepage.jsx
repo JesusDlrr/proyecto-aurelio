@@ -19,7 +19,6 @@ export const ProfilePage = ({ name, avatar }) => {
             updateAvatar(new Blob([file], { type: file.type }), file_type[1]);
         }
     }
-    console.log(user_avatar)
     return (
         <>
             <NavBar />
