@@ -22,7 +22,7 @@ export const Search = ({ children }) => {
 
   return (
     <>
-      <div className="container mx-auto pt-4 absolute z-200">
+      <div className="container w-80 ml-20 absolute mt-11">
         <ul className="list-disc flex-col font-normal text-black bg-white">
           {usuarios.map((usuario) => {
             return (

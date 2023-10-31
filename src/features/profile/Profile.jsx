@@ -8,10 +8,10 @@ export const Profile = ({ name, avatar }) => {
         <>
             {/* Profile */}
             <div className="bg-white text-white text-center text-3xl py-2 rounded-lg row-span-3 sm:row-span-6">
-                <div className="sticky p-16 bg-white">
+                <div className="p-16 bg-white">
                     <img className="rounded-full cursor-pointer  h-52 w-52 ml-2" src={avatar} onClick={()=>{navigate("/profile")}}/>
                     <div className="pt-2 mt-3 w-full text-center text-xl text-gray-600">
-                        <h1 className="text-xl font-sembold text-black hover:underline">
+                        <h1 className="text-xl font-sembold text-black hover:underline hover:cursor-pointer" onClick={()=>{navigate("/profile")}}>
                             {name}
                         </h1>
                     </div>
