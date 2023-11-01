@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useContext } from "react";
 import { UserContext } from "../../App";
 import { db, fs } from "../../firebase";
-import { collection, doc, getDoc, getDocs, query, updateDoc, where } from "firebase/firestore";
+import { addDoc, and, collection, deleteDoc, doc, getDoc, getDocs, query, updateDoc, where } from "firebase/firestore";
 import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
 import { useSearchParams } from "react-router-dom";
 
@@ -12,6 +12,8 @@ const UseProfile = () => {
     const [user_avatar, setUserAvatar] = useState("");
     const [search_params] = useSearchParams();
     const [posts, setPosts] = useState(null);
+    const [following, setFollowing] = useState(null);
+    const [followers, setFollowers] = useState(null);
 
     const user_uid = search_params.get("user") != null ? search_params.get("user") : user.uid;
 
@@ -46,6 +48,59 @@ const UseProfile = () => {
         );
     };
 
+    const getFollowers = async () => {
+        try {
+
+            const other_ref = await doc(db, "users", search_params.get("user"));
+            const followers_qry = await query(collection(db, "friends"), where("follows", "==", other_ref));
+            const followers_ref = await getDocs(followers_qry);
+
+            setFollowers(followers_ref.size);
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
+    const getFollowing = async () => {
+        try {
+            const user_ref = await doc(db, "users", user.uid);
+            const other_ref = await doc(db, "users", search_params.get("user"));
+            const follow_qry = await query(collection(db, "friends"), and(where("user", "==", user_ref), where("follows", "==", other_ref)));
+            const follow_ref = await getDocs(follow_qry);
+
+            setFollowing(follow_ref.size !== 0)
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
+    const followUser = async () => {
+        try {
+            const user_ref = await doc(db, "users", user.uid);
+            const other_ref = await doc(db, "users", search_params.get("user"));
+            const follow_qry = await query(collection(db, "friends"), and(where("user", "==", user_ref), where("follows", "==", other_ref)));
+            const follow_ref = await getDocs(follow_qry);
+
+            if (follow_ref.size === 0) {
+                await addDoc(collection(db, "friends"), {
+                    user: user_ref,
+                    follows: other_ref
+                });
+                setFollowing(true);
+                setFollowers(followers + 1);
+            } else {
+                follow_ref.forEach(async (follow) => {
+                    await deleteDoc(doc(db, "friends", follow.id));
+                })
+                setFollowing(false);
+                setFollowers(followers - 1);
+            }
+        } catch (error) {
+            console.log(error)
+        }
+
+    }
+
     const updateAvatar = async (new_avatar, format) => {
         const avatar_ref = ref(fs, `avatars/${user_name}.${format}`);
         await uploadBytes(avatar_ref, new_avatar).then(async (avatar_snapshot) => {
@@ -64,9 +119,19 @@ const UseProfile = () => {
     useEffect(() => {
         getUserInfo();
         getPosts();
+        getFollowing();
+        getFollowers();
     }, [])
 
-    return ({ user_name, user_avatar, updateAvatar, posts });
+    return ({
+        user_name,
+        user_avatar,
+        updateAvatar,
+        posts,
+        following,
+        followUser,
+        followers
+    });
 }
 
 export default UseProfile;
