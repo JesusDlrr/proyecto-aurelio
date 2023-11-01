@@ -46,7 +46,7 @@ export const NavBar = () => {
             </button>
             <input
               type="search"
-              className=" relative w-96 ml-6 rounded px-3 text-base font-normal text-black"
+              className=" relative w-1/4 ml-6 rounded px-3 text-base font-normal text-black"
               placeholder="Quick search..."
               aria-label="Search"
             />
