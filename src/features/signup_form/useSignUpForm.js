@@ -17,7 +17,6 @@ const useSignUpForm = () => {
   const { user, setUser } = useContext(UserContext);
 
   const createUser = async (id) => {
-    console.log(name)
     try {
       const userRef = doc(db, 'users', id);
       await setDoc(userRef, {

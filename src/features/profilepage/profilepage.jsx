@@ -3,6 +3,7 @@ import { NavBar } from "../nav_bar/Navbar";
 import { Feed } from "../feed/Feed";
 import { Quick_Thought } from "../quick_thought/Quick_thought";
 import UseProfile from "./UseProfile";
+import { Post } from "../post/post";
 
 export const ProfilePage = ({ name, avatar }) => {
     const ref = useRef();
@@ -10,7 +11,7 @@ export const ProfilePage = ({ name, avatar }) => {
         ref.current.click()
     }
 
-    const { user_name, user_avatar, updateAvatar } = UseProfile();
+    const { user_name, user_avatar, updateAvatar, posts } = UseProfile();
 
     const handleChange = (e) => {
         const file = e.target.files[0];
@@ -19,7 +20,6 @@ export const ProfilePage = ({ name, avatar }) => {
             updateAvatar(new Blob([file], { type: file.type }), file_type[1]);
         }
     }
-    console.log(user_avatar)
     return (
         <>
             <NavBar />
@@ -62,7 +62,19 @@ export const ProfilePage = ({ name, avatar }) => {
                 </div>
                 <div className="col-span-3 mt-20">
                     <Quick_Thought />
-                    <Feed />
+                    <Feed>
+                        {posts != null && posts
+                            .sort((a, b) => {
+                                return b.date.seconds - a.date.seconds;
+                            })
+                            .map((post) => {
+                                return (
+                                    <>
+                                        <Post post={post} key={post.id} />
+                                    </>
+                                );
+                            })}
+                    </Feed>
                 </div>
             </div>
         </>

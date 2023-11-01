@@ -68,7 +68,6 @@ const UseHome = () => {
           },
           likes: 0,
         };
-        console.log(new_post);
         setPosts([...posts, new_post]);
       });
     } catch (e) {
