@@ -1,17 +1,18 @@
-import React from "react";
+import React, { useState } from "react";
 import UseNavbar from "./UseNavbar";
 import { signOut } from "firebase/auth";
 import { auth } from "../../firebase";
 import { Search } from "../search/Search";
 
 export const NavBar = () => {
-  const {} = UseNavbar();
+  const { searchUsers, search_results } = UseNavbar();
+  const [search_value, setSearchValue] = useState("");
+  const [search_active, setSearchActive] = useState(false);
 
   const so = () => {
     signOut(auth)
       .then(() => {
         // Sign-out successful.
-        console.log("out");
       })
       .catch((error) => {
         // An error happened.
@@ -44,12 +45,19 @@ export const NavBar = () => {
                 />
               </svg>
             </button>
+            {search_value !== "" && search_active && <Search results={search_results} />}
+
             <input
               type="search"
+              value={search_value}
               className=" relative w-1/4 ml-6 rounded px-3 text-base font-normal text-black"
               placeholder="Quick search..."
               aria-label="Search"
+              onFocus={() => { setSearchActive(true) }}
+              onBlur={() => { setSearchActive(false) }}
+              onChange={(e) => { setSearchValue(e.target.value); searchUsers(e.target.value) }}
             />
+
             <a
               className="text-white m-auto duration-200 hover:text-neutral-700 hover:ease-in-out focus:text-neutral-700 disabled:text-black/30 motion-reduce:transition-none dark:text-neutral-200 dark:hover:text-neutral-400 dark:focus:text-neutral-400 [&.active]:text-black/90 dark:[&.active]:text-neutral-400"
               href="/"
@@ -79,7 +87,6 @@ export const NavBar = () => {
                 />
               </svg>
             </a>
-            <Search />
           </div>
         </div>
       </div>

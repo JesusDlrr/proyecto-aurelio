@@ -4,12 +4,11 @@ import { addDoc, and, collection, deleteDoc, doc, getDoc, getDocs, query, where 
 import { db } from "../../firebase";
 
 const usePost = (post_id) => {
-    const {user, setUser} = useContext(UserContext);
+    const { user, setUser } = useContext(UserContext);
     const [liked, setLiked] = useState(false);
     const [likes, setLikes] = useState(null);
 
-    const getLikes = async()=>
-    {
+    const getLikes = async () => {
         const user_ref = await doc(db, "users", user.uid);
         const post_ref = await doc(db, "posts", post_id);
         const like_qry = await query(collection(db, "likes"), and(where("from", "==", user_ref), where("on", "==", post_ref)));
@@ -21,47 +20,40 @@ const usePost = (post_id) => {
         setLiked(like_ref.size != 0);
     }
 
-    const likePost = async()=>
-    {
-        try
-        {
+    const likePost = async () => {
+        try {
             const user_ref = await doc(db, "users", user.uid);
             const post_ref = await doc(db, "posts", post_id);
             const like_qry = await query(collection(db, "likes"), and(where("from", "==", user_ref), where("on", "==", post_ref)));
             const like_ref = await getDocs(like_qry);
 
-            if(like_ref.size == 0)
-            {
+            if (like_ref.size == 0) {
                 await addDoc(collection(db, "likes"), {
                     from: user_ref,
                     on: post_ref
                 });
-                setLikes(likes+1);
+                setLikes(likes + 1);
                 setLiked(true);
-            }else
-            {
-                like_ref.forEach(async(like)=>{
+            } else {
+                like_ref.forEach(async (like) => {
                     await deleteDoc(doc(db, "likes", like.id));
                 })
-                setLikes(likes-1);
+                setLikes(likes - 1);
                 setLiked(false);
             }
 
-        }catch(error)
-        {
+        } catch (error) {
             console.log(error)
         }
 
     }
- 
-    useEffect(()=>
-    {
+
+    useEffect(() => {
         getLikes();
-        console.log(likes)
 
     }, [])
 
-    return{
+    return {
         likes,
         liked,
         likePost
