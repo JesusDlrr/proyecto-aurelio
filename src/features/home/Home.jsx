@@ -8,10 +8,10 @@ import { Post } from "../post/post";
 import useHome from "./UseHome";
 
 export const Home = () => {
-    const { 
-        user_name, 
-        user_avatar, 
-        posts, 
+    const {
+        user_name,
+        user_avatar,
+        posts,
         post,
     } = useHome();
     return (
@@ -22,13 +22,13 @@ export const Home = () => {
                 <Quick_Thought makePost={post} />
                 <Suggestions />
                 <Feed>
-                {
-                    posts.sort((a, b)=>{return(b.date.seconds>a.date.seconds)}).map((post) => {
-                        return (<>
-                            <Post post={post} key={post.id}/>
-                        </>);
-                    })
-                }
+                    {
+                        posts.sort((a, b) => { return (b.date.seconds - a.date.seconds) }).map((post) => {
+                            return (<>
+                                <Post post={post} key={post.id} />
+                            </>);
+                        })
+                    }
                 </Feed>
             </div>
         </>
