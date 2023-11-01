@@ -27,7 +27,7 @@ const usePost = (post_id) => {
             const like_qry = await query(collection(db, "likes"), and(where("from", "==", user_ref), where("on", "==", post_ref)));
             const like_ref = await getDocs(like_qry);
 
-            if (like_ref.size == 0) {
+            if (like_ref.size === 0) {
                 await addDoc(collection(db, "likes"), {
                     from: user_ref,
                     on: post_ref
