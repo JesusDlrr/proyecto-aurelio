@@ -66,7 +66,7 @@ export const ProfilePage = ({ name, avatar }) => {
                         {following != null && user.uid !== search_params.get("user") && <>
                             <div className="">
                                 <button type="button" title="Follow user" onClick={followUser} className="shadow-2xl shadow-black p-1 bg-green-500 rounded-lg active:bg-green-700 ease-linear transition-all duration-150 outline-none focus:outline-none">
-                                    <h1 className="text-white">{following ? "Following" : "Follow"}</h1>
+                                    <h1 className="text-white">{following ? "Unfollow" : "Follow"}</h1>
                                 </button>
                             </div>
                         </>}
