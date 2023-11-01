@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useContext } from "react";
 import { UserContext } from "../../App";
 import { db, fs } from "../../firebase";
-import { addDoc, and, collection, deleteDoc, doc, getDoc, getDocs, query, updateDoc, where } from "firebase/firestore";
+import { addDoc, and, collection, deleteDoc, doc, getDoc, getDocs, query, serverTimestamp, updateDoc, where } from "firebase/firestore";
 import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
 import { useSearchParams } from "react-router-dom";
 
@@ -112,8 +112,36 @@ const UseProfile = () => {
                 });
             })
         })
+    };
 
-
+    const post = async (message) => {
+        try {
+            const user_ref = doc(db, "users", user.uid);
+            await addDoc(collection(db, "posts"), {
+                from: user_ref,
+                message: message,
+                date: serverTimestamp(),
+                likes: 0,
+            }).then((post_ref) => {
+                const new_post = {
+                    id: post_ref.id,
+                    from: {
+                        id: user.uid,
+                        avatar: user_avatar,
+                        name: user_name,
+                        uid: user.uid,
+                    },
+                    message: message,
+                    date: {
+                        seconds: new Date().getTime() / 1000,
+                    },
+                    likes: 0,
+                };
+                setPosts([...posts, new_post]);
+            });
+        } catch (e) {
+            console.error("Error adding document: ", e);
+        }
     };
 
     useEffect(() => {
@@ -130,7 +158,8 @@ const UseProfile = () => {
         posts,
         following,
         followUser,
-        followers
+        followers,
+        post
     });
 }
 

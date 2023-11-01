@@ -22,7 +22,8 @@ export const ProfilePage = ({ name, avatar }) => {
         posts,
         following,
         followUser,
-        followers
+        followers,
+        post
     } = UseProfile();
 
     const handleChange = (e) => {
@@ -82,7 +83,7 @@ export const ProfilePage = ({ name, avatar }) => {
                 </div>
                 <div className="col-span-3 mt-20">
 
-                    {search_params.get("user") === user.uid && <Quick_Thought />}
+                    {search_params.get("user") === user.uid && <Quick_Thought makePost={post} />}
                     <Feed>
                         {posts != null && posts
                             .sort((a, b) => {
