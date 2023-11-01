@@ -26,7 +26,7 @@ export const ProfilePage = ({ name, avatar }) => {
             <input className="hidden" id="default_size" ref={ref} onChange={handleChange} type="file" />
             <div className="sm:row-span-6 md:row-span-3">
                 <div
-                    className={"absolute cursor-pointer rounded-full h-40 w-40 top-24 z-50 left-24 mt-2 border-gray-400 border-8 sm:row-span-6 bg-cover bg-center"} style={{ backgroundImage: `url("${user_avatar}")` }} onClick={handleClick} onChange={handleChange} alt="user avatar" title="Upload Image" loading="lazy">
+                    className={"absolute cursor-pointer rounded-full h-40 w-40 top-24 z-40 left-24 mt-2 border-gray-400 border-8 sm:row-span-6 bg-cover bg-center"} style={{ backgroundImage: `url("${user_avatar}")` }} onClick={handleClick} onChange={handleChange} alt="user avatar" title="Upload Image" loading="lazy">
                     <div className="flex rounded-full justify-center h-full w-full items-center bg-gray-600/30 backdrop-brightness-75 opacity-0 hover:opacity-70">
                         <span className="text-white text-lg text-center">Upload Image</span>
                     </div>
