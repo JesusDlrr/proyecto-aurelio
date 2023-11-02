@@ -6,6 +6,7 @@ import { useNavigate, useSearchParams } from "react-router-dom";
 
 const UseChat = () => {
     const [new_messages, setNewMessages] = useState([]);
+    const [new_chats, setNewChats] = useState([]);
     const [messages, setMessages] = useState([]);
     const [chat_list, setChatList] = useState([]);
     const [chat_name, setChatName] = useState("");
@@ -38,12 +39,17 @@ const UseChat = () => {
     const getChatList = async () => {
         try {
             const self_ref = await doc(db, "users", user.uid);
-            const mess_qry = await query(collection(db, "direct_messages"), where("from", "==", self_ref));
+            const mess_qry = await query(collection(db, "direct_messages"), or(where("from", "==", self_ref), where("to", "==", self_ref)));
             const mess_ref = await getDocs(mess_qry);
 
             let mess = await Promise.all(
                 mess_ref.docs.map(async (mess) => {
-                    const to_user = await getDoc(mess.data().to);
+                    let to_user = await getDoc(mess.data().to);
+
+                    if (to_user.id === user.uid) {
+                        to_user = await getDoc(mess.data().from);
+                    }
+
                     let to_user_data = to_user.data();
                     to_user_data.uid = to_user.id;
                     return to_user_data;
@@ -53,7 +59,9 @@ const UseChat = () => {
             setChatList(mess.filter(
                 (person, index) => index === mess.findIndex(
                     other => person.avatar === other.avatar
-                )));
+                )
+            ));
+
         } catch (error) {
             console.log(error);
         }
@@ -90,12 +98,27 @@ const UseChat = () => {
         }
     }
 
+    const openChatListListener = async () => {
+        const self_ref = await doc(db, "users", user.uid);
+        const q = query(collection(db, "direct_messages"), where("to", "==", self_ref));
+        onSnapshot(q, (snapshot) => {
+            snapshot.docChanges().forEach(async (change) => {
+                if (change.type === "added") {
+                    const to_user = await getDoc(change.doc.data().from);
+                    let to_user_data = to_user.data();
+                    to_user_data.uid = to_user.id;
+
+                    setNewChats([to_user_data])
+                }
+            });
+        });
+    }
+
     const openMessagesListener = async () => {
         const self_ref = await doc(db, "users", user.uid);
         const other_ref = await doc(db, "users", search_params.get("to"));
         const q = query(collection(db, "direct_messages"), and(where("from", "==", other_ref), where("to", "==", self_ref)));
         onSnapshot(q, (snapshot) => {
-            console.log(messages)
             snapshot.docChanges().forEach((change) => {
                 if (change.type === "added") {
                     setNewMessages([...new_messages, change.doc.data()]);
@@ -111,17 +134,37 @@ const UseChat = () => {
     }, [new_messages]);
 
     useEffect(() => {
-        getChatName();
-        getMessages();
+        if (chat_list !== null) {
+            let add = true;
+
+            console.log(chat_list)
+            console.log(new_chats)
+            chat_list.forEach((chat) => {
+                new_chats.forEach((new_chat) => {
+                    if (chat.avatar === new_chat.avatar) {
+                        add = false;
+                    }
+                })
+            })
+            if (add) {
+                setChatList([...chat_list, ...new_chats])
+            }
+        }
+    }, [new_chats]);
+
+    useEffect(() => {
         getChatList();
         openMessagesListener();
+        openChatListListener();
     }, [])
 
     return ({
         messages,
         sendMessage,
         chat_list,
-        chat_name
+        chat_name,
+        getChatName,
+        getMessages
     })
 }
 
