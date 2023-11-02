@@ -16,7 +16,9 @@ export const Chat = () => {
     messages,
     sendMessage,
     chat_list,
-    chat_name
+    chat_name,
+    getChatName,
+    getMessages
   } = UseChat();
 
   const handleSendMessage = () => {
@@ -27,8 +29,9 @@ export const Chat = () => {
   };
 
   useEffect(() => {
-
-  }, [messages]);
+    getMessages();
+    getChatName();
+  }, [search_params]);
 
   return (
     <div className="w-full h-screen flex flex-col">
@@ -42,7 +45,7 @@ export const Chat = () => {
 
           {/* Contenido de la barra lateral izquierda */
             chat_list.map((chat, index) => (
-              <div key={index} className="flex items-center p-2 cursor-pointer" onClick={() => { navigation("/dms?to=" + chat.uid); window.location.reload(); }}>
+              <div key={index} className={`flex items-center p-2 cursor-pointer ${chat.uid === search_params.get("to") && "bg-blue-100"}`} onClick={() => { navigation("/dms?to=" + chat.uid); }}>
                 <img src={chat.avatar} alt={`Foto de ${chat.name}`} className="w-12 h-12 rounded-full mr-2" />
                 <span>{chat.name}</span>
               </div>
