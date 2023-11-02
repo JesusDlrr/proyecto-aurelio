@@ -77,8 +77,8 @@ export const ProfilePage = ({ name, avatar }) => {
             <div className="h-auto w-auto bg-gray-400 p-10 grid grid-cols-4 gap-3 sm:row-span-6">
                 <div className="bg-white text-white text-center text-3xl rounded-lg row-span-3 mt-20 max-h-24">
                     <div className="flex flex-col hover:cursor-pointer">
-                        <a className="hover:bg-gray-300 bg-white border-t p-3 w-full text-xl text-left text-black font-semibold rounded-lg rounded-b-none" href="/dms" target="_blank">Messages</a>
-                        <a className="hover:bg-gray-300 bg-white border-t p-3 w-full text-xl text-left text-black font-semibold rounded-lg rounded-t-none border-black" href="" target="_blank">Settings</a>
+                        <a className="hover:bg-gray-300 bg-white border-t p-3 w-full text-xl text-left text-black font-semibold rounded-lg rounded-b-none" href={"/dms?to=" + search_params.get("user")}>Messages</a>
+                        <a className="hover:bg-gray-300 bg-white border-t p-3 w-full text-xl text-left text-black font-semibold rounded-lg rounded-t-none border-black">Settings</a>
                     </div>
                 </div>
                 <div className="col-span-3 mt-20">
