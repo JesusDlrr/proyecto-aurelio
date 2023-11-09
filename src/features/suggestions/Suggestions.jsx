@@ -10,7 +10,7 @@ export const Suggestions = () => {
                         <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"></path>
                     </svg></span>
                     <p className="text-md font-medium text-slate-700 mt-3">Nombre de usuario aqui</p>
-                    <button type="button" className=" bg-green-700 hover:bg-green-500 text-white py-2 px-4 rounded-full text-lg mt-2 drop-shadow-xl">Follow</button>
+                    <button type="button" className=" bg-green-700 hover:bg-green-500 active:bg-green-700 text-white py-2 px-4 rounded-full text-lg mt-2 drop-shadow-xl">Follow</button>
                 </div>
             </div>
         </>

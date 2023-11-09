@@ -2,19 +2,16 @@ import { collection, addDoc, getDocs, serverTimestamp } from "firebase/firestore
 import { db } from "../../firebase";
 import { useEffect, useState } from "react";
 
-const UseChat = () => 
-{
+const UseChat = () => {
     const [messages, setMessages] = useState([]);
-    const getMessages = async () => 
-    {
+    const getMessages = async () => {
         const docSnap = await getDocs(collection(db, "direct_messages"));
 
         setMessages(docSnap.docs.map((doc) => {
             return doc.data();
         }));
     }
-    const sendMessage = async(text) => 
-    {
+    const sendMessage = async (text) => {
         try {
             const docRef = await addDoc(collection(db, "direct_messages"), {
                 date: serverTimestamp(),
@@ -22,19 +19,17 @@ const UseChat = () =>
                 to: "13",
                 text: text,
             });
-            console.log("Document written with ID: ", docRef.id);
         } catch (e) {
             console.error("Error adding document: ", e);
         }
     }
 
 
-    useEffect(() => 
-    {
+    useEffect(() => {
         getMessages();
     }, [])
 
-    return({messages, sendMessage})
+    return ({ messages, sendMessage })
 }
 
 export default UseChat;

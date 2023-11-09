@@ -1,22 +1,22 @@
-import { React } from 'react';
+import { React, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { UserContext } from '../../App';
 
 
 export const Profile = ({ name, avatar }) => {
     const navigate = useNavigate();
+    const { user } = useContext(UserContext);
+
     return (
         <>
             {/* Profile */}
             <div className="bg-white text-white text-center text-3xl py-2 rounded-lg row-span-3 sm:row-span-6">
-                <div className="sticky p-16 bg-white">
-                    <img className="rounded-full cursor-pointer  h-52 w-52 ml-2" src={avatar} onClick={()=>{navigate("/profile")}}/>
+                <div className="p-16 bg-white">
+                    <img className="rounded-full cursor-pointer  h-52 w-52 ml-2" src={avatar} onClick={() => { navigate("/profile?user=" + user.uid) }} />
                     <div className="pt-2 mt-3 w-full text-center text-xl text-gray-600">
-                        <h1 className="text-xl font-sembold text-black hover:underline">
+                        <h1 className="text-xl font-sembold text-black hover:underline hover:cursor-pointer" onClick={() => { navigate("/profile?user=" + user.uid) }}>
                             {name}
                         </h1>
-                    </div>
-                    <div className="pt-2 mt-2 w-full text-center text-xl text-gray-600 hover:underline">
-                            <span className="flex items-center mt-1 space-x-2 text-gray-500 dark:text-gray-400 hover:underline">Numero de followers aqui Followers</span>
                     </div>
                 </div>
                 <div className="w-full h-screen antialiased flex flex-col hover:cursor-pointer">

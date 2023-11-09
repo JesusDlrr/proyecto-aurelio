@@ -5,6 +5,7 @@ import { UserContext } from "../../App";
 import { getAuth } from "firebase/auth";
 
 const UseFeed = () => {
+    /*
     const [posts, setPosts] = useState([]);
     const {user, setUser} = useContext(UserContext);
     const loaded_users = [];
@@ -14,6 +15,7 @@ const UseFeed = () => {
         const docSnap = await getDocs(collection(db, "posts"));
 
         setPosts(await Promise.all(docSnap.docs.map(async(post) => {
+            console.log(posts);
             let post_data = post.data();
             let from_user = await getDoc(post_data.from);
             
@@ -46,8 +48,10 @@ const UseFeed = () => {
 
     return {
         post,
-        posts
+        posts,
+        setPosts
     };
+    */
 }
 
 export default UseFeed;
