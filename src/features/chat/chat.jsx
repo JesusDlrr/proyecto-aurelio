@@ -83,16 +83,15 @@ export const Chat = () => {
 
           <div className="flex-grow overflow-y-auto p-4 bg-gray-100">
             <div className="flex flex-col-reverse">
-              {messages.map((message, index) => (
-                <div
-                  key={index}
-                  className={`mb-2 ${
-                    message.sender === 'Tú' ? 'self-end message-bubble' : 'self-start message-bubble other'
-                  }`}
-                >
-                  {message.text}
-                </div>
-              ))}
+            {messages.map((message, index) => (
+  <div
+    key={index}
+    className="message-bubble"
+    style={{ alignSelf: message.sender === 'Tú' ? 'flex-end' : 'flex-start' }}
+  >
+    {message.text}
+  </div>
+))}
             </div>
           </div>
 
