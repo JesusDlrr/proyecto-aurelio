@@ -1,24 +1,25 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import UseChat from './useChat';
 import './chat.modules.css';
 import { FaPaperPlane, FaSignOutAlt } from 'react-icons/fa';
+import { useNavigate, useSearchParams } from 'react-router-dom';
+import { UserContext } from '../../App';
+import { NavBar } from '../nav_bar/Navbar';
 
 export const Chat = () => {
-  const { messages, sendMessage } = UseChat();
   const [newMessage, setNewMessage] = useState('');
+  const navigation = useNavigate();
   const [selectedChat, setSelectedChat] = useState(null);
-
-  const chatList = [
-    {
-      name: 'Leon S. Kennedy',
-      profilePicture: 'https://i.pinimg.com/564x/8b/4c/4e/8b4c4e9e463b0077dc8db47c22f3c808.jpg',
-    },
-    {
-      name: 'Papá de Bambi',
-      profilePicture: 'https://pbs.twimg.com/media/FBIKD08XMAEK4uu.jpg',
-    },
-  
-  ];
+  const { user } = useContext(UserContext);
+  const [search_params] = useSearchParams();
+  const {
+    messages,
+    sendMessage,
+    chat_list,
+    chat_name,
+    getChatName,
+    getMessages
+  } = UseChat();
 
   const handleSendMessage = () => {
     if (newMessage.trim() !== '') {
@@ -28,37 +29,13 @@ export const Chat = () => {
   };
 
   useEffect(() => {
-    
-  }, [messages]);
+    getMessages();
+    getChatName();
+  }, [search_params]);
 
   return (
     <div className="w-full h-screen flex flex-col">
-      {/* NavBar */}
-      <div className="bg-[#397850] p-4 flex items-center justify-between"> {/* Reducir el padding de p-6 a p-4 */}
-        <div className="flex items-center space-x-4">
-          {/* Barra de búsqueda  */}
-          <input
-            type="text"
-            placeholder="Buscar"
-            className="w-40 px-2 py-1 rounded bg-gray-200 text-gray-700 focus:outline-none"
-          />
-
-          {/* Logotipo */}
-          <img
-            src="ruta-de-tu-logotipo.png"
-            alt="Tu logotipo"
-            className="w-9 h-9"
-          />
-        </div>
-
-        {/* Icono de logout  */}
-        <button className="text-white">
-          <FaSignOutAlt />
-        </button>
-      </div>
-
-      <br />
-
+      <NavBar />
       <div className="flex flex-grow">
         <div className="w-1/4 p-4 bg-gray-100 mr-4">
           {/* Encabezado de Chats en la barra lateral izquierda */}
@@ -67,53 +44,56 @@ export const Chat = () => {
           </div>
 
           {/* Contenido de la barra lateral izquierda */
-          chatList.map((chat, index) => (
-            <div key={index} className="flex items-center p-2 cursor-pointer">
-              <img src={chat.profilePicture} alt={`Foto de ${chat.name}`} className="w-12 h-12 rounded-full mr-2" />
-              <span>{chat.name}</span>
-            </div>
-          ))}
+            chat_list.map((chat, index) => (
+              <div key={index} className={`flex items-center p-2 cursor-pointer ${chat.uid === search_params.get("to") && "bg-blue-100"}`} onClick={() => { navigation("/dms?to=" + chat.uid); }}>
+                <img src={chat.avatar} alt={`Foto de ${chat.name}`} className="w-12 h-12 rounded-full mr-2" />
+                <span>{chat.name}</span>
+              </div>
+            ))}
         </div>
 
         <div className="w-3/4 flex flex-col">
           {/* Rectángulo superior */}
           <div className="bg-gray-100 h-16 text-black flex items-center justify-center">
-            <p>Leon S Kennedy</p>
+            <p>{user.uid === search_params.get("to") ? "Select a user to start a conversation" : chat_name}</p>
           </div>
 
           <div className="flex-grow overflow-y-auto p-4 bg-gray-100">
             <div className="flex flex-col-reverse">
-            {messages.map((message, index) => (
-  <div
-    key={index}
-    className="message-bubble"
-    style={{ alignSelf: message.sender === 'Tú' ? 'flex-end' : 'flex-start' }}
-  >
-    {message.text}
-  </div>
-))}
+              {messages.sort((a, b) => {
+                return b.date.seconds - a.date.seconds;
+              }).map((message, index) => (
+                <>
+                  <div key={index} className={`mb-2 ${message.from.id === user.uid ? 'self-end message-bubble' : 'self-start message-bubble other'}`}>
+                    {message.text}
+                    {/* <div className={message.from.id === user.uid ? 'self-end' : 'self-start other'}>{message.date.seconds}</div> */}
+                  </div>
+                </>
+              ))}
             </div>
           </div>
 
           {/* Rectángulo inferior */}
-          <div className="p-4 border-t bg-[#] text-gray mt-4">
-            <input
-              type="text"
-              className="w-full py-2 px-3 rounded border border-gray-300"
-              placeholder="Escribe tu mensaje..."
-              value={newMessage}
-              onChange={(e) => setNewMessage(e.target.value)}
-            />
-            <button
-              className="mt-2 bg-[#64DE92] hover:bg-[#397850] text-white py-2 px-4 rounded"
-              onClick={handleSendMessage}
-            >
-              <FaPaperPlane />
-            </button>
-          </div>
+          {user.uid !== search_params.get("to") &&
+            <div className="p-4 border-t bg-[#] text-gray mt-4">
+              <input
+                type="text"
+                className="w-full py-2 px-3 rounded border border-gray-300"
+                placeholder="Escribe tu mensaje..."
+                value={newMessage}
+                onChange={(e) => setNewMessage(e.target.value)}
+              />
+              <button
+                className="mt-2 bg-[#64DE92] hover:bg-[#397850] text-white py-2 px-4 rounded"
+                onClick={handleSendMessage}
+              >
+                <FaPaperPlane />
+              </button>
+            </div>
+          }
         </div>
       </div>
     </div>
-    
+
   );
 };

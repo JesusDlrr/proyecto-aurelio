@@ -6,7 +6,7 @@ import { LogInForm } from './features/login_form/LoginForm';
 import { SignUpForm } from './features/signup_form/SignUpForm';
 import { Home } from './features/home/Home';
 import { Chat } from './features/chat/chat';
-import {ProfilePage} from './features/profilepage/profilepage';
+import { ProfilePage } from './features/profilepage/profilepage';
 // import { NavBar } from './features/nav_bar/Navbar';
 // import { Suggestions } from './features/suggestions/Suggestions';
 // import { Feed } from './features/feed/Feed';
@@ -38,36 +38,36 @@ function App() {
                 <PrivateRoute isAllowed={user} redirectTo='/login'>
                   <Home />
                 </PrivateRoute>
-              }/>
+              } />
               <Route path="/dms" element={
                 <PrivateRoute isAllowed={user} redirectTo='/login'>
                   <Chat />
                 </PrivateRoute>
-              }/>
+              } />
               <Route path="/login" element={
                 // Change user to !user to make the route private
                 <PrivateRoute isAllowed={!user} redirectTo='/'>
-                  <LogInForm/>
+                  <LogInForm />
                 </PrivateRoute>
-              }/>
+              } />
               <Route path="/signup" element={
                 // Change user to !user to make the route private
                 <PrivateRoute isAllowed={!user} redirectTo='/'>
-                  <SignUpForm/>
+                  <SignUpForm />
                 </PrivateRoute>
-              }/>
+              } />
               <Route exact path="/profile" element={
                 // Change user to !user to make the route private
                 <PrivateRoute isAllowed={user} redirectTo='/'>
-                  <ProfilePage/>
+                  <ProfilePage />
                 </PrivateRoute>
-              }/>
+              } />
             </Routes>
           </UserContext.Provider>
         </BrowserRouter>
       }
       {/*Usuario Prueba*/}
-      <p>Test account: a@gmail.com | a123456</p>
+      {/* <p>Test account: a@gmail.com | a123456</p> */}
     </>
   )
 }
