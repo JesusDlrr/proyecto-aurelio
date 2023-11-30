@@ -8,15 +8,15 @@ export const Suggestions = () => {
 
     return (
         <>
-            <div className="bg-white text-white text-center text-3xl py-2 rounded-lg row-span-3 sm:row-span-3 md:row-span-6 ">
-                <h1 className="text-black">Suggestions</h1>
-                <div className="pt-6 flex flex-col items-center text-center group md:lg:xl:border-r md:lg:xl:border-b bg-white">
-                    <ul className="w-full">
+            <div className="bg-white text-white dark:bg-zinc-700 dark:text-white text-center text-3xl py-2 rounded-lg row-span-3 sm:row-span-3 md:row-span-6 ">
+                <h1 className="text-black dark:text-white">Suggestions</h1>
+                <div className="dark:bg-zinc-700 pt-6 flex flex-col items-center text-center group sm:md:lg:xl:border-b bg-white">
+                    <ul className="w-full ">
                         {
                             users.map((user) => {
                                 return (<>
                                     {Math.random() < 0.5 && <li
-                                        className="text-gray-900 flex text-lg p-4 border-t-2 border-gray-100 hover:bg-gray-100 hover:cursor-pointer transition-all duration-100"
+                                        className="text-gray-900 dark:text-white flex text-lg p-4 border-t-2 border-gray-100 hover:bg-gray-100 hover:cursor-pointer transition-all duration-100"
                                         key={user.uid}
                                         onMouseDown={(e) => { e.preventDefault() }}
                                         onClick={() => {

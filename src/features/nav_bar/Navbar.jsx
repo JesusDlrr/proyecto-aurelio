@@ -1,13 +1,25 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import UseNavbar from "./UseNavbar";
 import { signOut } from "firebase/auth";
 import { auth } from "../../firebase";
 import { Search } from "../search/Search";
+import ReactSwitch from 'react-switch';
+
 
 export const NavBar = () => {
   const { searchUsers, search_results } = UseNavbar();
   const [search_value, setSearchValue] = useState("");
   const [search_active, setSearchActive] = useState(false);
+  const [darkMode, setDarkMode] = useState(false)
+
+  useEffect(() => {
+
+      if (darkMode) {
+          document.documentElement.classList.add('dark');
+      } else {
+          document.documentElement.classList.remove('dark');
+      }
+  }, [darkMode])
 
   const so = () => {
     signOut(auth)
@@ -62,14 +74,20 @@ export const NavBar = () => {
               className="text-white m-auto duration-200 hover:text-neutral-700 hover:ease-in-out focus:text-neutral-700 disabled:text-black/30 motion-reduce:transition-none dark:text-neutral-200 dark:hover:text-neutral-400 dark:focus:text-neutral-400 [&.active]:text-black/90 dark:[&.active]:text-neutral-400"
               href="/"
             >
+
               {/* Home button */}
               <img src="./Quickk.png" className=" w-12 rounded-full"></img>
             </a>
+            <div className="flex w-auto h-auto justify-center items-center">
+              <label className=" text-sm" htmlFor="">{darkMode ? "Dark" : "Light"} Mode</label>
+              <ReactSwitch onChange={() => { setDarkMode(!darkMode); }} checked={darkMode === true} />
+            </div>
             <a
               className="ml-auto text-white duration-200 hover:text-neutral-700 hover:ease-in-out focus:text-neutral-700 disabled:text-black/30 motion-reduce:transition-none dark:text-neutral-200 dark:hover:text-neutral-400 dark:focus:text-neutral-400 [&.active]:text-black/90 dark:[&.active]:text-neutral-400"
               href="#"
               type="button"
             >
+
               {/* Logout button */}
               <svg
                 xmlns="http://www.w3.org/2000/svg"
