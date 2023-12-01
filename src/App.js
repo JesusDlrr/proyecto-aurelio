@@ -1,5 +1,5 @@
 /*Importes*/
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState} from 'react';
 import './App.css';
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { LogInForm } from './features/login_form/LoginForm';
@@ -21,54 +21,58 @@ export const UserContext = React.createContext(null);
 function App() {
   const [user, setUser] = useState(null);
 
+
+
   useEffect(() => {
     onAuthStateChanged(auth, (user) => {
       setUser(user == null ? false : user);
     });
   }, [])
 
+
   return (
-    <>
+    <div>
       {/*Navegacion por las rutas de la pagina*/}
       {user != null &&
         <BrowserRouter>
           <UserContext.Provider value={{ user: user, setUser: setUser }}>
-            <Routes>
-              <Route path="/" element={
-                <PrivateRoute isAllowed={user} redirectTo='/login'>
-                  <Home />
-                </PrivateRoute>
-              } />
-              <Route path="/dms" element={
-                <PrivateRoute isAllowed={user} redirectTo='/login'>
-                  <Chat />
-                </PrivateRoute>
-              } />
-              <Route path="/login" element={
-                // Change user to !user to make the route private
-                <PrivateRoute isAllowed={!user} redirectTo='/'>
-                  <LogInForm />
-                </PrivateRoute>
-              } />
-              <Route path="/signup" element={
-                // Change user to !user to make the route private
-                <PrivateRoute isAllowed={!user} redirectTo='/'>
-                  <SignUpForm />
-                </PrivateRoute>
-              } />
-              <Route exact path="/profile" element={
-                // Change user to !user to make the route private
-                <PrivateRoute isAllowed={user} redirectTo='/'>
-                  <ProfilePage />
-                </PrivateRoute>
-              } />
-            </Routes>
+              <Routes>
+                <Route path="/" element={
+                  <PrivateRoute isAllowed={user} redirectTo='/login'>
+                    <Home />
+                  </PrivateRoute>
+                } />
+                <Route path="/dms" element={
+                  <PrivateRoute isAllowed={user} redirectTo='/login'>
+                    <Chat />
+                  </PrivateRoute>
+                } />
+                <Route path="/login" element={
+                  // Change user to !user to make the route private
+                  <PrivateRoute isAllowed={!user} redirectTo='/'>
+                    <LogInForm />
+                  </PrivateRoute>
+                } />
+                <Route path="/signup" element={
+                  // Change user to !user to make the route private
+                  <PrivateRoute isAllowed={!user} redirectTo='/'>
+                    <SignUpForm />
+                  </PrivateRoute>
+                } />
+                <Route exact path="/profile" element={
+                  // Change user to !user to make the route private
+                  <PrivateRoute isAllowed={user} redirectTo='/'>
+                    <ProfilePage />
+                  </PrivateRoute>
+                } />
+              </Routes>
           </UserContext.Provider>
         </BrowserRouter>
       }
+
       {/*Usuario Prueba*/}
       {/* <p>Test account: a@gmail.com | a123456</p> */}
-    </>
+    </div>
   )
 }
 
