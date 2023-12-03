@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import usePost from "./usePost";
+import { FaSync } from "react-icons/fa";
 
 export const Post = ({ post }) => {
 
@@ -44,10 +45,12 @@ export const Post = ({ post }) => {
                     <div className="p-4 ">
                         <p className="text-gray-600 font-serif dark:text-white">{post.message}</p>
                         <div className="flex items-center space-x-4">
-                            <span className="cursor-pointer" onClick={()=>{likePost()}}><svg class="h-6 w-6 ml-2 text-red-500 items-center" viewBox="0 0 24 24" fill={liked ? "red" : "none"} stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z" /></svg></span>
+                            <span className="cursor-pointer" onClick={()=>{likePost()}}>
+                            <svg class="h-6 w-6 ml-2 text-red-500 items-center" viewBox="0 0 24 24" fill={liked ? "red" : "none"} stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z" /></svg></span>
                             <h1 className="text-md text-gray-500 dark:text-gray-400">
                                 {likes}
                             </h1>
+                            <FaSync/>
                         </div>
                     </div>
                 </div>
