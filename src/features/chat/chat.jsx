@@ -68,10 +68,10 @@ export const Chat = () => {
     <div className="w-full h-screen flex flex-col">
       <input type='file' ref={file_input_ref} accept='image/*,video/mp4' multiple hidden onChange={(e)=>{setMessageMedia(...message_media, Array.from(e.target.files))}}/>
       <NavBar />
-      <div className="flex flex-grow max-h-max overflow-hidden">
-        <div className="w-1/4 p-4 bg-gray-100 mr-4">
+      <div className="flex flex-grow max-h-max overflow-hidden dark:bg-zinc-500">
+        <div className="w-1/4 p-4 bg-gray-100 dark:bg-zinc-700 mr-4">
           {/* Encabezado de Chats en la barra lateral izquierda */}
-          <div className="bg-gray-100 text-black flex items-center justify-between p-2 border-b border-gray-300">
+          <div className="bg-gray-100 dark:bg-zinc-700 dark:text-white text-black flex items-center justify-between p-2 border-b border-gray-300">
             <h1 className="text-lg font-semibold">Chats</h1>
           </div>
           {/* Contenido de la barra lateral izquierda */
@@ -87,7 +87,7 @@ export const Chat = () => {
                       <img src={chatroom.participants.filter(({id})=>(id !== user.uid))[0].profile_picture} className='rounded-full w-10 h-10 border-2 border-gray-100'/>
                   }
                 </div>
-                <p className='truncate'>
+                <p className='truncate dark:text-white'>
                 {
                   chatroom.participants.length > 2 ?
                     chatroom.participants.map(({name})=>(name)).join(", ")
@@ -102,13 +102,13 @@ export const Chat = () => {
             ))}
         </div>
 
-        <div className="w-3/4 flex flex-col max-h-max overflow-hidden">
+        <div className="w-3/4 flex flex-col max-h-max overflow-hidden dark:bg-zinc-500">
           {/* Rectángulo superior */}
-          <div className="bg-gray-100 h-16 shrink-0 text-black flex items-center justify-center">
+          <div className="bg-gray-100 dark:bg-zinc-700 dark:text-white h-16 shrink-0 text-black flex items-center justify-center">
             <p>{chat_name}</p>
             {/* <p>{user.uid === search_params.get("to") ? "Select a user to start a conversation" : chat_name}</p> */}
           </div>
-          <div className="p-4 grow bg-gray-100 overflow-y-auto">
+          <div className="p-4 grow bg-gray-100 dark:bg-zinc-700 overflow-y-auto">
             <div className="flex flex-col-reverse">
               {messages.map((message, index) => (
                 <>
@@ -132,9 +132,9 @@ export const Chat = () => {
           {/* {user.uid !== search_params.get("to") && */}
           {true &&
             <div className="flex gap-4 mt-4 mb-4 mr-4 bg-[#] text-gray">
-              <butto className="bg-[#64DE92] hover:bg-[#397850] text-white py-2 px-4 rounded flex items-center cursor-pointer" onClick={()=>{file_input_ref.current.click()}}>
+              <button className="bg-[#64DE92] hover:bg-[#397850] text-white py-2 px-4 rounded flex items-center cursor-pointer" onClick={()=>{file_input_ref.current.click()}}>
                 <FaImage/>
-              </butto>
+              </button>
               <input
                 type="text"
                 className="w-full py-2 px-3 rounded border border-gray-300"
