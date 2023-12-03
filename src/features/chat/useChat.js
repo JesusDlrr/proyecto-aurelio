@@ -3,15 +3,35 @@ import { db } from "../../firebase";
 import { useContext, useEffect, useState } from "react";
 import { UserContext } from "../../App";
 import { useNavigate, useSearchParams } from "react-router-dom";
+import axios from "axios";
 
 const UseChat = () => {
     const [new_messages, setNewMessages] = useState([]);
     const [new_chats, setNewChats] = useState([]);
     const [messages, setMessages] = useState([]);
     const [chat_list, setChatList] = useState([]);
+    const [chatroom_list, setChatroomList] = useState([]);
     const [chat_name, setChatName] = useState("");
+    const [chatroom, setChatroom] = useState(null);
     const { user } = useContext(UserContext);
     const [search_params] = useSearchParams();
+
+    const openChatroomListener = (chatroom_id)=>{
+        const unsub = onSnapshot(doc(db, "chatrooms", chatroom_id), (doc) => {
+            setMessages(doc.data().messages.reverse());
+        });
+    }
+
+    const getChatrooms = ()=>{
+        axios.get(`https://quick-api-9c95.onrender.com/user/${user.uid}/chatrooms`, {})
+        .then((response)=>{
+            if(response.status === 200){
+                setChatroomList(response.data);
+            }
+        }).catch((error)=>{
+            console.error(error);
+        })
+    }
 
     const getChatName = async () => {
         const other_ref = await doc(db, "users", search_params.get("to"));
@@ -67,35 +87,49 @@ const UseChat = () => {
         }
     }
 
-    const sendMessage = async (text) => {
-        try {
-            const self_ref = await doc(db, "users", user.uid);
-            const other_ref = await doc(db, "users", search_params.get("to"));
-            await addDoc(collection(db, "direct_messages"), {
-                date: serverTimestamp(),
-                from: self_ref,
-                to: other_ref,
-                text: text,
-            });
-            setMessages([...messages, {
-                date: { seconds: new Date().getTime() / 1000 },
-                from: self_ref,
-                to: other_ref,
-                text: text,
-            }])
-            const other = await getDoc(other_ref);
-            let add = true;
-            chat_list.forEach((user) => {
-                if (user.avatar === other.data().avatar) {
-                    add = false;
-                }
-            })
-            if (add) {
-                setChatList([...chat_list, other.data()])
+    const sendMessage = (message, message_media) => {
+        const form_data = new FormData();
+        message_media.forEach((media)=>{
+            form_data.append("media", media);
+        })
+        axios.post(`https://quick-api-9c95.onrender.com/messages/${chatroom.id}`, form_data, {
+            headers: {
+                "Content-Type": "multipart/form-data"
+            },
+            params: {
+                from_user: user.uid,
+                color: '#000000',
+                message: message
             }
-        } catch (e) {
-            console.error("Error adding document: ", e);
-        }
+        })
+        // try {
+        //     const self_ref = await doc(db, "users", user.uid);
+        //     const other_ref = await doc(db, "users", search_params.get("to"));
+        //     await addDoc(collection(db, "direct_messages"), {
+        //         date: serverTimestamp(),
+        //         from: self_ref,
+        //         to: other_ref,
+        //         text: text,
+        //     });
+        //     setMessages([...messages, {
+        //         date: { seconds: new Date().getTime() / 1000 },
+        //         from: self_ref,
+        //         to: other_ref,
+        //         text: text,
+        //     }])
+        //     const other = await getDoc(other_ref);
+        //     let add = true;
+        //     chat_list.forEach((user) => {
+        //         if (user.avatar === other.data().avatar) {
+        //             add = false;
+        //         }
+        //     })
+        //     if (add) {
+        //         setChatList([...chat_list, other.data()])
+        //     }
+        // } catch (e) {
+        //     console.error("Error adding document: ", e);
+        // }
     }
 
     const openChatListListener = async () => {
@@ -153,9 +187,9 @@ const UseChat = () => {
     }, [new_chats]);
 
     useEffect(() => {
-        getChatList();
-        openMessagesListener();
-        openChatListListener();
+        // getChatList();
+        // openMessagesListener();
+        // openChatListListener();
     }, [])
 
     return ({
@@ -163,8 +197,13 @@ const UseChat = () => {
         sendMessage,
         chat_list,
         chat_name,
+        chatroom_list,
+        chatroom,
+        setChatroom,
         getChatName,
-        getMessages
+        getMessages,
+        getChatrooms,
+        openChatroomListener
     })
 }
 
