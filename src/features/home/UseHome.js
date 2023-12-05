@@ -11,6 +11,7 @@ import {
   getDoc,
   query,
 } from "firebase/firestore";
+import axios from "axios";
 
 const UseHome = () => {
   const { user } = useContext(UserContext);
@@ -26,23 +27,34 @@ const UseHome = () => {
     setUserAvatar(user_data.avatar);
   };
 
-  const getPosts = async () => {
-    const docSnap = await getDocs(collection(db, "posts"));
+  const getPosts = () => {
+    axios.get('https://quick-api-9c95.onrender.com/posts', {
+      params: {
+        user_request_id: user.uid
+      }
+    }).then((response)=>{
+      if(response.status === 200){
+        setPosts(response.data);
+      }
+    }).catch((error)=>{
+      console.log(error);
+    })
+    // const docSnap = await getDocs(collection(db, "posts"));
 
-    setPosts(
-      await Promise.all(
-        docSnap.docs.map(async (post) => {
-          let post_data = post.data();
-          let from_user = await getDoc(post_data.from);
+    // setPosts(
+    //   await Promise.all(
+    //     docSnap.docs.map(async (post) => {
+    //       let post_data = post.data();
+    //       let from_user = await getDoc(post_data.from);
 
-          let user_data = from_user.data();
-          user_data.uid = post_data.from.id;
-          post_data.from = user_data;
-          post_data.id = post.id;
-          return post_data;
-        })
-      )
-    );
+    //       let user_data = from_user.data();
+    //       user_data.uid = post_data.from.id;
+    //       post_data.from = user_data;
+    //       post_data.id = post.id;
+    //       return post_data;
+    //     })
+    //   )
+    // );
   };
 
   const post = async (message) => {

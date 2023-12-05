@@ -105,32 +105,42 @@ export const Chat = () => {
         <div className="w-3/4 flex flex-col max-h-max overflow-hidden dark:bg-zinc-500">
           {/* Rectángulo superior */}
           <div className="bg-gray-100 dark:bg-zinc-700 dark:text-white h-16 shrink-0 text-black flex items-center justify-center">
-            <p>{chat_name}</p>
+            <p>{
+              chatroom === null ?
+                "Select a chatroom to start chatting!"
+              :    
+                chat_name
+            }</p>
             {/* <p>{user.uid === search_params.get("to") ? "Select a user to start a conversation" : chat_name}</p> */}
           </div>
-          <div className="p-4 grow bg-gray-100 dark:bg-zinc-700 overflow-y-auto">
-            <div className="flex flex-col-reverse">
-              {messages.map((message, index) => (
-                <>
-                  <div key={index} className={`mb-2 ${message.from_user === user.uid ? 'self-end message-bubble' : 'self-start message-bubble other'}`}>
-                    {message.message}
-                    <div className={message.media.length > 1 && 'grid grid-cols-2 gap-1'}>
-                      {message.media.slice(0, 4).map((file)=>(
-                        file.mimetype.split('/')[0] === 'image' &&
-                          <div className={`bg-indigo-300 h-40 ${message.media.length > 1 ? 'w-40' :  'max-w-lg'}`}>
-                            <img src={file.link} className='object-cover h-full w-full max-w-xs'/>
-                          </div>
-                      ))}
-                    </div>
-                  </div>
-                </>
-              ))}
-            </div>
+          <div className="p-4 grow bg-gray-100 dark:bg-neutral-800 overflow-y-auto">
+            {
+              chatroom === null ?
+                <img src={'./quicker.png'} className='h-full w-full object-contain'/>
+              :
+                <div className="flex flex-col-reverse">
+                  {messages.map((message, index) => (
+                    <>
+                      <div key={index} className={`mb-2 ${message.from_user === user.uid ? 'self-end message-bubble' : 'self-start message-bubble other'}`}>
+                        {message.message}
+                        <div className={message.media.length > 1 && 'grid grid-cols-2 gap-1'}>
+                          {message.media.slice(0, 4).map((file)=>(
+                            file.mimetype.split('/')[0] === 'image' &&
+                              <div className={`bg-indigo-300 h-40 ${message.media.length > 1 ? 'w-40' :  'max-w-lg'}`}>
+                                <img src={file.link} className='object-cover h-full w-full max-w-xs'/>
+                              </div>
+                          ))}
+                        </div>
+                      </div>
+                    </>
+                  ))}
+                </div>
+            }
           </div>
 
           {/* Rectángulo inferior */}
           {/* {user.uid !== search_params.get("to") && */}
-          {true &&
+          {chatroom !== null &&
             <div className="flex gap-4 mt-4 mb-4 mr-4 bg-[#] text-gray">
               <button className="bg-[#64DE92] hover:bg-[#397850] text-white py-2 px-4 rounded flex items-center cursor-pointer" onClick={()=>{file_input_ref.current.click()}}>
                 <FaImage/>
