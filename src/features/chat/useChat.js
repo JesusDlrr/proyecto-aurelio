@@ -2,7 +2,7 @@ import { collection, addDoc, getDocs, serverTimestamp, query, where, getDoc, doc
 import { db } from "../../firebase";
 import { useContext, useEffect } from "react";
 import { UserContext } from "../../App";
-import { resolvePath, useNavigate, useSearchParams } from "react-router-dom";
+import { Navigate, resolvePath, useNavigate, useSearchParams } from "react-router-dom";
 import axios from "axios";
 import useState from "react-usestateref";
 
@@ -17,6 +17,7 @@ const UseChat = () => {
     const { user } = useContext(UserContext);
     const [search_params] = useSearchParams();
     const [new_recipient, setNewRecipient] = useState(null);
+    const navigate = useNavigate();
 
     useEffect(() => {
         if (chatroom != null) {
@@ -66,19 +67,19 @@ const UseChat = () => {
     }
 
     const getMessages = async () => {
-        const self_ref = await doc(db, "users", user.uid);
-        const other_ref = await doc(db, "users", search_params.get("to"));
-        const messages_qry = await query(collection(db, "direct_messages"), and(
-            or(where("from", "==", self_ref), where("from", "==", other_ref)),
-            or(where("to", "==", self_ref), where("to", "==", other_ref))
-        ));
-        const messages = await getDocs(messages_qry);
+        // const self_ref = await doc(db, "users", user.uid);
+        // const other_ref = await doc(db, "users", search_params.get("to"));
+        // const messages_qry = await query(collection(db, "direct_messages"), and(
+        //     or(where("from", "==", self_ref), where("from", "==", other_ref)),
+        //     or(where("to", "==", self_ref), where("to", "==", other_ref))
+        // ));
+        // const messages = await getDocs(messages_qry);
 
-        setMessages(await Promise.all(
-            messages.docs.map((message) => {
-                return message.data();
-            })
-        ));
+        // setMessages(await Promise.all(
+        //     messages.docs.map((message) => {
+        //         return message.data();
+        //     })
+        // ));
     }
 
     const getChatList = async () => {
@@ -138,7 +139,8 @@ const UseChat = () => {
                     }
                 }).then(() => {
                     setChatroom(response.data);
-                    setNewRecipient(null)
+                    setNewRecipient(null);
+                    navigate("/dms");
                     setChatroomList([
                         response.data,
                         ...chatroom_list
@@ -243,30 +245,32 @@ const UseChat = () => {
 
 
     useEffect(() => {
-        if (search_params.get("to") !== user.uid) {
-            if (chatroom_list.findIndex((chatroom) => {
-                if (chatroom.participants.length <= 2) {
-                    const to_index = chatroom.participants.findIndex(({ id }) => (id === search_params.get("to")));
-                    if (to_index !== -1) {
-                        setChatroom(chatroom);
-                        setNewRecipient(null);
-                        return true;
+        if (search_params.get("to") !== null) {
+            if (search_params.get("to") !== user.uid) {
+                if (chatroom_list.findIndex((chatroom) => {
+                    if (chatroom.participants.length <= 2) {
+                        const to_index = chatroom.participants.findIndex(({ id }) => (id === search_params.get("to")));
+                        if (to_index !== -1) {
+                            setChatroom(chatroom);
+                            setNewRecipient(null);
+                            return true;
+                        } else {
+                            return false;
+                        }
                     } else {
                         return false;
                     }
-                } else {
-                    return false;
-                }
-            }) === -1) {
-                axios.get(`https://quick-api-9c95.onrender.com/user/${search_params.get("to")}`, {}).then((response) => {
-                    if (response.status === 200) {
-                        setChatName(response.data.name);
-                        setNewRecipient(response.data);
-                    }
-                }).catch((error) => {
-                    console.log(error);
-                });
+                }) === -1) {
+                    axios.get(`https://quick-api-9c95.onrender.com/user/${search_params.get("to")}`, {}).then((response) => {
+                        if (response.status === 200) {
+                            setChatName(response.data.name);
+                            setNewRecipient(response.data);
+                        }
+                    }).catch((error) => {
+                        console.log(error);
+                    });
 
+                }
             }
         }
     }, [])
