@@ -6,6 +6,7 @@ import UseProfile from "./UseProfile";
 import { Post } from "../post/post";
 import { useSearchParams } from "react-router-dom";
 import { UserContext } from "../../App";
+import { Repost } from "../repost/reposts";
 
 export const ProfilePage = ({ name, avatar }) => {
     const ref = useRef();
@@ -21,6 +22,7 @@ export const ProfilePage = ({ name, avatar }) => {
         updateAvatar,
         posts,
         following,
+        setPosts,
         followUser,
         followers,
         post
@@ -36,31 +38,31 @@ export const ProfilePage = ({ name, avatar }) => {
     return (
         <>
             <NavBar />
-            <div className="bg-white h-20 w-full" />
-            <input className="hidden" id="default_size" ref={ref} onChange={handleChange} type="file" />
+            <div className="bg-white  h-20 w-full " />
+            <input className="hidden " id="default_size" ref={ref} onChange={handleChange} type="file" />
             <div className="sm:row-span-6 md:row-span-3">
                 {user.uid === search_params.get("user") ? <>
-                    <div className={"absolute cursor-pointer rounded-full h-40 w-40 top-24 z-40 left-24 mt-2 border-gray-400 border-8 sm:row-span-6 bg-cover bg-center"} style={{ backgroundImage: `url("${user_avatar}")` }} onClick={handleClick} onChange={handleChange} alt="user avatar" title="Upload Image" loading="lazy">
-                        <div className="flex rounded-full justify-center h-full w-full items-center bg-gray-600/30 backdrop-brightness-75 opacity-0 hover:opacity-70">
+                    <div className={"absolute cursor-pointer rounded-full h-40 w-40 top-24 z-40 left-24 mt-2 border-gray-400 dark:border-zinc-900 border-8 sm:row-span-6 bg-cover bg-center"} style={{ backgroundImage: `url("${user_avatar}")` }} onClick={handleClick} onChange={handleChange} alt="user avatar" title="Upload Image" loading="lazy">
+                        <div className="flex rounded-full justify-center h-full w-full items-center bg-gray-600/30 dark:bg-zinc-900/30 backdrop-brightness-75 opacity-0 hover:opacity-70">
                             <span className="text-white text-lg text-center">Upload Image</span>
                         </div>
                     </div>
                 </>
                     :
                     <>
-                        <div className={"absolute rounded-full h-40 w-40 top-24 z-40 left-24 mt-2 border-gray-400 border-8 sm:row-span-6 bg-cover bg-center"} style={{ backgroundImage: `url("${user_avatar}")` }} alt="user avatar" title="Upload Image" loading="lazy">
+                        <div className={"absolute rounded-full h-40 w-40 top-24 z-40 left-24 mt-2 border-gray-400 dark:border-zinc-900 border-8 sm:row-span-6 bg-cover bg-center"} style={{ backgroundImage: `url("${user_avatar}")` }} alt="user avatar" title="Upload Image" loading="lazy">
                         </div>
                     </>}
                 <div className="mx-60 px-8">
                     <div className="absolute">
                         <a>
-                            <h1 className="text-2xl font-sembold text-black">
+                            <h1 className="text-2xl font-sembold text-black dark:text-white">
                                 {user_name}
                             </h1>
                         </a>
                     </div>
-                    <span className="text-lg text-black absolute">
-                        <h1 className="flex items-center mt-8 space-x-2 text-black">
+                    <span className="text-lg text-black dark:text-white absolute">
+                        <h1 className="flex items-center mt-8 space-x-2 text-black dark:text-white">
                             {followers != null && <>{followers} followers</>}
                         </h1>
                         {following != null && user.uid !== search_params.get("user") && <>
@@ -74,28 +76,29 @@ export const ProfilePage = ({ name, avatar }) => {
 
                 </div>
             </div>
-            <div className="h-auto w-auto bg-gray-400 p-10 grid grid-cols-4 gap-3 sm:row-span-6">
+            <div className="h-auto w-auto bg-gray-400 p-10 grid grid-cols-4 gap-3 sm:row-span-6 dark:bg-zinc-900">
                 <div className="bg-white text-white text-center text-3xl rounded-lg row-span-3 mt-20 max-h-24">
                     <div className="flex flex-col hover:cursor-pointer">
-                        <a className="hover:bg-gray-300 bg-white border-t p-3 w-full text-xl text-left text-black font-semibold rounded-lg rounded-b-none" href={"/dms?to=" + search_params.get("user")}>Messages</a>
-                        <a className="hover:bg-gray-300 bg-white border-t p-3 w-full text-xl text-left text-black font-semibold rounded-lg rounded-t-none border-black">Settings</a>
+                        <a className="hover:bg-gray-300 bg-white p-3 w-full text-xl text-left text-black dark:bg-zinc-700 dark:text-white font-semibold rounded-lg rounded-b-none" href={"/dms?to=" + search_params.get("user")}>Messages</a>
+                        <a className="hover:bg-gray-300 bg-white border-t p-3 w-full text-xl text-left text-black dark:bg-zinc-700 dark:text-white font-semibold rounded-lg rounded-t-none border-black dark:border-white">Settings</a>
                     </div>
                 </div>
                 <div className="col-span-3 mt-20">
 
                     {search_params.get("user") === user.uid && <Quick_Thought makePost={post} />}
                     <Feed>
-                        {posts != null && posts
-                            .sort((a, b) => {
-                                return b.date.seconds - a.date.seconds;
-                            })
-                            .map((post) => {
-                                return (
-                                    <>
-                                        <Post post={post} key={post.id} />
-                                    </>
-                                );
-                            })}
+                        {posts != null &&
+                            posts.sort((a, b) => {
+                                return b.date._seconds - a.date._seconds;
+                            }).map((post) => (
+                                post.type === "post" ?
+                                    <Post post={post} key={post.id} />
+                                    :
+                                    <Repost post={post} key={post.id} self={user.uid === search_params.get("user")} reposter_name={user_name} unrepost={() => {
+                                        setPosts(posts.filter((_post) => (_post.id !== post.id)))
+                                    }} />
+                            ))
+                        }
                     </Feed>
                 </div>
             </div>

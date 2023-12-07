@@ -12,14 +12,15 @@ export const Home = () => {
   return (
     <>
       <NavBar />
-      <div className="h-auto w-auto bg-gray-400 p-10 grid grid-cols-4 gap-3">
+
+      <div className="h-auto w-auto bg-gray-400 dark:bg-zinc-900 p-10 grid grid-cols-4 gap-3">
         <Profile name={user_name} avatar={user_avatar} />
         <Quick_Thought makePost={post} />
         <Suggestions />
         <Feed>
           {posts
             .sort((a, b) => {
-              return b.date.seconds - a.date.seconds;
+              return b.date._seconds - a.date._seconds;
             })
             .map((post) => {
               return (

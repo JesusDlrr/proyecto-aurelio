@@ -4,7 +4,7 @@ import { addDoc, and, collection, deleteDoc, doc, getDoc, getDocs, query, where 
 import { db } from "../../firebase";
 import axios from "axios";
 
-const usePost = (post_id) => {
+const useRepost = (post_id) => {
     const { user, setUser } = useContext(UserContext);
     const [likes, setLikes] = useState(false);
     const [reposts, setReposts] = useState(false);
@@ -25,72 +25,72 @@ const usePost = (post_id) => {
         // setLiked(like_ref.size != 0);
     }
 
-    const repost = ()=>{
-        if(repostable){
+    const repost = () => {
+        if (repostable) {
             setRepostable(false);
-            if(reposted){
+            if (reposted) {
                 axios.delete(`https://quick-api-9c95.onrender.com/repost/${post_id}`, {
-                    params: {user_id: user.uid}
+                    params: { user_id: user.uid }
                 })
-                .then((response)=>{
-                    if(response.status === 200){
-                        setReposts(reposts-1);
+                    .then((response) => {
+                        if (response.status === 200) {
+                            setReposts(reposts - 1);
+                            setRepostable(true);
+                            setReposted(!reposted);
+                        }
+                    }).catch((error) => {
+                        console.error(error);
                         setRepostable(true);
-                        setReposted(!reposted);
-                    }
-                }).catch((error)=>{
-                    console.error(error);
-                    setRepostable(true);
-                });
-            }else{
+                    });
+            } else {
                 axios.post(`https://quick-api-9c95.onrender.com/repost/${post_id}`, {}, {
-                    params: {user_id: user.uid}
+                    params: { user_id: user.uid }
                 })
-                .then((response)=>{
-                    if(response.status === 200){
-                        setReposts(reposts+1);
+                    .then((response) => {
+                        if (response.status === 200) {
+                            setReposts(reposts + 1);
+                            setRepostable(true);
+                            setReposted(!reposted);
+                        }
+                    }).catch((error) => {
+                        console.error(error);
                         setRepostable(true);
-                        setReposted(!reposted);
-                    }
-                }).catch((error)=>{
-                    console.error(error);
-                    setRepostable(true);
-                });
+                    });
             }
         }
     }
 
     const likePost = () => {
-        if(likeable){
+        if (likeable) {
             setLikeable(false);
-            if(liked){
+            if (liked) {
                 axios.delete(`https://quick-api-9c95.onrender.com/likes/${post_id}`, {
-                    params: {user_id: user.uid}
+                    params: { user_id: user.uid }
                 })
-                .then((response)=>{
-                    if(response.status === 200){
-                        setLikes(likes-1);
+                    .then((response) => {
+                        if (response.status === 200) {
+                            setLikes(likes - 1);
+                            setLikeable(true);
+                            setLiked(!likes);
+                        }
+                    }).catch((error) => {
+                        console.error(error);
                         setLikeable(true);
-                        setLiked(!likes);
-                    }
-                }).catch((error)=>{
-                    console.error(error);
-                    setLikeable(true);
-                });
-            }else{
+                    });
+            } else {
                 axios.post(`https://quick-api-9c95.onrender.com/likes/${post_id}`, {}, {
-                    params: {user_id: user.uid}
+                    params: { user_id: user.uid }
                 })
-                .then((response)=>{
-                    if(response.status === 200){
-                        setLikes(likes+1);
+                    .then((response) => {
+                        if (response.status === 200) {
+                            setLikes(likes + 1);
+                            setLikeable(true);
+                            setLiked(!likes);
+                        }
+                    }).catch((error) => {
+                        console.error(error);
                         setLikeable(true);
-                        setLiked(!likes);
-                    }
-                }).catch((error)=>{
-                    console.error(error);
-                    setLikeable(true);
-                });
+                    });
             }
         }
     }
@@ -100,6 +100,7 @@ const usePost = (post_id) => {
     }, [])
 
     return {
+        user,
         likes,
         reposts,
         liked,
@@ -114,4 +115,4 @@ const usePost = (post_id) => {
 
 }
 
-export default usePost;
+export default useRepost;
