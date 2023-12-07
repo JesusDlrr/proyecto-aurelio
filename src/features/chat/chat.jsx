@@ -167,7 +167,7 @@ export const Chat = () => {
                   message_media &&
                   message_media.map((media) => (
                     <div className='flex p-1'>
-                      <img src={media.preview} className='rounded-md w-24 h-24' alt='' />
+                      <img src={media.preview} className='bg-black rounded-md w-24 h-24' alt='' />
                       <span className='absolute text-white cursor-pointer p-1' >
                         <button
                           className="rounded relative h-8 max-h-[40px] w-8 max-w-[40px] select-none text-center align-middle font-sans text-xs font-medium uppercase dark:text-white transition-all hover:bg-gray-900/60 active:bg-gray-900/70 bg-gray-900/50 disabled:pointer-events-none disabled:opacity-80 disabled:shadow-none"
