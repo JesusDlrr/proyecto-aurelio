@@ -32,11 +32,11 @@ const UseHome = () => {
       params: {
         user_request_id: user.uid
       }
-    }).then((response)=>{
-      if(response.status === 200){
+    }).then((response) => {
+      if (response.status === 200) {
         setPosts(response.data);
       }
-    }).catch((error)=>{
+    }).catch((error) => {
       console.log(error);
     })
     // const docSnap = await getDocs(collection(db, "posts"));
@@ -57,35 +57,47 @@ const UseHome = () => {
     // );
   };
 
-  const post = async (message) => {
-    try {
-      const user_ref = doc(db, "users", user.uid);
-      await addDoc(collection(db, "posts"), {
-        from: user_ref,
-        message: message,
-        date: serverTimestamp(),
-        likes: 0,
-      }).then((post_ref) => {
-        const new_post = {
-          id: post_ref.id,
-          from: {
-            id: user.uid,
-            avatar: user_avatar,
-            name: user_name,
-            uid: user.uid,
-          },
-          message: message,
-          date: {
-            seconds: new Date().getTime() / 1000,
-          },
-          likes: 0,
-        };
-        setPosts([...posts, new_post]);
-      });
-    } catch (e) {
-      console.error("Error adding document: ", e);
-    }
-  };
+  const post = async (message, media) => {
+    const form_data = new FormData();
+
+    form_data.append('message', message);
+
+    media.forEach(media_file => {
+      form_data.append('media', media_file.file);
+    });
+
+    axios.post(`https://quick-api-9c95.onrender.com/posts/${user.uid}`, form_data, {}).then(response => {
+      setPosts([response.data, ...posts])
+    })
+    // try {
+    //   const user_ref = doc(db, "users", user.uid);
+    //   await addDoc(collection(db, "posts"), {
+    //     from: user_ref,
+    //     message: message,
+    //     date: serverTimestamp(),
+    //     likes: 0,
+    //     reposts: 0
+    //   }).then((post_ref) => {
+    //     const new_post = {
+    //       id: post_ref.id,
+    //       from: {
+    //         id: user.uid,
+    //         avatar: user_avatar,
+    //         name: user_name,
+    //         uid: user.uid,
+    //       },
+    //       message: message,
+    //       date: {
+    //         seconds: new Date().getTime() / 1000,
+    //       },
+    //       likes: 0,
+    //     };
+    //     setPosts([...posts, new_post]);
+    //   });
+    // } catch (e) {
+    //   console.error("Error adding document: ", e);
+    // }
+  }
 
   useEffect(() => {
     getUserInfo();

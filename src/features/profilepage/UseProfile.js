@@ -6,15 +6,17 @@ import { addDoc, and, collection, deleteDoc, doc, getDoc, getDocs, query, server
 import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
 import { useSearchParams } from "react-router-dom";
 import axios from "axios";
+import usePost from "../post/usePost";
 
 const UseProfile = () => {
     const { user } = useContext(UserContext);
     const [user_name, setUserName] = useState("");
     const [user_avatar, setUserAvatar] = useState("");
     const [search_params] = useSearchParams();
-    const [posts, setPosts] = useState(null);
+    const [posts, setPosts] = useState([]);
     const [following, setFollowing] = useState(null);
     const [followers, setFollowers] = useState(null);
+
 
     const user_uid = search_params.get("user") != null ? search_params.get("user") : user.uid;
 
@@ -27,6 +29,12 @@ const UseProfile = () => {
     }
 
 
+    const unrepost = (post_id) => {
+        setPosts(posts.filter(post => (
+            post.id !== post_id && post.type !== "repost"
+        )))
+    }
+
     const getPosts = async () => {
         axios.get(`https://quick-api-9c95.onrender.com/user/${user_uid}/posts`, {
             params: {
@@ -34,6 +42,7 @@ const UseProfile = () => {
             }
         }).then((response) => {
             if (response.status === 200) {
+                console.log(response.data)
                 setPosts([
                     ...response.data.posts.map((post) => ({ type: "post", ...post })),
                     ...response.data.reposts.map((repost) => ({ type: "repost", ...repost }))
@@ -110,40 +119,24 @@ const UseProfile = () => {
         })
     };
 
-    const post = async (message) => {
-        try {
-            const user_ref = doc(db, "users", user.uid);
-            await addDoc(collection(db, "posts"), {
-                from: user_ref,
-                message: message,
-                date: serverTimestamp(),
-                likes: 0,
-            }).then((post_ref) => {
-                const new_post = {
-                    id: post_ref.id,
-                    from: {
-                        id: user.uid,
-                        avatar: user_avatar,
-                        name: user_name,
-                        uid: user.uid,
-                    },
-                    message: message,
-                    date: {
-                        seconds: new Date().getTime() / 1000,
-                    },
-                    likes: 0,
-                };
-                setPosts([...posts, new_post]);
-            });
-        } catch (e) {
-            console.error("Error adding document: ", e);
-        }
+    const post = async (message, media) => {
+        const form_data = new FormData();
+
+        form_data.append('message', message);
+
+        media.forEach(media_file => {
+            form_data.append('media', media_file.file);
+        });
+
+        axios.post(`https://quick-api-9c95.onrender.com/posts/${user.uid}`, form_data, {}).then(response => {
+            setPosts([response.data, ...posts])
+        })
     };
 
     useEffect(() => {
         getUserInfo();
         getPosts();
-        getFollowing();
+        // getFollowing();
         getFollowers();
     }, [])
 
@@ -152,6 +145,7 @@ const UseProfile = () => {
         user_avatar,
         updateAvatar,
         posts,
+        unrepost,
         following,
         followUser,
         setPosts,
