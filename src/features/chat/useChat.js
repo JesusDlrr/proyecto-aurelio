@@ -253,6 +253,7 @@ const UseChat = () => {
                         if (to_index !== -1) {
                             setChatroom(chatroom);
                             setNewRecipient(null);
+                            navigate("/dms")
                             return true;
                         } else {
                             return false;
@@ -273,7 +274,7 @@ const UseChat = () => {
                 }
             }
         }
-    }, [])
+    }, [chatroom_list])
 
     const openCHatroomListListener = () => {
         const unsub = onSnapshot(collection(db, "chatrooms"), async (doc) => {
