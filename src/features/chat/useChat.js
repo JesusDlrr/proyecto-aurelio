@@ -25,14 +25,13 @@ const UseChat = () => {
     }, [chatroom]);
 
     const getChatroomMessages = (chatroom_id) => {
-        axios.get(`https://quick-api-9c95.onrender.com/messages/${chatroom_id}`, {})
-            .then((response) => {
-                if (response.status === 200) {
-                    setMessages(response.data.reverse());
-                }
-            }).catch((error) => {
-                console.error(error);
-            });
+        axios.get(`https://quick-api-9c95.onrender.com/messages/${chatroom_id}`, {}).then((response) => {
+            if (response.status === 200) {
+                setMessages(response.data.reverse());
+            }
+        }).catch((error) => {
+            console.error(error);
+        });
     }
 
 
@@ -117,7 +116,7 @@ const UseChat = () => {
         const form_data = new FormData();
         if (message_media !== undefined) {
             message_media.forEach((media) => {
-                form_data.append("media", media);
+                form_data.append("media", media.file);
             })
         }
         if (new_recipient !== null) {
@@ -251,6 +250,7 @@ const UseChat = () => {
                     const to_index = chatroom.participants.findIndex(({ id }) => (id === search_params.get("to")));
                     if (to_index !== -1) {
                         setChatroom(chatroom);
+                        setNewRecipient(null);
                         return true;
                     } else {
                         return false;
@@ -270,6 +270,7 @@ const UseChat = () => {
 
             }
         }
+        console.log(new_recipient)
     }, [chatroom_list])
 
     const openCHatroomListListener = () => {

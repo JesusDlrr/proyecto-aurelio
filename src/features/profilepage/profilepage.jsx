@@ -22,6 +22,7 @@ export const ProfilePage = ({ name, avatar }) => {
         updateAvatar,
         posts,
         following,
+        unrepost,
         setPosts,
         followUser,
         followers,
@@ -85,21 +86,28 @@ export const ProfilePage = ({ name, avatar }) => {
                 </div>
                 <div className="col-span-3 mt-20">
 
-                    {search_params.get("user") === user.uid && <Quick_Thought makePost={post} />}
-                    <Feed>
-                        {posts != null &&
-                            posts.sort((a, b) => {
-                                return b.date._seconds - a.date._seconds;
-                            }).map((post) => (
-                                post.type === "post" ?
-                                    <Post post={post} key={post.id} />
-                                    :
-                                    <Repost post={post} key={post.id} self={user.uid === search_params.get("user")} reposter_name={user_name} unrepost={() => {
-                                        setPosts(posts.filter((_post) => (_post.id !== post.id)))
-                                    }} />
-                            ))
+                    <div className="text-xl rounded-lg col-span-2 grid gap-3">
+                        {
+                            search_params.get("user") === user.uid && <div><Quick_Thought makePost={post} /></div>
                         }
-                    </Feed>
+                        <div>
+
+                            <Feed>
+                                {posts != null &&
+                                    posts.sort((a, b) => {
+                                        return b.date._seconds - a.date._seconds;
+                                    }).map((post) => (
+                                        <Post post={post} profile_user={{ id: search_params.get("user"), name: user_name }} key={post.id} unrepost={unrepost} />
+                                        // post.type === "post" ?
+                                        //     :
+                                        //     <Repost post={post} key={post.id} self={user.uid === search_params.get("user")} reposter_name={user_name} unrepost={() => {
+                                        //         setPosts(posts.filter((_post) => (_post.id !== post.id)))
+                                        //     }} />
+                                    ))
+                                }
+                            </Feed>
+                        </div>
+                    </div>
                 </div>
             </div>
         </>
