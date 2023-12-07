@@ -5,6 +5,7 @@ import { db, fs } from "../../firebase";
 import { addDoc, and, collection, deleteDoc, doc, getDoc, getDocs, query, serverTimestamp, updateDoc, where } from "firebase/firestore";
 import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
 import { useSearchParams } from "react-router-dom";
+import axios from "axios";
 
 const UseProfile = () => {
     const { user } = useContext(UserContext);
@@ -27,26 +28,21 @@ const UseProfile = () => {
 
 
     const getPosts = async () => {
-        const user_ref = await doc(db, "users", search_params.get("user"));
-        const posts_qry = await query(collection(db, "posts"), where("from", "==", user_ref));
-        const posts_data = await getDocs(posts_qry);
-
-
-        setPosts(
-            await Promise.all(
-                posts_data.docs.map(async (post) => {
-                    let post_data = post.data();
-                    let from_user = await getDoc(post_data.from);
-
-                    let user_data = from_user.data();
-                    user_data.uid = post_data.from.id;
-                    post_data.from = user_data;
-                    post_data.id = post.id;
-                    return post_data;
-                })
-            )
-        );
-    };
+        axios.get(`https://quick-api-9c95.onrender.com/user/${user_uid}/posts`, {
+            params: {
+                user_request_id: user.uid
+            }
+        }).then((response) => {
+            if (response.status === 200) {
+                setPosts([
+                    ...response.data.posts.map((post) => ({ type: "post", ...post })),
+                    ...response.data.reposts.map((repost) => ({ type: "repost", ...repost }))
+                ]);
+            }
+        }).catch((error) => {
+            console.log(error);
+        })
+    }
 
     const getFollowers = async () => {
         try {
@@ -158,6 +154,7 @@ const UseProfile = () => {
         posts,
         following,
         followUser,
+        setPosts,
         followers,
         post
     });

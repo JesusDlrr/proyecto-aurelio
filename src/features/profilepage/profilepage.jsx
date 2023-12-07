@@ -6,6 +6,7 @@ import UseProfile from "./UseProfile";
 import { Post } from "../post/post";
 import { useSearchParams } from "react-router-dom";
 import { UserContext } from "../../App";
+import { Repost } from "../repost/reposts";
 
 export const ProfilePage = ({ name, avatar }) => {
     const ref = useRef();
@@ -21,6 +22,7 @@ export const ProfilePage = ({ name, avatar }) => {
         updateAvatar,
         posts,
         following,
+        setPosts,
         followUser,
         followers,
         post
@@ -85,17 +87,18 @@ export const ProfilePage = ({ name, avatar }) => {
 
                     {search_params.get("user") === user.uid && <Quick_Thought makePost={post} />}
                     <Feed>
-                        {posts != null && posts
-                            .sort((a, b) => {
-                                return b.date.seconds - a.date.seconds;
-                            })
-                            .map((post) => {
-                                return (
-                                    <>
-                                        <Post post={post} key={post.id} />
-                                    </>
-                                );
-                            })}
+                        {posts != null &&
+                            posts.sort((a, b) => {
+                                return b.date._seconds - a.date._seconds;
+                            }).map((post) => (
+                                post.type === "post" ?
+                                    <Post post={post} key={post.id} />
+                                    :
+                                    <Repost post={post} key={post.id} self={user.uid === search_params.get("user")} reposter_name={user_name} unrepost={() => {
+                                        setPosts(posts.filter((_post) => (_post.id !== post.id)))
+                                    }} />
+                            ))
+                        }
                     </Feed>
                 </div>
             </div>
