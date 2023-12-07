@@ -69,7 +69,7 @@ export const Post = ({ post }) => {
                             </div>
                             <div className="flex items-center space-x-4">
                                 <span className="cursor-pointer" onClick={repost}>
-                                    <svg class="h-6 w-6 ml-2 items-center" viewBox="0 0 24 24" fill={reposted ? "green" : "white"} xmlns="http://www.w3.org/2000/svg"><path d="M19 7a1 1 0 0 0-1-1h-8v2h7v5h-3l3.969 5L22 13h-3V7zM5 17a1 1 0 0 0 1 1h8v-2H7v-5h3L6 6l-4 5h3v6z" /></svg>
+                                    <svg className={`h-6 w-6 ml-2 items-center ${reposted ? "fill-green-400" : "dark:fill-white"}`} viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M19 7a1 1 0 0 0-1-1h-8v2h7v5h-3l3.969 5L22 13h-3V7zM5 17a1 1 0 0 0 1 1h8v-2H7v-5h3L6 6l-4 5h3v6z" /></svg>
                                 </span>
                                 <h1 className="text-md text-gray-500 dark:text-gray-400">
                                     {reposts}

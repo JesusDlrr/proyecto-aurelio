@@ -34,6 +34,7 @@ const UseProfile = () => {
             }
         }).then((response) => {
             if (response.status === 200) {
+                console.log(response.data)
                 setPosts([
                     ...response.data.posts.map((post) => ({ type: "post", ...post })),
                     ...response.data.reposts.map((repost) => ({ type: "repost", ...repost }))
@@ -143,7 +144,7 @@ const UseProfile = () => {
     useEffect(() => {
         getUserInfo();
         getPosts();
-        getFollowing();
+        // getFollowing();
         getFollowers();
     }, [])
 

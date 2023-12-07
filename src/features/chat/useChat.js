@@ -270,6 +270,7 @@ const UseChat = () => {
 
             }
         }
+        console.log(new_recipient)
     }, [chatroom_list])
 
     const openCHatroomListListener = () => {
