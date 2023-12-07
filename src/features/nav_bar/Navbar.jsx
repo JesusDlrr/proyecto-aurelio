@@ -129,7 +129,7 @@ export const NavBar = () => {
             </a>
 
             {/* Dark mode button */}
-            <div className="flex rounded dark:bg-slate-700 text-black dark:text-white bg-gray-100">
+            <div className="flex rounded dark:bg-quick7  text-black dark:text-white bg-gray-400">
               {
                 options?.map(opt => (
 

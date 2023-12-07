@@ -8,12 +8,12 @@ export const Search = ({ children, results }) => {
 
   return (
     <>
-      <div className="container w-80 ml-24 absolute mt-11 z-50">
-        <ul className="list-disc flex-col font-normal text-black bg-white">
+      <div className="container w-80 ml-24  absolute mt-11 z-50">
+        <ul className="list-disc flex-col dark:bg-zinc-800 rounded-lg font-normal text-black bg-white">
           {results != null && results.map((result) => {
             return (
               <li
-                className="text-gray-900 flex text-lg p-4 border-t-2 border-gray-100 hover:bg-gray-100 hover:cursor-pointer transition-all duration-100"
+                className="text-gray-900 dark:text-white flex text-lg p-4 dark:hover:bg-quick5 hover:cursor-pointer transition-all duration-100"
                 key={result.uid}
                 onMouseDown={(e) => { e.preventDefault() }}
                 onClick={() => {
