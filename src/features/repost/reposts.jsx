@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import usePost from "./usePost";
+import useRepost from "./useRepost";
 import { FaSync } from "react-icons/fa";
 
-export const Post = ({ post }) => {
+export const Repost = ({ post, self, reposter_name, unrepost }) => {
 
     //const and var para obtener la fecha de la publicacion
     const sec = post.date._seconds;
@@ -12,6 +12,7 @@ export const Post = ({ post }) => {
     const navigate = useNavigate();
 
     const {
+        user,
         likes,
         reposts,
         liked,
@@ -22,7 +23,7 @@ export const Post = ({ post }) => {
         setReposts,
         setLiked,
         setReposted
-    } = usePost(post.id);
+    } = useRepost(post.id);
 
     useEffect(() => {
         setLikes(post.likes);
@@ -37,6 +38,12 @@ export const Post = ({ post }) => {
                 <div className="space-y-4 text-center sm:mt-0 sm:text-left break-all w-full">
                     {/* Div para la foto de perfil, nombre y numero de followers */}
                     <div className="cursor-pointer hover:bg-green-400 hover:rounded p-4" onClick={() => { navigate("/profile?user=" + post.from.id) }}>
+                        <p className="text-xl font-sembold text-slate-400 ml-2 mb-5">{
+                            self ?
+                                "You reposted"
+                                :
+                                `${reposter_name} reposted`
+                        }</p>
                         <div className="flex items-center space-x-4">
                             <img className="w-20 h-20 rounded-full" src={post.from.avatar} alt="user avatar" loading="lazy"></img>
                             <div className="">
@@ -68,9 +75,16 @@ export const Post = ({ post }) => {
                                 </h1>
                             </div>
                             <div className="flex items-center space-x-4">
-                                <span className="cursor-pointer" onClick={repost}>
-                                    <svg class="h-6 w-6 ml-2 items-center" viewBox="0 0 24 24" fill={reposted ? "green" : "white"} xmlns="http://www.w3.org/2000/svg"><path d="M19 7a1 1 0 0 0-1-1h-8v2h7v5h-3l3.969 5L22 13h-3V7zM5 17a1 1 0 0 0 1 1h8v-2H7v-5h3L6 6l-4 5h3v6z" /></svg>
-                                </span>
+                                {
+                                    post.from.id === user.uid ?
+                                        <span className="">
+                                            <svg class="h-6 w-6 ml-2 items-center" viewBox="0 0 24 24" fill="gray" xmlns="http://www.w3.org/2000/svg"><path d="M19 7a1 1 0 0 0-1-1h-8v2h7v5h-3l3.969 5L22 13h-3V7zM5 17a1 1 0 0 0 1 1h8v-2H7v-5h3L6 6l-4 5h3v6z" /></svg>
+                                        </span>
+                                        :
+                                        <span className="cursor-pointer" onClick={() => { repost(); if (self) { unrepost(); } }}>
+                                            <svg class="h-6 w-6 ml-2 items-center" viewBox="0 0 24 24" fill={reposted ? "green" : "white"} xmlns="http://www.w3.org/2000/svg"><path d="M19 7a1 1 0 0 0-1-1h-8v2h7v5h-3l3.969 5L22 13h-3V7zM5 17a1 1 0 0 0 1 1h8v-2H7v-5h3L6 6l-4 5h3v6z" /></svg>
+                                        </span>
+                                }
                                 <h1 className="text-md text-gray-500 dark:text-gray-400">
                                     {reposts}
                                 </h1>
