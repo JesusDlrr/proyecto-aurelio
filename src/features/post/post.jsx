@@ -98,11 +98,8 @@ export const Post = ({ post, profile_user, unrepost }) => {
 
                                     post.type === "repost" ?
                                         profile_user.id === user.uid ?
-                                            < span onClick={() => {
-                                                unrepost(post.id);
-                                                repost(post.id)
-                                            }}>
-                                                <svg className={`h-6 w-6 ml-2 items-center fill-red-600`} viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M19 7a1 1 0 0 0-1-1h-8v2h7v5h-3l3.969 5L22 13h-3V7zM5 17a1 1 0 0 0 1 1h8v-2H7v-5h3L6 6l-4 5h3v6z" /></svg>
+                                            < span onClick={() => { unrepost(post.id); repost(post.id) }}>
+                                                <svg className={`cursor-pointer h-6 w-6 ml-2 items-center ${reposted ? "fill-green-400" : "dark:fill-white"}`} viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M19 7a1 1 0 0 0-1-1h-8v2h7v5h-3l3.969 5L22 13h-3V7zM5 17a1 1 0 0 0 1 1h8v-2H7v-5h3L6 6l-4 5h3v6z" /></svg>
                                             </span>
                                             :
                                             < span className="cursor-pointer" onClick={() => { repost(post.id) }}>
