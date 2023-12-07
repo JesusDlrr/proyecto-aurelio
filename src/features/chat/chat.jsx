@@ -67,16 +67,16 @@ export const Chat = () => {
     <div className="w-full h-screen flex flex-col">
       <input type='file' ref={file_input_ref} accept='image/*,video/mp4' multiple hidden onChange={(e) => { setMessageMedia(...message_media, Array.from(e.target.files)) }} />
       <NavBar />
-      <div className="flex flex-grow max-h-max overflow-hidden dark:bg-zinc-500">
-        <div className="w-1/4 p-4 bg-gray-100 dark:bg-zinc-700 mr-4">
+      <div className="flex flex-grow max-h-max overflow-hidden dark:bg-quick5">
+        <div className="w-1/4 p-4 bg-gray-100 dark:bg-quick4 mr-4">
           {/* Encabezado de Chats en la barra lateral izquierda */}
-          <div className="bg-gray-100 dark:bg-zinc-700 dark:text-white text-black flex items-center justify-between p-2 border-b border-gray-300">
+          <div className="bg-gray-100 dark:bg-quick4 dark:text-white text-black flex items-center justify-between p-2 border-b border-quick5">
             <h1 className="text-lg font-semibold">Chats</h1>
           </div>
           {/* Contenido de la barra lateral izquierda */
             chatroom_list.map((chatroom) => (
-              <div key={chatroom.id} className={`flex items-center gap-2 p-2 cursor-pointer`} onClick={() => { setChatroom(chatroom) }}>
-                <div className='flex'>
+              <div key={chatroom.id} className={`flex items-center gap-2 p-2 cursor-pointer dark:hover:bg-quick5`} onClick={() => { setChatroom(chatroom) }}>
+                <div className='flex '>
                   {
                     chatroom.participants.length > 2 ?
                       chatroom.participants.slice(0, 2).map(({ profile_picture }) => (
@@ -101,9 +101,9 @@ export const Chat = () => {
             ))}
         </div>
 
-        <div className="w-3/4 flex flex-col max-h-max overflow-hidden dark:bg-zinc-500">
+        <div className="w-3/4 flex flex-col max-h-max overflow-hidden dark:bg-quick5">
           {/* Rectángulo superior */}
-          <div className="bg-gray-100 dark:bg-zinc-700 dark:text-white h-16 shrink-0 text-black flex items-center justify-center">
+          <div className="bg-gray-100 dark:bg-quick4 dark:text-white h-16 shrink-0 text-black flex items-center justify-center dark:border-b dark:border-quick5">
             <p>{
               chatroom === null ?
                 new_recipient ?
