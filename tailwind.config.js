@@ -11,6 +11,9 @@ module.exports = {
         'quick4': '#222b32',
         'quick5': '#435164',
         'quick6': '#8E9EB6',
+        'quick7': '#23272a',
+        'quick8': '#99aab5',
+        'quick9': '#2e2f33',
       },
     },
   },
@@ -22,3 +25,4 @@ module.exports = {
     },
   ],
 }
+

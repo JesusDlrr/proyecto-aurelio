@@ -12,7 +12,8 @@ export const Home = () => {
   return (
     <>
       <NavBar />
-      <div className="h-auto w-auto bg-gray-400 dark:bg-zinc-900 p-10 grid grid-cols-4 gap-3">
+
+      <div className="h-auto w-auto bg-gray-400 dark:bg-quick7 p-10 grid grid-cols-4 gap-3">
         <Profile name={user_name} avatar={user_avatar} />
         <div className="text-xl rounded-lg col-span-2">
           <Quick_Thought makePost={post} />
