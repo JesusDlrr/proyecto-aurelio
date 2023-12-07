@@ -31,7 +31,7 @@ const UseProfile = () => {
 
     const unrepost = (post_id) => {
         setPosts(posts.filter(post => (
-            post.id !== post_id && post.type !== "repost"
+            post.id !== post_id
         )))
     }
 
