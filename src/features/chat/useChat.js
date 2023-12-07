@@ -137,6 +137,7 @@ const UseChat = () => {
                         message: message
                     }
                 }).then(() => {
+                    setChatroom(response.data);
                     setNewRecipient(null)
                     setChatroomList([
                         response.data,
@@ -227,8 +228,6 @@ const UseChat = () => {
         if (chat_list !== null) {
             let add = true;
 
-            console.log(chat_list)
-            console.log(new_chats)
             chat_list.forEach((chat) => {
                 new_chats.forEach((new_chat) => {
                     if (chat.avatar === new_chat.avatar) {
@@ -270,8 +269,7 @@ const UseChat = () => {
 
             }
         }
-        console.log(new_recipient)
-    }, [chatroom_list])
+    }, [])
 
     const openCHatroomListListener = () => {
         const unsub = onSnapshot(collection(db, "chatrooms"), async (doc) => {

@@ -37,9 +37,9 @@ export const ProfilePage = ({ name, avatar }) => {
         }
     }
     return (
-        <>
+        <div className="h-screen">
             <NavBar />
-            <div className="bg-white  h-20 w-full " />
+            <div className="bg-white h-20 w-full " />
             <input className="hidden " id="default_size" ref={ref} onChange={handleChange} type="file" />
             <div className="sm:row-span-6 md:row-span-3">
                 {user.uid === search_params.get("user") ? <>
@@ -77,7 +77,7 @@ export const ProfilePage = ({ name, avatar }) => {
 
                 </div>
             </div>
-            <div className="h-auto w-auto bg-gray-400 p-10 grid grid-cols-4 gap-3 sm:row-span-6 dark:bg-quick7">
+            <div className="h-auto min-h-screen w-auto bg-gray-400 p-10 grid grid-cols-4 gap-3 sm:row-span-6 dark:bg-quick7">
                 <div className="bg-white text-white text-center text-3xl rounded-lg row-span-3 mt-20 max-h-24">
                     <div className="flex flex-col hover:cursor-pointer">
                         <a className="hover:bg-gray-300 dark:hover:bg-quick5 dark:outline dark:outline-1 dark:outline-quick5 bg-white p-3 w-full text-xl text-left text-black dark:bg-quick4 dark:text-white font-semibold rounded-lg rounded-b-none" href={"/dms?to=" + search_params.get("user")}>Messages</a>
@@ -110,7 +110,7 @@ export const ProfilePage = ({ name, avatar }) => {
                     </div>
                 </div>
             </div>
-        </>
+        </div>
     )
 }
 
