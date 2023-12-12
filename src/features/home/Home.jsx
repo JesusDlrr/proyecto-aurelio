@@ -8,7 +8,7 @@ import { Post } from "../post/post";
 import useHome from "./UseHome";
 
 export const Home = () => {
-  const { user_name, user_avatar, posts, post } = useHome();
+  const { user_name, user_avatar, posts, setPosts, post } = useHome();
   return (
     <>
       <NavBar />
@@ -20,19 +20,7 @@ export const Home = () => {
             <Quick_Thought makePost={post} />
           </div>
           <div>
-            <Feed>
-              {posts
-                .sort((a, b) => {
-                  return b.date._seconds - a.date._seconds;
-                })
-                .map((post) => {
-                  return (
-                    <>
-                      <Post post={post} key={post.id} />
-                    </>
-                  );
-                })}
-            </Feed>
+            <Feed posts={posts} setPosts={setPosts} />
           </div>
         </div>
         <Suggestions />
