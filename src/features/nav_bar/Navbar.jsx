@@ -83,7 +83,7 @@ export const NavBar = () => {
   return (
     <>
       {/* Header */}
-      <div className="bg-green-700 text-white text-5xl py-4 col-span-4">
+      <div className="bg-green-700 text-white text-5xl py-4 col-span-4 md:col-span-4 lg:col-span-4">
         <div className="px-6">
           <div className="flex">
             <button

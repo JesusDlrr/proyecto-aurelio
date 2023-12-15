@@ -82,7 +82,7 @@ export const Chat = () => {
   }, [search_params]);
 
   return (
-    <div className="w-full h-screen flex flex-col">
+    <div className="w-full h-screen flex flex-col ">
       <input type='file' ref={file_input_ref} accept='image/*,video/mp4' multiple hidden onChange={(e) => { handleSetMessageMedia(e.target.files) }} />
       <NavBar />
       <div className="flex flex-grow max-h-max overflow-hidden dark:bg-quick5">
