@@ -32,7 +32,7 @@ const UseHome = () => {
       params: {
         before_date: 170227262,
         limit: 222,
-        requester_id: 'b4R7ZsJxY6ZLf0SbwT0TaauvONI2'
+        requester_id: user.uid
       }
     }).then((response) => {
       if (response.status === 200) {

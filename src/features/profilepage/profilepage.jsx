@@ -91,13 +91,7 @@ export const ProfilePage = ({ name, avatar }) => {
                             search_params.get("user") === user.uid && <div><Quick_Thought makePost={post} /></div>
                         }
                         <div>
-
                             <Feed posts={posts} setPosts={setPosts} />
-                            {/* {posts != null && posts.map((post) => (
-                                    <Post post={post} profile_user={{ id: search_params.get("user"), name: user_name }} key={post.id} unrepost={unrepost} />
-                                ))
-                                } */}
-                            {/* </Feed> */}
                         </div>
                     </div>
                 </div>

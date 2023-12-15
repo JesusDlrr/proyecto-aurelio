@@ -37,11 +37,11 @@ const UseProfile = () => {
 
     const getPosts = async () => {
         // axios.get(`https://quick-api-9c95.onrender.com/user/${user_uid}/posts`, {
-        axios.get(`http://localhost:3001/users/b4R7ZsJxY6ZLf0SbwT0TaauvONI2/posts`, {
+        axios.get(`http://localhost:3001/users/${user_uid}/posts`, {
             params: {
-                before_date: 170227262,
+                before_date: 0,
                 limit: 222,
-                requester_id: 'b4R7ZsJxY6ZLf0SbwT0TaauvONI2'
+                requester_id: user_uid
             }
         }).then((response) => {
             if (response.status === 200) {
@@ -131,7 +131,7 @@ const UseProfile = () => {
             form_data.append('media', media_file.file);
         });
 
-        axios.post(`https://quick-api-9c95.onrender.com/posts/${user.uid}`, form_data, {}).then(response => {
+        axios.post(`http://localhost:3001/posts/${user.uid}`, form_data, {}).then(response => {
             setPosts([response.data, ...posts])
         })
     };

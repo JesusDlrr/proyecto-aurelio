@@ -50,13 +50,18 @@ export const Feed = ({ posts, setPosts }) => {
         }).then((response) => {
             if (response.status === 200 && response.data === true) {
                 setPosts(posts.map((post) => {
-
                     if (post.id === post_id) {
                         post.reposts -= 1;
                         post.reposted = false;
                     }
                     return post
-                }));
+                }).filter((post) => {
+                    if (post.original_post !== undefined) {
+                        return (post.original_post.id !== post_id);
+                    } else {
+                        return true;
+                    }
+                }))
             }
         }).catch((error) => { console.log(error) });
     }
