@@ -84,7 +84,7 @@ export const NavBar = () => {
   return (
     <>
       {/* Header */}
-      <div className="bg-green-700 text-white text-5xl py-4 col-span-4 md:col-span-4 lg:col-span-4">
+      <div className="bg-green-700 text-white text-5xl py-4 col-span-1 md:col-span-4 lg:col-span-4 sm:col-span-4">
         <div className="px-6">
           <div className="flex">
             <button
@@ -112,7 +112,7 @@ export const NavBar = () => {
             <input
               type="search"
               value={search_value}
-              className=" relative w-1/4 ml-6 rounded px-3 text-base font-normal text-black"
+              className=" relative w-1/4 ml-6 rounded px-3 text-base font-normal text-black hidden lg:block md:block sm:block"
               placeholder="Quick search..."
               aria-label="Search"
               onFocus={() => { setSearchActive(true) }}

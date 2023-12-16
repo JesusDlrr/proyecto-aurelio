@@ -13,10 +13,10 @@ export const Home = () => {
     <>
       <NavBar />
 
-      <div className="h-auto w-auto bg-gray-400 dark:bg-quick7 p-10 grid grid-cols-4 gap-3">
+      <div className="h-auto w-auto bg-gray-400 dark:bg-quick7 p-10 grid grid-cols-1 gap-3 lg:grid-cols-4 md:grid-cols-4 sm:grid-cols-4">
         <Profile name={user_name} avatar={user_avatar} />
         <div className="text-xl rounded-lg col-span-2 grid gap-3">
-          <div>
+          <div className="">
             <Quick_Thought makePost={post} />
           </div>
           <div>

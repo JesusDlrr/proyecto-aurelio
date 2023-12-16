@@ -60,7 +60,7 @@ export const Quick_Thought = ({ makePost }) => {
     return (
         <>
             <input type='file' hidden ref={post_media_input} onChange={(e) => { handleSetPostMedia(e.target.files) }} multiple accept='image/*' />
-            <div className="dark:outline outline-1 outline-quick5 flex w-auto h-auto flex-row items-top gap-2 rounded-md border border-gray-900/10 bg-white dark:bg-quick4 p-1">
+            <div className="dark:outline outline-1 outline-quick5 flex w-auto h-auto flex-row items-top gap-2 rounded-md border border-gray-900/10 bg-white dark:bg-quick4 p-1 lg:w-auto md:w-auto sm:w-auto">
                 <div className="">
                     <button
                         className="rounded-full relative h-10 max-h-[40px] w-10 max-w-[40px] select-none text-center align-middle font-sans text-xs font-medium uppercase text-gray-500 transition-all active:bg-gray-700 disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
@@ -129,46 +129,6 @@ export const Quick_Thought = ({ makePost }) => {
                     </span>
                 </div>
             </div>
-            {/* </div> */}
-
-            {/* Next/New Quick Thought text area */}
-            {/*  <div classNameName="flex col-span-2 gap-2 rounded-lg bg-white dark:bg-zinc-400  p-2">
-                <div classNameName="flex">
-                    <IconButton variant="outlined" classNameName="rounded-full">
-                        <FaFileImage size="sm" color='black' data-fa-transform="shrink-8 left-6" classNameName=''/>
-                    </IconButton>
-                </div>
-                <Textarea
-                    rows={1}
-                    placeholder="Quick thought..."
-                    classNameName="min-h-full !border-0 focus:border-transparent dark:placeholder-white"
-                    containerProps={{
-                        classNameName: "h-full",
-                    }}
-                    labelProps={{
-                        classNameName: "before:content-none after:content-none",
-                    }}
-                />
-                <div>
-                    <IconButton variant="text" classNameName="rounded-full">
-                        <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            fill="none"
-                            viewBox="0 0 24 24"
-                            stroke="currentColor"
-                            strokeWidth={2}
-                            classNameName="h-5 w-5"
-                        >
-                            <path
-                                strokeLinecap="round"
-                                strokeLinejoin="round"
-                                d="M6 12L3.269 3.126A59.768 59.768 0 0121.485 12 59.77 59.77 0 013.27 20.876L5.999 12zm0 0h7.5"
-                            />
-                        </svg>
-                    </IconButton>
-                </div>
-            </div> */}
-
         </>
     )
 }
