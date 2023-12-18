@@ -153,7 +153,7 @@ export const NavBar = () => {
                 viewBox="0 0 24 24"
                 stroke-width="1.5"
                 stroke="currentColor"
-                className="w-10 h-10 object-right"
+                className="w-10 h-10 object-right hidden lg:block md:block sm:block"
                 onClick={so}
               >
                 <path
