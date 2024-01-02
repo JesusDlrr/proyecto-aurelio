@@ -91,21 +91,7 @@ export const ProfilePage = ({ name, avatar }) => {
                             search_params.get("user") === user.uid && <div><Quick_Thought makePost={post} /></div>
                         }
                         <div>
-
-                            <Feed>
-                                {posts != null &&
-                                    posts.sort((a, b) => {
-                                        return b.date._seconds - a.date._seconds;
-                                    }).map((post) => (
-                                        <Post post={post} profile_user={{ id: search_params.get("user"), name: user_name }} key={post.id} unrepost={unrepost} />
-                                        // post.type === "post" ?
-                                        //     :
-                                        //     <Repost post={post} key={post.id} self={user.uid === search_params.get("user")} reposter_name={user_name} unrepost={() => {
-                                        //         setPosts(posts.filter((_post) => (_post.id !== post.id)))
-                                        //     }} />
-                                    ))
-                                }
-                            </Feed>
+                            <Feed posts={posts} setPosts={setPosts} />
                         </div>
                     </div>
                 </div>

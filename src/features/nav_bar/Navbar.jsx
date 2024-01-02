@@ -7,6 +7,7 @@ import ReactSwitch from 'react-switch';
 import { IoIosSunny } from "react-icons/io";
 import { IoIosMoon } from "react-icons/io";
 import { IoMdDesktop } from "react-icons/io";
+import BuyButton from "../buy_button/BuyButton";
 
 export const NavBar = () => {
   const { searchUsers, search_results } = UseNavbar();
@@ -107,7 +108,7 @@ export const NavBar = () => {
               </svg>
             </button>
             {search_value !== "" && search_active && <Search results={search_results} />}
-
+            <BuyButton />
             <input
               type="search"
               value={search_value}

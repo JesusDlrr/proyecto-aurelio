@@ -36,17 +36,20 @@ const UseProfile = () => {
     }
 
     const getPosts = async () => {
-        axios.get(`https://quick-api-9c95.onrender.com/user/${user_uid}/posts`, {
+        // axios.get(`https://quick-api-9c95.onrender.com/user/${user_uid}/posts`, {
+        axios.get(`http://localhost:3001/users/${user_uid}/posts`, {
             params: {
-                user_request_id: user.uid
+                before_date: 0,
+                limit: 222,
+                requester_id: user_uid
             }
         }).then((response) => {
             if (response.status === 200) {
-                console.log(response.data)
-                setPosts([
-                    ...response.data.posts.map((post) => ({ type: "post", ...post })),
-                    ...response.data.reposts.map((repost) => ({ type: "repost", ...repost }))
-                ]);
+                setPosts(response.data);
+                // setPosts([
+                //     ...response.data.posts.map((post) => ({ type: "post", ...post })),
+                //     ...response.data.reposts.map((repost) => ({ type: "repost", ...repost }))
+                // ]);
             }
         }).catch((error) => {
             console.log(error);
@@ -128,7 +131,7 @@ const UseProfile = () => {
             form_data.append('media', media_file.file);
         });
 
-        axios.post(`https://quick-api-9c95.onrender.com/posts/${user.uid}`, form_data, {}).then(response => {
+        axios.post(`http://localhost:3001/posts/${user.uid}`, form_data, {}).then(response => {
             setPosts([response.data, ...posts])
         })
     };
