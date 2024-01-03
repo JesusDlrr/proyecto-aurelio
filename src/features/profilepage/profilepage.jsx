@@ -81,7 +81,7 @@ export const ProfilePage = ({ name, avatar }) => {
                 <div className="bg-white text-white text-center text-3xl rounded-lg row-span-3 mt-20 max-h-24 hidden lg:block md:block sm:block">
                     <div className="flex flex-col hover:cursor-pointer">
                         <a className="hover:bg-gray-300 dark:hover:bg-quick5 dark:outline dark:outline-1 dark:outline-quick5 bg-white p-3 w-full text-xl text-left text-black dark:bg-quick4 dark:text-white font-semibold rounded-lg rounded-b-none" href={"/dms?to=" + search_params.get("user")}>Messages</a>
-                        <a className="hover:bg-gray-300 dark:hover:bg-quick5 dark:outline dark:outline-1 dark:outline-quick5 bg-white border-t dark:border-quick3 p-3 w-full text-xl text-left text-black dark:bg-quick4 dark:text-white font-semibold rounded-lg rounded-t-none border-black">Settings</a>
+                        <a className="hover:bg-gray-300 dark:hover:bg-quick5 dark:outline dark:outline-1 dark:outline-quick5 bg-white border-t dark:border-quick3 p-3 w-full text-xl text-left text-black dark:bg-quick4 dark:text-white font-semibold rounded-lg rounded-t-none border-black" href="/settings">Settings</a>
                     </div>
                 </div>
                 <div className="col-span-3 mt-20">

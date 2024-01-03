@@ -7,6 +7,7 @@ import { SignUpForm } from './features/signup_form/SignUpForm';
 import { Home } from './features/home/Home';
 import { Chat } from './features/chat/chat';
 import { ProfilePage } from './features/profilepage/profilepage';
+import { Settings } from './features/settings/settings';
 // import { NavBar } from './features/nav_bar/Navbar';
 // import { Suggestions } from './features/suggestions/Suggestions';
 // import { Feed } from './features/feed/Feed';
@@ -19,8 +20,64 @@ import GetQuicker from './features/get_quicker/GetQuicker';
 
 export const UserContext = React.createContext(null);
 
+
 function App() {
   const [user, setUser] = useState(null);
+  const [theme, setTheme] = useState(localStorage.getItem("theme") ? localStorage.getItem("theme") : "system");
+  const darkQuery = window.matchMedia("(prefers-color-scheme: dark)");
+  const element = document.documentElement;
+
+  function onReload() {
+    if (localStorage.theme === 'dark' || (!("theme" in localStorage) && darkQuery.matches)) {
+      element.classList.add("dark");
+    } else {
+      element.classList.remove("dark")
+    }
+  }
+
+  onReload();
+
+  useEffect(() => {
+    switch (theme) {
+      case 'dark':
+        element.classList.add('dark')
+        localStorage.setItem('theme', 'dark')
+        break;
+      case 'light':
+        element.classList.remove('dark')
+        localStorage.setItem('theme', 'light')
+        break;
+      default:
+        localStorage.removeItem('theme')
+        onReload()
+        break;
+    }
+  }, [theme])
+
+  darkQuery.addEventListener("change", (e) => {
+    if (!("theme" in localStorage)) {
+      if (e.matches) {
+        element.classList.add('dark');
+      } else {
+        element.classList.remove('dark');
+      }
+    }
+  })
+
+  const options = [
+    {
+      icon: "sunny",
+      text: "light"
+    },
+    {
+      icon: "moon",
+      text: "dark"
+    },
+    {
+      icon: "desktop-outline",
+      text: "system"
+    }
+  ]
 
 
 
@@ -46,6 +103,11 @@ function App() {
               <Route path="/dms" element={
                 <PrivateRoute isAllowed={user} redirectTo='/login'>
                   <Chat />
+                </PrivateRoute>
+              } />
+              <Route path="/settings" element={
+                <PrivateRoute isAllowed={user} redirectTo='/login'>
+                  <Settings />
                 </PrivateRoute>
               } />
               <Route path="/login" element={
