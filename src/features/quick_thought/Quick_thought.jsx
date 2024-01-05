@@ -85,7 +85,7 @@ export const Quick_Thought = ({ makePost }) => {
                     </button> */}
                 </div>
                 <div className="relative grid h-full w-full min-w-[200px]">
-                    <textarea rows="5" placeholder="Your Message" value={post_message} onChange={(e) => { handleSetPostMessage(e.target.value) }}
+                    <textarea rows="5" placeholder="Quick tought..." value={post_message} onChange={(e) => { handleSetPostMessage(e.target.value) }}
                         className="peer h-full  min-h-full w-full resize-none rounded-[7px]  !border-0 border-blue-gray-200 border-t-transparent bg-transparent px-3 py-2.5 font-sans text-sm font-normal dark:text-white outline outline-0 transition-all placeholder:text-blue-gray-300 placeholder-shown:border placeholder-shown:border-blue-gray-200 placeholder-shown:border-t-blue-gray-200 focus:border-2 focus:border-gray-900 focus:border-transparent focus:border-t-transparent focus:outline-0 disabled:resize-none disabled:border-0 disabled:bg-blue-gray-50">
                     </textarea>
                     <div className='flex'>

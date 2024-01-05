@@ -39,6 +39,14 @@ export const Chat = () => {
     setNewMessage(value);
   }
 
+  const removeMessageMedia = (file_name) => {
+    setMessageMedia(message_media.filter(({ file }) => (file.name !== file_name)));
+
+    if (newMessage.length <= 0 && message_media.length <= 1) {
+      setMessageEnabled(false);
+    }
+  }
+
   const handleSendMessage = () => {
     if (message_enabled) {
       sendMessage(newMessage, message_media);
@@ -172,7 +180,7 @@ export const Chat = () => {
                         <button
                           className="rounded relative h-8 max-h-[40px] w-8 max-w-[40px] select-none text-center align-middle font-sans text-xs font-medium uppercase dark:text-white transition-all hover:bg-gray-900/60 active:bg-gray-900/70 bg-gray-900/50 disabled:pointer-events-none disabled:opacity-80 disabled:shadow-none"
                           type="button"
-                        // onClick={() => { removePostMedia(media.file.name) }}
+                          onClick={() => { removeMessageMedia(media.file.name) }}
                         >
                           <span className="absolute transform -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2">
                             <IoIosClose size={40} />
