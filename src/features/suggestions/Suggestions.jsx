@@ -8,7 +8,7 @@ export const Suggestions = () => {
 
     return (
         <>
-            <div className="bg-white text-white dark:bg-quick4 dark:text-white dark:outline dark:outline-1 dark:outline-quick5 text-center text-3xl py-2 rounded-lg row-span-3 sm:row-span-3 md:row-span-6 ">
+            <div className="bg-white text-white dark:bg-quick4 dark:text-white dark:outline dark:outline-1 dark:outline-quick5 text-center text-3xl py-2 rounded-lg row-span-3 hidden  lg:text-white lg:dark:bg-quick4 lg:dark:text-white lg:dark:outline lg:dark:outline-1 lg:dark:outline-quick5 lg:text-center lg:text-3xl lg:py-2 lg:rounded-lg lg:row-span-3 lg:block md:text-white md:dark:bg-quick4 md:dark:text-white md:dark:outline md:dark:outline-1 md:dark:outline-quick5 md:text-center md:text-3xl md:py-2 md:rounded-lg md:row-span-3 md:block sm:hidden ">
                 <h1 className="text-black dark:text-white dark:border-quick5 border-b">Suggestions</h1>
                 <div className="dark:bg-quick4 pt-6 flex flex-col items-center text-center group bg-white">
                     <ul className="w-full ">

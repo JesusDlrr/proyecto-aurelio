@@ -8,31 +8,19 @@ import { Post } from "../post/post";
 import useHome from "./UseHome";
 
 export const Home = () => {
-  const { user_name, user_avatar, posts, post } = useHome();
+  const { user_name, user_avatar, posts, setPosts, post } = useHome();
   return (
     <>
       <NavBar />
 
-      <div className="h-auto w-auto bg-gray-400 dark:bg-quick7 p-10 grid grid-cols-4 gap-3">
+      <div className="h-auto w-auto bg-gray-400 dark:bg-quick7 p-4 grid grid-cols-1 gap-3 lg:grid-cols-4 lg:p-10 md:grid-cols-4 md:p-10 sm:grid-cols-1 sm:p-10 ">
         <Profile name={user_name} avatar={user_avatar} />
         <div className="text-xl rounded-lg col-span-2 grid gap-3">
-          <div>
+          <div className="">
             <Quick_Thought makePost={post} />
           </div>
           <div>
-            <Feed>
-              {posts
-                .sort((a, b) => {
-                  return b.date._seconds - a.date._seconds;
-                })
-                .map((post) => {
-                  return (
-                    <>
-                      <Post post={post} key={post.id} />
-                    </>
-                  );
-                })}
-            </Feed>
+            <Feed posts={posts} setPosts={setPosts} />
           </div>
         </div>
         <Suggestions />

@@ -28,9 +28,11 @@ const UseHome = () => {
   };
 
   const getPosts = () => {
-    axios.get('https://quick-api-9c95.onrender.com/posts', {
+    axios.get('http://localhost:3001/posts', {
       params: {
-        user_request_id: user.uid
+        before_date: 170227262,
+        limit: 222,
+        requester_id: user.uid
       }
     }).then((response) => {
       if (response.status === 200) {
@@ -108,6 +110,7 @@ const UseHome = () => {
     user_name,
     user_avatar,
     post,
+    setPosts,
     posts,
   };
 };
