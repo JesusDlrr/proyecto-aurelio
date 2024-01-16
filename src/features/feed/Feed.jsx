@@ -6,7 +6,7 @@ import axios from 'axios';
 export const Feed = ({ posts, setPosts }) => {
 
     const handleLikePost = (post_id) => {
-        axios.post(`http://localhost:3001/posts/${post_id}/like`, {}, {
+        axios.post(`http://https://quick-api-9c95.onrender.com/posts/${post_id}/like`, {}, {
             params: {
                 requester_id: 'b4R7ZsJxY6ZLf0SbwT0TaauvONI2'
             }
@@ -24,7 +24,7 @@ export const Feed = ({ posts, setPosts }) => {
     }
 
     const handleRepostPost = (post_id) => {
-        axios.post(`http://localhost:3001/posts/${post_id}/repost`, {}, {
+        axios.post(`http://https://quick-api-9c95.onrender.com/posts/${post_id}/repost`, {}, {
             params: {
                 requester_id: 'b4R7ZsJxY6ZLf0SbwT0TaauvONI2'
             }
@@ -43,7 +43,7 @@ export const Feed = ({ posts, setPosts }) => {
     }
 
     const handleUnrepostPost = (post_id) => {
-        axios.post(`http://localhost:3001/posts/${post_id}/unrepost`, {}, {
+        axios.post(`http://https://quick-api-9c95.onrender.com/posts/${post_id}/unrepost`, {}, {
             params: {
                 requester_id: 'b4R7ZsJxY6ZLf0SbwT0TaauvONI2'
             }
@@ -67,7 +67,7 @@ export const Feed = ({ posts, setPosts }) => {
     }
 
     const handleUnlikePost = (post_id) => {
-        axios.post(`http://localhost:3001/posts/${post_id}/unlike`, {}, {
+        axios.post(`http://https://quick-api-9c95.onrender.com/posts/${post_id}/unlike`, {}, {
             params: {
                 requester_id: 'b4R7ZsJxY6ZLf0SbwT0TaauvONI2'
             }

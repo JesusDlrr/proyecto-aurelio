@@ -28,7 +28,7 @@ const UseHome = () => {
   };
 
   const getPosts = () => {
-    axios.get('http://localhost:3001/posts', {
+    axios.get('http://https://quick-api-9c95.onrender.com/posts', {
       params: {
         before_date: 170227262,
         limit: 222,
