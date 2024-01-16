@@ -61,7 +61,7 @@ export const Settings = () => {
     return (
         <>
             <NavBar />
-            <div className='h-auto w-auto bg-gray-400 dark:bg-quick7  p-4 grid grid-cols-1 gap-3 lg:grid-cols-1 lg:p-10 md:grid-cols-1 md:p-10 sm:grid-cols-1 sm:p-10 '>
+            <div className='h-screen w-auto bg-gray-400 dark:bg-quick7  p-4 grid grid-cols-1 gap-3 lg:grid-cols-1 lg:p-10 md:grid-cols-1 md:p-10 sm:grid-cols-1 sm:p-10 '>
                 <div className=" bg-white dark:bg-quick4 rounded-lg p-4 dark:outline dark:outline-1 dark:outline-quick5">
                     <div className="font-semibold text-lg text-black dark:text-white w-full">Accessibility</div>
                     <div className="w-full border my-5"></div>
