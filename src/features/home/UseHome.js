@@ -28,7 +28,7 @@ const UseHome = () => {
   };
 
   const getPosts = () => {
-    axios.get('http://localhost:3001/posts', {
+    axios.get('https://quick-api-9c95.onrender.com/posts', {
       params: {
         before_date: 170227262,
         limit: 222,
@@ -69,6 +69,7 @@ const UseHome = () => {
     });
 
     axios.post(`https://quick-api-9c95.onrender.com/posts/${user.uid}`, form_data, {}).then(response => {
+      console.log(response.data)
       setPosts([response.data, ...posts])
     })
     // try {

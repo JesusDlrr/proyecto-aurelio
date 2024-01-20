@@ -1,14 +1,17 @@
-import { React, useEffect, useState } from 'react';
+import { React, useContext, useEffect, useState } from 'react';
 import { Post } from "../post/post";
 import UseFeed from './UseFeed';
 import axios from 'axios';
+import { UserContext } from '../../App';
 
 export const Feed = ({ posts, setPosts }) => {
 
+    const { user } = useContext(UserContext);
+
     const handleLikePost = (post_id) => {
-        axios.post(`http://localhost:3001/posts/${post_id}/like`, {}, {
+        axios.post(`https://quick-api-9c95.onrender.com/posts/${post_id}/like`, {}, {
             params: {
-                requester_id: 'b4R7ZsJxY6ZLf0SbwT0TaauvONI2'
+                requester_id: user.uid
             }
         }).then((response) => {
             if (response.status === 200 && response.data === true) {
@@ -24,9 +27,9 @@ export const Feed = ({ posts, setPosts }) => {
     }
 
     const handleRepostPost = (post_id) => {
-        axios.post(`http://localhost:3001/posts/${post_id}/repost`, {}, {
+        axios.post(`https://quick-api-9c95.onrender.com/posts/${post_id}/repost`, {}, {
             params: {
-                requester_id: 'b4R7ZsJxY6ZLf0SbwT0TaauvONI2'
+                requester_id: user.uid
             }
         }).then((response) => {
             if (response.status === 200 && response.data === true) {
@@ -43,9 +46,9 @@ export const Feed = ({ posts, setPosts }) => {
     }
 
     const handleUnrepostPost = (post_id) => {
-        axios.post(`http://localhost:3001/posts/${post_id}/unrepost`, {}, {
+        axios.post(`https://quick-api-9c95.onrender.com/posts/${post_id}/unrepost`, {}, {
             params: {
-                requester_id: 'b4R7ZsJxY6ZLf0SbwT0TaauvONI2'
+                requester_id: user.uid
             }
         }).then((response) => {
             if (response.status === 200 && response.data === true) {
@@ -67,9 +70,9 @@ export const Feed = ({ posts, setPosts }) => {
     }
 
     const handleUnlikePost = (post_id) => {
-        axios.post(`http://localhost:3001/posts/${post_id}/unlike`, {}, {
+        axios.post(`https://quick-api-9c95.onrender.com/posts/${post_id}/unlike`, {}, {
             params: {
-                requester_id: 'b4R7ZsJxY6ZLf0SbwT0TaauvONI2'
+                requester_id: user.uid
             }
         }).then((response) => {
             if (response.status === 200 && response.data === true) {
