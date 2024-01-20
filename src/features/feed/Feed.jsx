@@ -9,7 +9,11 @@ export const Feed = ({ posts, setPosts }) => {
     const { user } = useContext(UserContext);
 
     const handleLikePost = (post_id) => {
+<<<<<<< HEAD
         axios.post(`https://quick-api-9c95.onrender.com/posts/${post_id}/like`, {}, {
+=======
+        axios.post(`http://https://quick-api-9c95.onrender.com/posts/${post_id}/like`, {}, {
+>>>>>>> b8bff78beb3e129813a9d057f1990d10d1307c78
             params: {
                 requester_id: user.uid
             }
@@ -27,7 +31,11 @@ export const Feed = ({ posts, setPosts }) => {
     }
 
     const handleRepostPost = (post_id) => {
+<<<<<<< HEAD
         axios.post(`https://quick-api-9c95.onrender.com/posts/${post_id}/repost`, {}, {
+=======
+        axios.post(`http://https://quick-api-9c95.onrender.com/posts/${post_id}/repost`, {}, {
+>>>>>>> b8bff78beb3e129813a9d057f1990d10d1307c78
             params: {
                 requester_id: user.uid
             }
@@ -46,7 +54,11 @@ export const Feed = ({ posts, setPosts }) => {
     }
 
     const handleUnrepostPost = (post_id) => {
+<<<<<<< HEAD
         axios.post(`https://quick-api-9c95.onrender.com/posts/${post_id}/unrepost`, {}, {
+=======
+        axios.post(`http://https://quick-api-9c95.onrender.com/posts/${post_id}/unrepost`, {}, {
+>>>>>>> b8bff78beb3e129813a9d057f1990d10d1307c78
             params: {
                 requester_id: user.uid
             }
@@ -70,7 +82,11 @@ export const Feed = ({ posts, setPosts }) => {
     }
 
     const handleUnlikePost = (post_id) => {
+<<<<<<< HEAD
         axios.post(`https://quick-api-9c95.onrender.com/posts/${post_id}/unlike`, {}, {
+=======
+        axios.post(`http://https://quick-api-9c95.onrender.com/posts/${post_id}/unlike`, {}, {
+>>>>>>> b8bff78beb3e129813a9d057f1990d10d1307c78
             params: {
                 requester_id: user.uid
             }
