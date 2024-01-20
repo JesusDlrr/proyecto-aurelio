@@ -1,14 +1,21 @@
-import { React, useEffect, useState } from 'react';
+import { React, useContext, useEffect, useState } from 'react';
 import { Post } from "../post/post";
 import UseFeed from './UseFeed';
 import axios from 'axios';
+import { UserContext } from '../../App';
 
 export const Feed = ({ posts, setPosts }) => {
 
+    const { user } = useContext(UserContext);
+
     const handleLikePost = (post_id) => {
+<<<<<<< HEAD
+        axios.post(`https://quick-api-9c95.onrender.com/posts/${post_id}/like`, {}, {
+=======
         axios.post(`http://https://quick-api-9c95.onrender.com/posts/${post_id}/like`, {}, {
+>>>>>>> b8bff78beb3e129813a9d057f1990d10d1307c78
             params: {
-                requester_id: 'b4R7ZsJxY6ZLf0SbwT0TaauvONI2'
+                requester_id: user.uid
             }
         }).then((response) => {
             if (response.status === 200 && response.data === true) {
@@ -24,9 +31,13 @@ export const Feed = ({ posts, setPosts }) => {
     }
 
     const handleRepostPost = (post_id) => {
+<<<<<<< HEAD
+        axios.post(`https://quick-api-9c95.onrender.com/posts/${post_id}/repost`, {}, {
+=======
         axios.post(`http://https://quick-api-9c95.onrender.com/posts/${post_id}/repost`, {}, {
+>>>>>>> b8bff78beb3e129813a9d057f1990d10d1307c78
             params: {
-                requester_id: 'b4R7ZsJxY6ZLf0SbwT0TaauvONI2'
+                requester_id: user.uid
             }
         }).then((response) => {
             if (response.status === 200 && response.data === true) {
@@ -43,9 +54,13 @@ export const Feed = ({ posts, setPosts }) => {
     }
 
     const handleUnrepostPost = (post_id) => {
+<<<<<<< HEAD
+        axios.post(`https://quick-api-9c95.onrender.com/posts/${post_id}/unrepost`, {}, {
+=======
         axios.post(`http://https://quick-api-9c95.onrender.com/posts/${post_id}/unrepost`, {}, {
+>>>>>>> b8bff78beb3e129813a9d057f1990d10d1307c78
             params: {
-                requester_id: 'b4R7ZsJxY6ZLf0SbwT0TaauvONI2'
+                requester_id: user.uid
             }
         }).then((response) => {
             if (response.status === 200 && response.data === true) {
@@ -67,9 +82,13 @@ export const Feed = ({ posts, setPosts }) => {
     }
 
     const handleUnlikePost = (post_id) => {
+<<<<<<< HEAD
+        axios.post(`https://quick-api-9c95.onrender.com/posts/${post_id}/unlike`, {}, {
+=======
         axios.post(`http://https://quick-api-9c95.onrender.com/posts/${post_id}/unlike`, {}, {
+>>>>>>> b8bff78beb3e129813a9d057f1990d10d1307c78
             params: {
-                requester_id: 'b4R7ZsJxY6ZLf0SbwT0TaauvONI2'
+                requester_id: user.uid
             }
         }).then((response) => {
             if (response.status === 200 && response.data === true) {

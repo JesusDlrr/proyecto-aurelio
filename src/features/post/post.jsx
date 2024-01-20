@@ -111,7 +111,16 @@ export const Post = ({ post, like, repost, unlike, unrepost, profile_user }) => 
                     </div>
                     {/* Seccion para el post de las personas */}
                     <div className="p-3">
-                        <p className="text-gray-600 font-serif dark:text-white pb-8">{post.message}</p>
+                        <p className="text-gray-600 font-serif dark:text-white pb-8">
+
+                            {
+                                is_repost ?
+                                    post.original_post.content
+                                    :
+                                    post.content
+
+                            }
+                        </p>
                         {
                             !is_repost ?
                                 <div className={post.media.length > 1 && 'grid grid-cols-2 gap-1'}>

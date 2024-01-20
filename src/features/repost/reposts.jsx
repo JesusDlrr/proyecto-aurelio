@@ -64,7 +64,7 @@ export const Repost = ({ post, self, reposter_name, unrepost }) => {
                     </div>
                     {/* Seccion para el post de las personas */}
                     <div className="p-4 ">
-                        <p className="text-gray-600 font-serif dark:text-white">{post.message}</p>
+                        <p className="text-gray-600 font-serif dark:text-white">{post.content}</p>
                         <div className="flex gap-x-5">
                             <div className="flex items-center space-x-4">
                                 <span className="cursor-pointer" onClick={likePost}>
