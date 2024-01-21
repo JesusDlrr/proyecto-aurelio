@@ -37,11 +37,7 @@ const UseProfile = () => {
 
     const getPosts = async () => {
         // axios.get(`https://quick-api-9c95.onrender.com/user/${user_uid}/posts`, {
-<<<<<<< HEAD
         axios.get(`https://quick-api-9c95.onrender.com/users/${user_uid}/posts`, {
-=======
-        axios.get(`http://https://quick-api-9c95.onrender.com/users/${user_uid}/posts`, {
->>>>>>> b8bff78beb3e129813a9d057f1990d10d1307c78
             params: {
                 before_date: 0,
                 limit: 222,
@@ -135,11 +131,7 @@ const UseProfile = () => {
             form_data.append('media', media_file.file);
         });
 
-<<<<<<< HEAD
         axios.post(`https://quick-api-9c95.onrender.com/posts/${user.uid}`, form_data, {}).then(response => {
-=======
-        axios.post(`http://https://quick-api-9c95.onrender.com/posts/${user.uid}`, form_data, {}).then(response => {
->>>>>>> b8bff78beb3e129813a9d057f1990d10d1307c78
             setPosts([response.data, ...posts])
         })
     };
