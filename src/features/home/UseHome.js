@@ -28,11 +28,7 @@ const UseHome = () => {
   };
 
   const getPosts = () => {
-<<<<<<< HEAD
     axios.get('https://quick-api-9c95.onrender.com/posts', {
-=======
-    axios.get('http://https://quick-api-9c95.onrender.com/posts', {
->>>>>>> b8bff78beb3e129813a9d057f1990d10d1307c78
       params: {
         before_date: 170227262,
         limit: 222,
