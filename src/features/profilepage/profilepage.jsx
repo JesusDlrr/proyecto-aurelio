@@ -7,37 +7,40 @@ import { Post } from "../post/post";
 import { useSearchParams } from "react-router-dom";
 import { UserContext } from "../../App";
 import { Repost } from "../repost/reposts";
+import { Speed_Dial } from "../speed_dial/speed_dial";
+import { SpeedDial } from "@material-tailwind/react";
 
 export const ProfilePage = ({ name, avatar }) => {
-    const ref = useRef();
-    const handleClick = (e) => {
-        ref.current.click()
-    }
+  const ref = useRef();
+  const handleClick = (e) => {
+    ref.current.click();
+  };
 
-    const { user } = useContext(UserContext);
-    const [search_params] = useSearchParams();
-    const {
-        user_name,
-        user_avatar,
-        updateAvatar,
-        posts,
-        following,
-        unrepost,
-        setPosts,
-        followUser,
-        followers,
-        post
-    } = UseProfile();
+  const { user } = useContext(UserContext);
+  const [search_params] = useSearchParams();
+  const {
+    user_name,
+    user_avatar,
+    updateAvatar,
+    posts,
+    following,
+    unrepost,
+    setPosts,
+    followUser,
+    followers,
+    post,
+  } = UseProfile();
 
-    const handleChange = (e) => {
-        const file = e.target.files[0];
-        const file_type = file.type.split("/");
-        if (file_type[0] === "image") {
-            updateAvatar(new Blob([file], { type: file.type }), file_type[1]);
-        }
+  const handleChange = (e) => {
+    const file = e.target.files[0];
+    const file_type = file.type.split("/");
+    if (file_type[0] === "image") {
+      updateAvatar(new Blob([file], { type: file.type }), file_type[1]);
     }
-    return (
-        <div className="min-h-screen bg-gray-400 dark:bg-quick7 overflow-hidden">
+  };
+  return (
+    <div className="min-h-screen bg-gray-400 dark:bg-quick7 overflow-hidden">
+      {user.uid === search_params.get("user") ? <Speed_Dial /> : null}
       <NavBar />
 
       <div className="bg-white h-20 w-full " />
@@ -142,7 +145,5 @@ export const ProfilePage = ({ name, avatar }) => {
         </div>
       </div>
     </div>
-    )
-}
-
-
+  );
+};
