@@ -8,6 +8,8 @@ import { Home } from './features/home/Home';
 import { Chat } from './features/chat/chat';
 import { ProfilePage } from './features/profilepage/profilepage';
 import { Settings } from './features/settings/settings';
+import { OtherProfilePage } from './features/profilepage/otherprofile';
+import { NavBar } from './features/nav_bar/Navbar';
 // import { NavBar } from './features/nav_bar/Navbar';
 // import { Suggestions } from './features/suggestions/Suggestions';
 // import { Feed } from './features/feed/Feed';
@@ -126,6 +128,12 @@ function App() {
                 // Change user to !user to make the route private
                 <PrivateRoute isAllowed={user} redirectTo='/'>
                   <ProfilePage />
+                </PrivateRoute>
+              } />
+                  <Route exact path="/other" element={
+                // Change user to !user to make the route private
+                <PrivateRoute isAllowed={user} redirectTo='/'>
+                  <OtherProfilePage />
                 </PrivateRoute>
               } />
               <Route exact path="/subscriptions/quicker" element={
