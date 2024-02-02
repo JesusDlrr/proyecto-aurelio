@@ -15,7 +15,7 @@ export const Home = () => {
 
       <div className="h-auto w-auto bg-gray-400 dark:bg-quick7 p-4 grid grid-cols-1 gap-3 lg:grid-cols-4 lg:p-10 md:grid-cols-4 md:p-10 sm:grid-cols-1 sm:p-10 ">
         <Profile name={user_name} avatar={user_avatar} />
-        <div className="text-xl rounded-lg col-span-2 grid gap-3">
+        <div className="text-xl rounded-lg col-span-1 sm:col-span-3 lg:col-span-2 grid gap-3">
           <div className="">
             <Quick_Thought makePost={post} />
           </div>
@@ -23,7 +23,9 @@ export const Home = () => {
             <Feed posts={posts} setPosts={setPosts} />
           </div>
         </div>
-        <Suggestions />
+        <span className="hidden lg:flex row-span-3">
+          <Suggestions />
+        </span>
       </div>
     </>
   );

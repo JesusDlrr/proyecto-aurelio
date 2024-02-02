@@ -15,7 +15,7 @@ import {
 
 export const Speed_Dial = () => {
   return (
-    <div className="fixed end-6 bottom-6 group lg:hidden">
+    <div className="fixed end-6 bottom-6 group sm:hidden">
       <SpeedDial>
         <SpeedDialHandler className="h-20 w-20 bg-green-500">
           <IconButton size="lg" className="rounded-full">
