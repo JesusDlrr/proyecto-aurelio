@@ -54,7 +54,7 @@ export const ProfilePage = ({ name, avatar }) => {
       />
 
       {/* Avatar */}
-      <div className="flex flex-col items-center sm:flex-row sm:justify-center mt-6">
+      <div className="flex flex-col items-center sm:flex-row sm:justify-center mt-24 lg:mt-6 lg:mb-24">
         {user.uid === search_params.get("user") ? (
           <div
             className="absolute top-24 lg:z-40 lg:left-24
@@ -83,7 +83,7 @@ export const ProfilePage = ({ name, avatar }) => {
         )}
 
         {/* Username and folowwers */}
-        <div className="lg:absolute lg:mt-4 mt-20 lg:ml-16 left-40 px-8">
+        <div className="lg:absolute lg:mt-4 lg:ml-16 left-40 px-8">
           <a>
             <h1 className="text-md font-semibold text-black dark:text-white lg:text-2xl md:text-2xl sm:text-2xl mt-1">
               {user_name}
@@ -113,8 +113,8 @@ export const ProfilePage = ({ name, avatar }) => {
       </div>
 
       {/* Settings and messagges */}
-      <div className="mt-6 lg-p-10 p-5 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 lg:gap-3">
-        <div className="bg-white text-white text-3xl rounded-lg row-span-3 mt-20 max-h-24 lg:block md:block sm:block hidden">
+      <div className="lg-p-10 p-5 grid grid-cols-1 lg:grid-cols-4 lg:gap-3">
+        <div className="bg-white text-white text-3xl rounded-lg row-span-3 max-h-24 hidden lg:block">
           <div className="flex flex-col hover:cursor-pointer">
             <a
               className="hover:bg-gray-300 dark:hover:bg-quick5 dark:outline dark:outline-1 dark:outline-quick5 bg-white p-3 w-full text-xl text-left text-black dark:bg-quick4 dark:text-white font-semibold rounded-lg rounded-b-none"
@@ -131,7 +131,7 @@ export const ProfilePage = ({ name, avatar }) => {
           </div>
         </div>
         {/* POST Quick Thought */}
-        <div className="col-span-3 mt-20">
+        <div className="col-span-3">
           <div className="text-xl rounded-lg col-span-2 grid gap-3">
             {search_params.get("user") === user.uid && (
               <div className="sm:block hidden">

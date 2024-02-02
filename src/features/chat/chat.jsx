@@ -94,7 +94,7 @@ export const Chat = () => {
       <input type='file' ref={file_input_ref} accept='image/*,video/mp4' multiple hidden onChange={(e) => { handleSetMessageMedia(e.target.files) }} />
       <NavBar />
       <div className="flex flex-grow max-h-max overflow-hidden dark:bg-quick5">
-        <div className="w-1/4 p-4 bg-gray-100 dark:bg-quick4 mr-4">
+        <div className="w-screen sm:w-32 lg:w-1/4 p-4 bg-gray-100 dark:bg-quick4 border-r border-quick5">
           {/* Encabezado de Chats en la barra lateral izquierda */}
           <div className="bg-gray-100 dark:bg-quick4 dark:text-white text-black flex items-center justify-between p-2 border-b border-quick5">
             <h1 className="text-lg font-semibold">Chats</h1>
@@ -127,7 +127,7 @@ export const Chat = () => {
             ))}
         </div>
 
-        <div className="w-3/4 flex flex-col max-h-max overflow-hidden dark:bg-quick5">
+        <div className="w-full hidden sm:flex flex-col max-h-max overflow-hidden dark:bg-quick5">
           {/* Rectángulo superior */}
           <div className="bg-gray-100 dark:bg-quick4 dark:text-white h-16 shrink-0 text-black flex items-center justify-center dark:border-b dark:border-quick5">
             <p>{
