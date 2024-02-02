@@ -67,7 +67,7 @@ export const Post = ({ post, like, repost, unlike, unrepost, profile_user }) => 
     return (
         <>
             <div className="bg-gray-50 dark:bg-quick4 dark:text-white sm:flex border-b border-quick5">
-                <div className="text-center sm:mt-0 sm:text-left break-all w-full">
+                <div className="sm:mt-0 sm:text-left break-all w-full">
                     {/* Div para la foto de perfil, nombre y numero de followers */}
                     <div className="cursor-pointer hover:bg-slate-200 dark:hover:bg-quick5 hover:rounded p-3" onClick={() => { navigate("/profile?user=" + post.author.id) }}>
                         <p className="text-xl font-sembold text-slate-400 ml-2 mb-5">
@@ -111,7 +111,7 @@ export const Post = ({ post, like, repost, unlike, unrepost, profile_user }) => 
                     </div>
                     {/* Seccion para el post de las personas */}
                     <div className="p-3">
-                        <p className="text-gray-600 font-serif dark:text-white pb-8">
+                        <p className="text-gray-600 font-serif dark:text-white lg:pb-8 content-start">
 
                             {
                                 is_repost ?
