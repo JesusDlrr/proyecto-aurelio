@@ -36,17 +36,20 @@ const UseProfile = () => {
     }
 
     const getPosts = async () => {
-        axios.get(`https://quick-api-9c95.onrender.com/user/${user_uid}/posts`, {
+        // axios.get(`https://quick-api-9c95.onrender.com/user/${user_uid}/posts`, {
+        axios.get(`https://quick-api-9c95.onrender.com/users/${user_uid}/posts`, {
             params: {
-                user_request_id: user.uid
+                before_date: 0,
+                limit: 222,
+                requester_id: user_uid
             }
         }).then((response) => {
             if (response.status === 200) {
-                console.log(response.data)
-                setPosts([
-                    ...response.data.posts.map((post) => ({ type: "post", ...post })),
-                    ...response.data.reposts.map((repost) => ({ type: "repost", ...repost }))
-                ]);
+                setPosts(response.data);
+                // setPosts([
+                //     ...response.data.posts.map((post) => ({ type: "post", ...post })),
+                //     ...response.data.reposts.map((repost) => ({ type: "repost", ...repost }))
+                // ]);
             }
         }).catch((error) => {
             console.log(error);

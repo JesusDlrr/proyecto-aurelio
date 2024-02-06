@@ -57,12 +57,12 @@ export const ProfilePage = ({ name, avatar }) => {
                 <div className="mx-60 px-8">
                     <div className="absolute">
                         <a>
-                            <h1 className="text-2xl font-sembold text-black dark:text-white">
+                            <h1 className="text-md font-sembold text-black dark:text-white lg:text-2xl md:text-2xl sm:text-2xl">
                                 {user_name}
                             </h1>
                         </a>
                     </div>
-                    <span className="text-lg text-black dark:text-white absolute">
+                    <span className="text-md text-black dark:text-white absolute lg:text-lg md:text-lg sm:text-lg">
                         <h1 className="flex items-center mt-8 space-x-2 text-black dark:text-white">
                             {followers != null && <>{followers} followers</>}
                         </h1>
@@ -78,10 +78,10 @@ export const ProfilePage = ({ name, avatar }) => {
                 </div>
             </div>
             <div className="h-auto min-h-screen w-auto bg-gray-400 p-10 grid grid-cols-4 gap-3 sm:row-span-6 dark:bg-quick7">
-                <div className="bg-white text-white text-center text-3xl rounded-lg row-span-3 mt-20 max-h-24">
+                <div className="bg-white text-white text-center text-3xl rounded-lg row-span-3 mt-20 max-h-24 hidden lg:block md:block sm:block">
                     <div className="flex flex-col hover:cursor-pointer">
                         <a className="hover:bg-gray-300 dark:hover:bg-quick5 dark:outline dark:outline-1 dark:outline-quick5 bg-white p-3 w-full text-xl text-left text-black dark:bg-quick4 dark:text-white font-semibold rounded-lg rounded-b-none" href={"/dms?to=" + search_params.get("user")}>Messages</a>
-                        <a className="hover:bg-gray-300 dark:hover:bg-quick5 dark:outline dark:outline-1 dark:outline-quick5 bg-white border-t dark:border-quick3 p-3 w-full text-xl text-left text-black dark:bg-quick4 dark:text-white font-semibold rounded-lg rounded-t-none border-black">Settings</a>
+                        <a className="hover:bg-gray-300 dark:hover:bg-quick5 dark:outline dark:outline-1 dark:outline-quick5 bg-white border-t dark:border-quick3 p-3 w-full text-xl text-left text-black dark:bg-quick4 dark:text-white font-semibold rounded-lg rounded-t-none border-black" href="/settings">Settings</a>
                     </div>
                 </div>
                 <div className="col-span-3 mt-20">
@@ -91,21 +91,7 @@ export const ProfilePage = ({ name, avatar }) => {
                             search_params.get("user") === user.uid && <div><Quick_Thought makePost={post} /></div>
                         }
                         <div>
-
-                            <Feed>
-                                {posts != null &&
-                                    posts.sort((a, b) => {
-                                        return b.date._seconds - a.date._seconds;
-                                    }).map((post) => (
-                                        <Post post={post} profile_user={{ id: search_params.get("user"), name: user_name }} key={post.id} unrepost={unrepost} />
-                                        // post.type === "post" ?
-                                        //     :
-                                        //     <Repost post={post} key={post.id} self={user.uid === search_params.get("user")} reposter_name={user_name} unrepost={() => {
-                                        //         setPosts(posts.filter((_post) => (_post.id !== post.id)))
-                                        //     }} />
-                                    ))
-                                }
-                            </Feed>
+                            <Feed posts={posts} setPosts={setPosts} />
                         </div>
                     </div>
                 </div>
