@@ -24,6 +24,8 @@ const useSignUpForm = () => {
           "https://firebasestorage.googleapis.com/v0/b/quick-11766.appspot.com/o/avatars%2Fdefault.png?alt=media&token=a6fac49b-9ee9-4850-86cd-852a31189421",
         name: name,
         date: serverTimestamp(),
+        subscriptions: [],
+        role: ''
       });
       // console.log("Document written with ID: ", docRef.id);
     } catch (e) {
@@ -38,8 +40,10 @@ const useSignUpForm = () => {
         createUser(userCredential.user.uid);
         setUser({
           uid: userCredential.user.uid,
-          avatar: "",
+          avatar: '',
           name: name,
+          subscriptions: [],
+          role: ''
         });
         setLoading(false);
       })

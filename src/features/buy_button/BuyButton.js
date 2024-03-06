@@ -7,10 +7,10 @@ function BuyButton() {
 
 
     const a = () => {
-        window.open('/subscriptions/quicker/monthly', '_blank', 'noreferrer');
+        window.open('/subscriptions/quicker/', '_blank', 'noreferrer');
     }
     const b = () => {
-        window.open('/subscriptions/quicker/yearly', '_blank', 'noreferrer');
+        window.open('/subscriptions/quicker/', '_blank', 'noreferrer');
     }
     // Paste the stripe-buy-button snippet in your React component
     return (

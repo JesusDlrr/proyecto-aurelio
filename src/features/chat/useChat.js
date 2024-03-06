@@ -21,6 +21,7 @@ const UseChat = () => {
 
     useEffect(() => {
         if (chatroom != null) {
+            console.log(chatroom);
             getChatroomMessages(chatroom.id);
         }
     }, [chatroom]);
@@ -47,8 +48,10 @@ const UseChat = () => {
     }
 
     const getChatrooms = () => {
-        axios.get(`https://quick-api-9c95.onrender.com/user/${user.uid}/chatrooms`, {}).then((response) => {
+        // axios.get(`https://quick-api-9c95.onrender.com/user/${user.uid}/chatrooms`, {}).then((response) => {
+        axios.get(`http://localhost:3001/user/${user.uid}/chatrooms`, {}).then((response) => {
             if (response.status === 200) {
+                console.log(response.data);
                 setChatroomList(response.data);
                 response.data.forEach((chatroom) => {
                     openChatroomListener(chatroom.id);
@@ -82,35 +85,46 @@ const UseChat = () => {
         // ));
     }
 
-    const getChatList = async () => {
-        try {
-            const self_ref = await doc(db, "users", user.uid);
-            const mess_qry = await query(collection(db, "direct_messages"), or(where("from", "==", self_ref), where("to", "==", self_ref)));
-            const mess_ref = await getDocs(mess_qry);
+    // const getChatList = async () => {
+    //     try {
+    //         const self_ref = await doc(db, "users", user.uid);
+    //         const mess_qry = await query(collection(db, "direct_messages"), or(where("from", "==", self_ref), where("to", "==", self_ref)));
+    //         const mess_ref = await getDocs(mess_qry);
 
-            let mess = await Promise.all(
-                mess_ref.docs.map(async (mess) => {
-                    let to_user = await getDoc(mess.data().to);
+    //         let mess = await Promise.all(
+    //             mess_ref.docs.map(async (mess) => {
+    //                 let to_user = await getDoc(mess.data().to);
 
-                    if (to_user.id === user.uid) {
-                        to_user = await getDoc(mess.data().from);
-                    }
+    //                 if (to_user.id === user.uid) {
+    //                     to_user = await getDoc(mess.data().from);
+    //                 }
 
-                    let to_user_data = to_user.data();
-                    to_user_data.uid = to_user.id;
-                    return to_user_data;
-                })
-            )
+    //                 let to_user_data = to_user.data();
+    //                 to_user_data.uid = to_user.id;
+    //                 return to_user_data;
+    //             })
+    //         )
 
-            setChatList(mess.filter(
-                (person, index) => index === mess.findIndex(
-                    other => person.avatar === other.avatar
-                )
-            ));
+    //         setChatList(mess.filter(
+    //             (person, index) => index === mess.findIndex(
+    //                 other => person.avatar === other.avatar
+    //             )
+    //         ));
 
-        } catch (error) {
-            console.log(error);
-        }
+    //     } catch (error) {
+    //         console.log(error);
+    //     }
+    // }
+
+    const addParticipants = (chatroom_id, users_id) => {
+        axios.post(`http://localhost:3001/chatrooms/`, {}, {
+            params: {
+                chatroom_id: chatroom_id,
+                participants: users_id,
+                requester_id: user.uid,
+            }
+        }).then((response) => {
+        })
     }
 
     const sendMessage = (message, message_media) => {
@@ -121,20 +135,23 @@ const UseChat = () => {
             })
         }
         if (new_recipient !== null) {
-            axios.post(`https://quick-api-9c95.onrender.com/chatrooms/`, {}, {
+            // axios.post(`https://quick-api-9c95.onrender.com/chatrooms/`, {}, {
+            axios.post(`http://localhost:3001/chatrooms/`, {}, {
                 params: {
                     chatroom_id: "",
                     participants: `${user.uid},${search_params.get("to")}`,
+                    requester_id: user.uid,
                 }
             }).then((response) => {
                 openChatListListener(response.data.id);
-                axios.post(`https://quick-api-9c95.onrender.com/messages/${response.data.id}`, form_data, {
+                // axios.post(`https://quick-api-9c95.onrender.com/messages/${response.data.id}`, form_data, {
+                axios.post(`http://localhost:3001/messages/${response.data.id}`, form_data, {
                     headers: {
                         "Content-Type": "multipart/form-data"
                     },
                     params: {
                         from_user: user.uid,
-                        color: '#000000',
+                        // color: '#000000',
                         message: message
                     }
                 }).then(() => {
@@ -150,13 +167,14 @@ const UseChat = () => {
                 console.log(error);
             })
         } else {
-            axios.post(`https://quick-api-9c95.onrender.com/messages/${chatroom.id}`, form_data, {
+            // axios.post(`https://quick-api-9c95.onrender.com/messages/${chatroom.id}`, form_data, {
+            axios.post(`http://localhost:3001/messages/${chatroom.id}`, form_data, {
                 headers: {
                     "Content-Type": "multipart/form-data"
                 },
                 params: {
                     from_user: user.uid,
-                    color: '#000000',
+                    // color: '#000000',
                     message: message
                 }
             });
@@ -302,7 +320,8 @@ const UseChat = () => {
         getChatName,
         getMessages,
         getChatrooms,
-        openChatroomListener
+        openChatroomListener,
+        addParticipants
     })
 }
 

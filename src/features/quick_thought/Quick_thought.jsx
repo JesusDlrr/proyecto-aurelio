@@ -1,13 +1,14 @@
-import { React, useEffect, useRef, useState } from 'react';
+import { React, useContext, useEffect, useRef, useState } from 'react';
 import { Post } from "../post/post";
 import useHome from "../feed/UseFeed";
 import { Textarea, Button, IconButton } from "@material-tailwind/react";
 import { FaBuffer, FaFileImage, FaImages } from "react-icons/fa";
 import { IoIosClose, IoIosSend, IoMdSend } from 'react-icons/io';
+import { UserContext } from '../../App';
 // import { LinkIcon } from "@heroicons/react/24/outline";
 
 export const Quick_Thought = ({ makePost }) => {
-
+    const { user } = useContext(UserContext);
     const [post_message, setPostMessage] = useState("");
     const [post_enabled, setPostEnabled] = useState(true);
     const post_media_input = useRef(null);
@@ -16,7 +17,7 @@ export const Quick_Thought = ({ makePost }) => {
     //     post,
     //     posts
     // } = useHome();
-    const message_max_chars = 128;
+    const message_max_chars = user.subscriptions.indexOf('quicker') === -1 ? 128 : 512;
 
 
     const removePostMedia = (file_name) => {

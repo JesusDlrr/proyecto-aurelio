@@ -18,6 +18,7 @@ import { PrivateRoute } from './features/private_route/PrivateRoute';
 import { onAuthStateChanged } from 'firebase/auth';
 import { auth } from './firebase';
 import GetQuicker from './features/get_quicker/GetQuicker';
+import axios from 'axios';
 
 export const UserContext = React.createContext(null);
 
@@ -84,7 +85,17 @@ function App() {
 
   useEffect(() => {
     onAuthStateChanged(auth, (user) => {
-      setUser(user == null ? false : user);
+      if (user === null) {
+        setUser(false)
+      } else {
+        axios.get(`http://localhost:3001/user/` + user.uid, {}, {
+        }).then((response) => {
+          setUser({
+            uid: user.uid,
+            ...response.data
+          });
+        })
+      }
     });
   }, [])
 
