@@ -8,6 +8,7 @@ import { Home } from './features/home/Home';
 import { Chat } from './features/chat/chat';
 import { ProfilePage } from './features/profilepage/profilepage';
 import { Settings } from './features/settings/settings';
+import { NavBar } from './features/nav_bar/Navbar';
 // import { NavBar } from './features/nav_bar/Navbar';
 // import { Suggestions } from './features/suggestions/Suggestions';
 // import { Feed } from './features/feed/Feed';

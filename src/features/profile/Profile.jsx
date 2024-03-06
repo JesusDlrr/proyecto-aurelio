@@ -11,15 +11,13 @@ export const Profile = ({ name, avatar }) => {
         <>
             {/* Profile */}
             <div className=" dark:bg-quick4 dark:outline dark:outline-1 dark:outline-quick5 text-center text-3xl py-2 rounded-lg row-span-3 hidden lg:bg-white lg:dark:bg-quick4 lg:dark:outline lg:dark:outline-1 lg:dark:outline-quick5 lg:text-center lg:text-3xl lg:py-2 lg:rounded-lg lg:row-span-3 lg:block md:bg-white md:dark:bg-quick4 md:dark:outline md:dark:outline-1 md:dark:outline-quick5 md:text-center md:text-3xl md:py-2 md:rounded-lg md:row-span-3 md:block sm:hidden ">
-                <div className="p-16">
-                    <img className="rounded-full cursor-pointer h-52 w-52 ml-2" src={avatar} onClick={() => { navigate("/profile?user=" + user.uid) }} />
-                    <div className="pt-2 mt-3 w-full text-center text-xl text-gray-600">
-                        <h1 className="text-xl font-sembold text-black dark:text-white hover:underline hover:cursor-pointer" onClick={() => { navigate("/profile?user=" + user.uid) }}>
-                            {name}
-                        </h1>
-                    </div>
+                <div className="p-2 flex flex-col items-center">
+                    <img className="rounded-full cursor-pointer w-9/12 lg:w-1/2 aspect-square" src={avatar} onClick={() => { navigate("/profile?user=" + user.uid) }} />
+                    <h1 className="text-xl font-sembold text-black dark:text-white hover:underline hover:cursor-pointer mt-5" onClick={() => { navigate("/profile?user=" + user.uid) }}>
+                        {name}
+                    </h1>
                 </div>
-                <div className="w-full h-screen antialiased flex flex-col hover:cursor-pointer">
+                <div className="mt-5 w-full h-screen antialiased flex flex-col hover:cursor-pointer">
                     <a className="hover:bg-gray-300 dark:hover:bg-quick5 dark:text-white dark:border-quick5 border-t p-3 w-full text-xl text-left text-gray-600 font-semibold" href={"/dms?to=" + user.uid}><i class="fa fa-comment text-gray-600 text-2xl pr-1 pt-1 float-right"></i>Messages</a>
                     <a className="hover:bg-gray-300 dark:hover:bg-quick5 dark:text-white dark:border-quick5 border-t p-3 w-full text-xl text-left text-gray-600 font-semibold" href="/settings"><i class="fa fa-cog text-gray-600 text-2xl pr-1 pt-1 float-right"></i>Settings</a>
                 </div>

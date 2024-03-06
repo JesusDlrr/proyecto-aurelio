@@ -1,6 +1,5 @@
 /*Importes*/
 import { React, useState } from "react";
-import loginStyles from "./login.module.css";
 import useLoginForm from "./useLoginForm";
 import { Spinner } from "@material-tailwind/react";
 const validator = require("validator");
@@ -40,17 +39,17 @@ export const LogInForm = () => {
   return (
     <>
       {/*Seccion para iniciar sesion*/}
-      <div className={loginStyles.background}>
-        <div className="bg-slate-800 border border-slate-600 rounded p-8 shadow-lg backdrop-filter backdrop-blur-lg bg-opacity-40 relative">
-          <h1 className="text-white text-4xl font-bold text-center">
+      <div className="bg-[url('/assets/imagenesDeFondo/fondoNubes.png')] bg-center bg-cover  h-screen w-screen lg:p-32 lg:pl-32 md:px-32 md:py-11">
+        <div className="bg-slate-800 border w-full h-full lg:w-96 lg:h-auto border-slate-600 rounded-none lg:rounded md:rounded p-8 shadow-lg backdrop-filter backdrop-blur-lg bg-opacity-40 relative">
+          <h1 className=" text-white text-4xl font-bold text-center">
             Welcome Back
           </h1>
           <form action="">
-            <div className="relative my-4">
+            <div className="relative my-6">
               <input
                 id="email"
                 type="email"
-                className="block w-72 py-2.5 px-0 text-sm text-white bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:focus:border-green-400 focus:outline-none focus:ring-0 focus:text-white focus:border-green-800 peer placeholder:text-slate-800"
+                className="block w-full py-2.5 px-0 text-sm text-white bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:focus:border-green-400 focus:outline-none focus:ring-0 focus:text-white focus:border-green-800 peer placeholder:text-white"
                 placeholder="Email"
                 onChange={(e) => {
                   setEmail(e.target.value);
@@ -62,10 +61,10 @@ export const LogInForm = () => {
                 ""
               )}
             </div>
-            <div className="relative my-4">
+            <div className="relative my-6">
               <input
                 type="password"
-                className="block w-72 py-2.5 px-0 text-sm text-white bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:focus:border-green-400 focus:outline-none focus:ring-0 focus:text-white focus:border-green-600 peer placeholder:text-slate-800"
+                className="block w-full py-2.5 px-0 text-sm text-white bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:focus:border-green-400 focus:outline-none focus:ring-0 focus:text-white focus:border-green-600 peer placeholder:text-white"
                 placeholder="Password"
                 onChange={(e) => {
                   setPassword(e.target.value);
@@ -81,7 +80,7 @@ export const LogInForm = () => {
           <button
             type="button"
             disabled={loading}
-            className="middle none center rounded-lg py-3 px-6 font-sans text-xs font-bold uppercase text-white shadow-md transition-all hover:shadow-lg focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none w-full mb-4 text-[18px] mt-6 rounded bg-green-400 py-2 hover:bg-green-500 transition-colors duration-300 text-black"
+            className="middle none center my-6 rounded-lg py-3 px-6 font-sans text-xs font-bold uppercase text-white shadow-md transition-all hover:shadow-lg focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none w-full mb-4 text-[18px] mt-6 bg-green-400 hover:bg-green-500 duration-300"
             value="Log In"
             onClick={() => {
               validation_email();
@@ -112,7 +111,7 @@ export const LogInForm = () => {
           )}
           <h5 className="text-center">
             <a
-              className="text-decoration: underline hover:text-white "
+              className="text-white text-decoration: underline hover:text-purple-400 "
               href="/signup"
             >
               Don't have an account? Sign up!
