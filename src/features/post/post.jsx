@@ -122,7 +122,7 @@ export const Post = ({ post, like, repost, unlike, unrepost, profile_user }) => 
 								user.role.indexOf('administrator') !== -1 &&
 								<button>
 									<IoIosFlag onClick={() => {
-										axios.post(`http://localhost:3001/administration/flag/post/${post.id}`, {}, {
+										axios.post(`https://quick-api-9c95.onrender.com/administration/flag/post/${post.id}`, {}, {
 											params: { requester_id: user.uid }
 										})
 											.then((response) => { })

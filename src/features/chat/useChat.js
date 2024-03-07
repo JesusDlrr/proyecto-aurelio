@@ -41,6 +41,7 @@ const UseChat = () => {
         const unsub = onSnapshot(doc(db, "chatrooms", chatroom_id), (doc) => {
             if (chatroom_ref.current != null) {
                 if (doc.id === chatroom_ref.current.id) {
+                    console.log(doc.data())
                     setMessages(doc.data().messages.reverse());
                 }
             }
@@ -49,7 +50,7 @@ const UseChat = () => {
 
     const getChatrooms = () => {
         // axios.get(`https://quick-api-9c95.onrender.com/user/${user.uid}/chatrooms`, {}).then((response) => {
-        axios.get(`http://localhost:3001/user/${user.uid}/chatrooms`, {}).then((response) => {
+        axios.get(`https://quick-api-9c95.onrender.com/user/${user.uid}/chatrooms`, {}).then((response) => {
             if (response.status === 200) {
                 setChatroomList(response.data);
                 response.data.forEach((chatroom) => {
@@ -116,7 +117,7 @@ const UseChat = () => {
     // }
 
     const addParticipants = (chatroom_id, users_id) => {
-        axios.post(`http://localhost:3001/chatrooms/`, {}, {
+        axios.post(`https://quick-api-9c95.onrender.com/chatrooms/`, {}, {
             params: {
                 chatroom_id: chatroom_id,
                 participants: users_id.join(','),
@@ -139,7 +140,7 @@ const UseChat = () => {
         }
         if (new_recipient !== null) {
             // axios.post(`https://quick-api-9c95.onrender.com/chatrooms/`, {}, {
-            axios.post(`http://localhost:3001/chatrooms/`, {}, {
+            axios.post(`https://quick-api-9c95.onrender.com/chatrooms/`, {}, {
                 params: {
                     chatroom_id: "",
                     participants: `${user.uid},${search_params.get("to")}`,
@@ -148,7 +149,7 @@ const UseChat = () => {
             }).then((response) => {
                 openChatListListener(response.data.id);
                 // axios.post(`https://quick-api-9c95.onrender.com/messages/${response.data.id}`, form_data, {
-                axios.post(`http://localhost:3001/messages/${response.data.id}`, form_data, {
+                axios.post(`https://quick-api-9c95.onrender.com/messages/${response.data.id}`, form_data, {
                     headers: {
                         "Content-Type": "multipart/form-data"
                     },
@@ -171,7 +172,7 @@ const UseChat = () => {
             })
         } else {
             // axios.post(`https://quick-api-9c95.onrender.com/messages/${chatroom.id}`, form_data, {
-            axios.post(`http://localhost:3001/messages/${chatroom.id}`, form_data, {
+            axios.post(`https://quick-api-9c95.onrender.com/messages/${chatroom.id}`, form_data, {
                 headers: {
                     "Content-Type": "multipart/form-data"
                 },

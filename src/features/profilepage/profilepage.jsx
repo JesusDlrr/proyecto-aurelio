@@ -92,7 +92,7 @@ export const ProfilePage = ({ name, avatar }) => {
             <p className="flex text-md font-semibold text-black dark:text-white p-0 lg:text-2xl md:text-2xl sm:text-2xl mr-5">
               {user_name} {user_subscriptions.indexOf('quicker') !== -1 && <span className='w-4 ml-1'><img src='quicker_badge.png' /></span>}
             </p>
-            {follows_you && <Chip variant="outlined" value="Follows You" className="text-black dark:text-white bg-slate-200 dark:bg-slate-700 p-1"></Chip>}
+            {follows_you && user.uid !== search_params.get("user") && <Chip variant="outlined" value="Follows You" className="text-black dark:text-white bg-slate-200 dark:bg-slate-700 p-1"></Chip>}
           </span>
           <span className="text-md text-black dark:text-white block lg:text-lg md:text-lg sm:text-lg mt-1">
             <span className="flex gap-5">
@@ -101,7 +101,7 @@ export const ProfilePage = ({ name, avatar }) => {
               </h1>
               <div className="mt-1">
                 {
-                  following !== null &&
+                  following !== null && user.uid !== search_params.get("user") &&
                   <button
                     type="button"
                     onClick={followUser}
@@ -127,14 +127,21 @@ export const ProfilePage = ({ name, avatar }) => {
               className="dark:disabled:text-slate-500 disabled:text-gray-400 disabled:bg-gray-200 dark:disabled:bg-quick4 hover:bg-gray-300 dark:hover:bg-quick5 dark:outline dark:outline-1 dark:outline-quick5 bg-white p-3 w-full text-xl text-left text-black dark:bg-quick4 dark:text-white font-semibold rounded-lg rounded-b-none"
               onClick={() => { navigate('/dms?to=' + search_params.get("user")) }}
             >
-              Send message
+              {user.uid === search_params.get("user") ? 'Messages' : 'Send message'}
             </button>
             <button
-              className="hover:bg-gray-300 dark:hover:bg-quick5 dark:outline dark:outline-1 dark:outline-quick5 bg-white border-t dark:border-quick3 p-3 w-full text-xl text-left text-black dark:bg-quick4 dark:text-white font-semibold rounded-lg rounded-t-none border-black"
+              className={`hover:bg-gray-300 dark:hover:bg-quick5 dark:outline dark:outline-1 dark:outline-quick5 bg-white border-t dark:border-quick3 p-3 w-full text-xl text-left text-black dark:bg-quick4 dark:text-white font-semibold border-black ${(user.role.indexOf('administrator') === -1 || user.uid !== search_params.get("user")) && 'rounded rounded-t-none'}`}
               onClick={() => { navigate('/settings') }}
             >
               Settings
             </button>
+            {
+              user.uid === search_params.get("user") && user.role.indexOf('administrator') !== -1 &&
+              <button className="hover:bg-gray-300 dark:hover:bg-quick5 dark:outline dark:outline-1 dark:outline-quick5 bg-white border-t dark:border-quick3 p-3 w-full text-xl text-left text-black dark:bg-quick4 dark:text-white font-semibold rounded-lg rounded-t-none border-black"
+                onClick={() => { navigate('/admintools') }}
+              >Administrator tools
+              </button>
+            }
           </div>
         </div>
         {/* POST Quick Thought */}

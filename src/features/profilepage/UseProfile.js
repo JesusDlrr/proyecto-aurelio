@@ -25,7 +25,7 @@ const UseProfile = () => {
 
     const getUserInfo = () => {
         // axios.get(`https://quick-api-9c95.onrender.com/user/${search_params.get("user")}`, {
-        axios.get(`http://localhost:3001/user/${search_params.get("user")}`, {
+        axios.get(`https://quick-api-9c95.onrender.com/user/${search_params.get("user")}`, {
             params: {
                 requester_id: user.uid
             }
@@ -103,7 +103,7 @@ const UseProfile = () => {
     // }
 
     const followUser = () => {
-        axios.get(`http://localhost:3001/${following ? 'unfollow' : 'follow'}/${search_params.get("user")}`, {
+        axios.get(`https://quick-api-9c95.onrender.com/${following ? 'unfollow' : 'follow'}/${search_params.get("user")}`, {
             params: {
                 requester_id: user.uid
             }

@@ -12,7 +12,7 @@ const UseFollowerPicker = () => {
     const { user } = useContext(UserContext)
 
     const fetchUsers = async () => {
-        axios.get(`http://localhost:3001/user/${user.uid}/followers`).then((response) => {
+        axios.get(`https://quick-api-9c95.onrender.com/user/${user.uid}/followers`).then((response) => {
             if (response.status === 200) {
                 setUsers(response.data)
                 setSearchResults(response.data)

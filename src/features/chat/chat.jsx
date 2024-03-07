@@ -175,10 +175,16 @@ export const Chat = () => {
                           {message.message}
                           <div className={message.media.length > 1 && 'grid grid-cols-2 gap-1'}>
                             {message.media.slice(0, 4).map((file) => (
-                              file.mimetype.split('/')[0] === 'image' &&
-                              <div className={`bg-black h-40 ${message.media.length > 1 ? 'w-40' : 'max-w-lg'}`}>
-                                <img src={file.link} className='object-cover h-full w-full max-w-xs' />
-                              </div>
+                              file.mimetype.split('/')[0] === 'image' ?
+                                <div className={`bg-black h-40 ${message.media.length > 1 ? 'w-40' : 'max-w-lg'}`}>
+                                  <img src={file.url} className='object-cover h-full w-full max-w-xs' />
+                                </div>
+                                :
+                                file.mimetype.split('/')[0] === 'video' &&
+                                <video className='object-cover h-full w-full max-w-xs' controls>
+                                  <source src={file.url}>
+                                  </source>
+                                </video>
                             ))}
                           </div>
                         </div>
