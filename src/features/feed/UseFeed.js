@@ -1,11 +1,19 @@
 import { useContext, useEffect, useState } from "react";
-import { collection, addDoc, getDocs, serverTimestamp, doc, getDoc, query } from "firebase/firestore";
+import {
+  collection,
+  addDoc,
+  getDocs,
+  serverTimestamp,
+  doc,
+  getDoc,
+  query,
+} from "firebase/firestore";
 import { db } from "../../firebase";
 import { UserContext } from "../../App";
 import { getAuth } from "firebase/auth";
 
 const UseFeed = () => {
-    /*
+  /*
     const [posts, setPosts] = useState([]);
     const {user, setUser} = useContext(UserContext);
     const loaded_users = [];
@@ -52,6 +60,6 @@ const UseFeed = () => {
         setPosts
     };
     */
-}
+};
 
 export default UseFeed;

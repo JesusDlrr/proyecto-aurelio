@@ -4,35 +4,37 @@ import { db } from "../../firebase";
 import { useEffect, useState } from "react";
 
 const UseNavbar = () => {
-    const [search_results, setSearchResults] = useState(null);
-    const [users, setUsers] = useState(null);
+  const [search_results, setSearchResults] = useState(null);
+  const [users, setUsers] = useState(null);
 
-    const fetchUsers = async () => {
-        try {
-            const user_list = await getDocs(collection(db, "users"));
+  const fetchUsers = async () => {
+    try {
+      const user_list = await getDocs(collection(db, "users"));
 
-            setUsers(await Promise.all(
-                user_list.docs.map(async (user) => {
-                    let user_data = user.data();
-                    user_data.uid = user.id;
-                    return user_data;
-                })
-            ));
-        } catch (error) {
-            console.log(error)
-        }
+      setUsers(
+        await Promise.all(
+          user_list.docs.map(async (user) => {
+            let user_data = user.data();
+            user_data.uid = user.id;
+            return user_data;
+          })
+        )
+      );
+    } catch (error) {
+      console.log(error);
     }
+  };
 
-    const searchUsers = async (search_input) => {
-        let search = new RegExp(search_input, 'i');
-        setSearchResults(users.filter(user => search.test(user.name)));
-    }
+  const searchUsers = async (search_input) => {
+    let search = new RegExp(search_input, "i");
+    setSearchResults(users.filter((user) => search.test(user.name)));
+  };
 
-    useEffect(() => {
-        fetchUsers();
-    }, [])
+  useEffect(() => {
+    fetchUsers();
+  }, []);
 
-    return ({ search_results, searchUsers })
-}
+  return { search_results, searchUsers };
+};
 
 export default UseNavbar;

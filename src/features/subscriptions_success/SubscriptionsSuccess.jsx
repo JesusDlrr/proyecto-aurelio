@@ -1,7 +1,7 @@
 const SubscriptionsSuccess = () => {
-    // window.opener = null;
-    // window.open("", "_self");
-    // window.close();
-}
+  // window.opener = null;
+  // window.open("", "_self");
+  // window.close();
+};
 
-export default SubscriptionsSuccess
+export default SubscriptionsSuccess;

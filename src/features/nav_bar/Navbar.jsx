@@ -3,7 +3,7 @@ import UseNavbar from "./UseNavbar";
 import { signOut } from "firebase/auth";
 import { auth } from "../../firebase";
 import { Search } from "../search/Search";
-import ReactSwitch from 'react-switch';
+import ReactSwitch from "react-switch";
 import { IoIosSunny } from "react-icons/io";
 import { IoIosMoon } from "react-icons/io";
 import { IoMdDesktop } from "react-icons/io";
@@ -29,7 +29,9 @@ export const NavBar = () => {
       <div className="bg-green-700 text-white text-5xl py-4 col-span-1 md:col-span-4 lg:col-span-4 sm:col-span-4">
         <div className="px-6">
           <div className="flex">
-            {search_value !== "" && search_active && <Search results={search_results} />}
+            {search_value !== "" && search_active && (
+              <Search results={search_results} />
+            )}
 
             <input
               type="search"
@@ -37,9 +39,16 @@ export const NavBar = () => {
               className=" relative w-1/4 ml-4 rounded px-3 text-base font-normal text-black hidden lg:block md:block sm:block"
               placeholder="Quick search..."
               aria-label="Search"
-              onFocus={() => { setSearchActive(true) }}
-              onBlur={() => { setSearchActive(false) }}
-              onChange={(e) => { setSearchValue(e.target.value); searchUsers(e.target.value) }}
+              onFocus={() => {
+                setSearchActive(true);
+              }}
+              onBlur={() => {
+                setSearchActive(false);
+              }}
+              onChange={(e) => {
+                setSearchValue(e.target.value);
+                searchUsers(e.target.value);
+              }}
             />
             <a
               className="ml-44 mr-auto flex justify-center sm:ml-auto md:ml-auto lg:ml-auto sm:mr-auto md:mr-auto lg:mr-auto"

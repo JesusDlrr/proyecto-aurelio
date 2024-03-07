@@ -1,11 +1,9 @@
 import { useEffect, useState } from "react";
 
 const useSearch = ({ results }) => {
-    useEffect(() => {
+  useEffect(() => {}, []);
 
-    }, [])
-
-    return {}
+  return {};
 };
 
 export default useSearch;

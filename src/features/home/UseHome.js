@@ -28,19 +28,22 @@ const UseHome = () => {
   };
 
   const getPosts = () => {
-    axios.get('https://quick-api-9c95.onrender.com/posts', {
-      params: {
-        before_date: 170227262,
-        limit: 222,
-        requester_id: user.uid
-      }
-    }).then((response) => {
-      if (response.status === 200) {
-        setPosts(response.data);
-      }
-    }).catch((error) => {
-      console.log(error);
-    })
+    axios
+      .get("https://quick-api-9c95.onrender.com/posts", {
+        params: {
+          before_date: 170227262,
+          limit: 222,
+          requester_id: user.uid,
+        },
+      })
+      .then((response) => {
+        if (response.status === 200) {
+          setPosts(response.data);
+        }
+      })
+      .catch((error) => {
+        console.log(error);
+      });
     // const docSnap = await getDocs(collection(db, "posts"));
 
     // setPosts(
@@ -62,16 +65,22 @@ const UseHome = () => {
   const post = async (message, media) => {
     const form_data = new FormData();
 
-    form_data.append('message', message);
+    form_data.append("message", message);
 
-    media.forEach(media_file => {
-      form_data.append('media', media_file.file);
+    media.forEach((media_file) => {
+      form_data.append("media", media_file.file);
     });
 
-    axios.post(`https://quick-api-9c95.onrender.com/posts/${user.uid}`, form_data, {}).then(response => {
-      console.log(response.data)
-      setPosts([response.data, ...posts])
-    })
+    axios
+      .post(
+        `https://quick-api-9c95.onrender.com/posts/${user.uid}`,
+        form_data,
+        {}
+      )
+      .then((response) => {
+        console.log(response.data);
+        setPosts([response.data, ...posts]);
+      });
     // try {
     //   const user_ref = doc(db, "users", user.uid);
     //   await addDoc(collection(db, "posts"), {
@@ -100,7 +109,7 @@ const UseHome = () => {
     // } catch (e) {
     //   console.error("Error adding document: ", e);
     // }
-  }
+  };
 
   useEffect(() => {
     getUserInfo();
