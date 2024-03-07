@@ -19,6 +19,8 @@ import { PrivateRoute } from './features/private_route/PrivateRoute';
 import { onAuthStateChanged } from 'firebase/auth';
 import { auth } from './firebase';
 import GetQuicker from './features/get_quicker/GetQuicker';
+import axios from 'axios';
+import SubscriptionsSuccess from './features/subscriptions_success/SubscriptionsSuccess';
 
 export const UserContext = React.createContext(null);
 
@@ -85,7 +87,17 @@ function App() {
 
   useEffect(() => {
     onAuthStateChanged(auth, (user) => {
-      setUser(user == null ? false : user);
+      if (user === null) {
+        setUser(false)
+      } else {
+        axios.get(`https://quick-api-9c95.onrender.com/user/` + user.uid, {}, {
+        }).then((response) => {
+          setUser({
+            uid: user.uid,
+            ...response.data
+          });
+        })
+      }
     });
   }, [])
 
@@ -113,7 +125,7 @@ function App() {
                 </PrivateRoute>
               } />
               <Route path="/admintools" element={
-                <PrivateRoute isAllowed={user} redirectTo='/login'>
+                <PrivateRoute isAllowed={user && user.role.indexOf('administrator') !== -1} redirectTo='/login'>
                   <AdminTools />
                 </PrivateRoute>
               } />
@@ -133,6 +145,12 @@ function App() {
                 // Change user to !user to make the route private
                 <PrivateRoute isAllowed={user} redirectTo='/'>
                   <ProfilePage />
+                </PrivateRoute>
+              } />
+              <Route exact path="/subscriptions/success" element={
+                // Change user to !user to make the route private
+                <PrivateRoute isAllowed={user} redirectTo='/'>
+                  <SubscriptionsSuccess />
                 </PrivateRoute>
               } />
               <Route exact path="/subscriptions/quicker" element={

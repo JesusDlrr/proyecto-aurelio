@@ -53,14 +53,21 @@ export const Feed = ({ posts, setPosts }) => {
         }).then((response) => {
             if (response.status === 200 && response.data === true) {
                 setPosts(posts.map((post) => {
-                    if (post.id === post_id) {
-                        post.reposts -= 1;
-                        post.reposted = false;
+                    if (post.original_post !== undefined) {
+                        if (post.original_post.id === post_id) {
+                            post.original_post.reposts -= 1;
+                            post.original_post.reposted = false;
+                        }
+                    } else {
+                        if (post.id === post_id) {
+                            post.reposts -= 1;
+                            post.reposted = false;
+                        }
                     }
                     return post
                 }).filter((post) => {
                     if (post.original_post !== undefined) {
-                        return (post.original_post.id !== post_id);
+                        return !(post.author.id === user.uid && post.original_post.id === post_id);
                     } else {
                         return true;
                     }
