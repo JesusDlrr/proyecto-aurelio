@@ -15,8 +15,8 @@ function BuyButton() {
     // Paste the stripe-buy-button snippet in your React component
     return (
         <>
-            <Button color='black' onClick={a}>Quicker Monthly</Button>
-            <Button color='black' onClick={b}>Quicker Yearly </Button>
+            <Button className='bg-green-700 mt-3 align-middle sm:mt-0 md:mt-0 lg:mt-0' onClick={a}>Quicker Monthly</Button>
+            <Button className='bg-green-700 ml-2 mt-3 align-middle sm:mt-0 md:mt-0 lg:mt-0' onClick={b}>Quicker Yearly </Button>
         </>
         // <stripe-buy-button
         //     buy-button-id="buy_btn_1ONNM2KwKqN5WBN1vNRrBBnC"

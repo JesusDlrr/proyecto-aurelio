@@ -7,7 +7,6 @@ import ReactSwitch from 'react-switch';
 import { IoIosSunny } from "react-icons/io";
 import { IoIosMoon } from "react-icons/io";
 import { IoMdDesktop } from "react-icons/io";
-import BuyButton from "../buy_button/BuyButton";
 
 export const NavBar = () => {
   const { searchUsers, search_results } = UseNavbar();
@@ -42,9 +41,8 @@ export const NavBar = () => {
               onBlur={() => { setSearchActive(false) }}
               onChange={(e) => { setSearchValue(e.target.value); searchUsers(e.target.value) }}
             />
-            <BuyButton />
             <a
-              className=" ml-44"
+              className="ml-44 mr-auto flex justify-center sm:ml-auto md:ml-auto lg:ml-auto sm:mr-auto md:mr-auto lg:mr-auto"
               href="/"
             >
               {/* Home button */}
@@ -56,7 +54,6 @@ export const NavBar = () => {
               href="#"
               type="button"
             >
-
               {/* Logout button */}
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -64,7 +61,7 @@ export const NavBar = () => {
                 viewBox="0 0 24 24"
                 stroke-width="1.5"
                 stroke="currentColor"
-                className="w-10 h-10 object-right hidden lg:block md:block sm:block"
+                className="w-10 h-10 object-right lg:block md:block sm:block"
                 onClick={so}
               >
                 <path
