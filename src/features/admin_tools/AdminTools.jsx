@@ -3,6 +3,7 @@ import { NavBar } from '../nav_bar/Navbar'
 import useAdminTools from './useAdminTools'
 import { Card, Typography } from "@material-tailwind/react";
 import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
 
 export const AdminTools = () => {
   const [selected_post, setSelectedPost] = useState(null)
@@ -74,7 +75,15 @@ export const AdminTools = () => {
                         <button>
                           Unflag
                         </button>
-                        <button>
+                        <button
+                          onClick={() => {
+                            axios.post(`https://quick-api-9c95.onrender.com/administration/post/${post.id}/deactivate`).then((response) => {
+                              if (response.status === 200) {
+
+                              }
+                            })
+                          }}
+                        >
                           Delete
                         </button>
                       </td>

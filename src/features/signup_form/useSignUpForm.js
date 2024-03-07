@@ -25,7 +25,7 @@ const useSignUpForm = () => {
         name: name,
         date: serverTimestamp(),
         subscriptions: [],
-        role: ''
+        role: []
       });
       // console.log("Document written with ID: ", docRef.id);
     } catch (e) {
@@ -43,7 +43,7 @@ const useSignUpForm = () => {
           avatar: '',
           name: name,
           subscriptions: [],
-          role: ''
+          role: []
         });
         setLoading(false);
       })
