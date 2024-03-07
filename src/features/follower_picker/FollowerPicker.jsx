@@ -6,7 +6,7 @@ import { Search } from "../search/Search";
 import ReactSwitch from 'react-switch';
 import { RxCross1 } from "react-icons/rx";
 import BuyButton from "../buy_button/BuyButton";
-import { Avatar, Chip, Typography } from "@material-tailwind/react";
+import { Avatar, Chip, Typography, button } from "@material-tailwind/react";
 
 export const FollowerPicker = ({ current_chatroom, handleAddParticipants, handleClose }) => {
 	const { searchUsers, search_results, participan_list, addParticipant, removeParticipant } = UseFollowerPicker();
@@ -26,7 +26,7 @@ export const FollowerPicker = ({ current_chatroom, handleAddParticipants, handle
 					<div class="relative bg-white shadow dark:bg-gray-700">
 						<div class="flex items-center justify-between p-4 md:p-5 border-b rounded-t dark:border-gray-600">
 							<h3 class="text-xl font-semibold text-gray-900 dark:text-white">
-								Add participant
+								Add participants
 							</h3>
 							<button type="button" onClick={handleClose} class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white" data-modal-hide="default-modal">
 								<svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
@@ -41,15 +41,14 @@ export const FollowerPicker = ({ current_chatroom, handleAddParticipants, handle
 						</div>
 						<div class="">
 							{/* <div className="container w-80 ml-24  absolute mt-11 z-50"> */}
-							<ul className="dark:bg-zinc-800 dark:hover:bg-zinc-700 font-normal border-transparent text-black bg-white">
-								{search_results != null && search_results.map((result) => {
-									return (
+							<ul className="dark:bg-zinc-800 font-normal border-transparent text-black bg-white">
+								{search_results != null && search_results.map((result) => (
+									current_chatroom.participants.findIndex((e) => (e.id === result.id)) === -1 ?
 										<li
-											className="flex items-center text-gray-900 dark:text-white flex text-lg p-4 hover:cursor-pointer"
+											className="flex items-center dark:hover:bg-zinc-700 text-gray-900 dark:text-white flex text-lg p-4 hover:cursor-pointer"
 											key={result.uid}
 											onMouseDown={(e) => { e.preventDefault() }}
 											onClick={() => {
-
 												addParticipant(result)
 											}}
 										>
@@ -60,29 +59,26 @@ export const FollowerPicker = ({ current_chatroom, handleAddParticipants, handle
 											></img>
 											<p>{result.name}</p>
 										</li>
-									);
-								})}
+										:
+										null
+								))}
 							</ul>
 							{/* </div> */}
 						</div>
-						<div className="flex p-4">
+						<div className="flex gap-3 p-3">
 							{
-								participan_list !== null && participan_list.map((participan) => (
-									<Chip icon={
-										<RxCross1
-											className="h-full translate-x-3"
-										/>
-									} variant="outlined" size="lg" value={
+								participan_list !== null && participan_list.map((participant) => (
+									<Chip variant="outlined" size="lg" value={
 										<Typography variant="small"
 											color="white"
 											className="font-medium capitalize leading-none"
-										>{participan.name}</Typography>
-									} className="rounded-full cursor-pointer" onClick={() => { removeParticipant(participan) }} />
+										>{participant.name}</Typography>
+									} className="rounded-full hover:bg-red-700 hover:bg-opacity-30 cursor-pointer" onClick={() => { removeParticipant(participant) }} />
 								))
 							}
 						</div>
 						<div class="flex items-center p-4 md:p-5 border-t border-gray-200 rounded-b dark:border-gray-600">
-							<button type="button" class="text-white bg-green-700 hover:bg-blue-800 focus:ring-4 focus:outline-none  font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Add</button>
+							<button disabled={participan_list.length === 0} onClick={() => { handleAddParticipants(current_chatroom.id, participan_list.map((e) => (e.id))); handleClose() }} type="button" class="text-white dark:disabled:bg-slate-600 bg-green-700 hover:bg-blue-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-green-700">Add</button>
 						</div>
 					</div>
 				</div>

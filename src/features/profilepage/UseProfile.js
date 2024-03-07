@@ -12,6 +12,8 @@ const UseProfile = () => {
     const { user } = useContext(UserContext);
     const [user_name, setUserName] = useState("");
     const [user_avatar, setUserAvatar] = useState("");
+    const [user_subscriptions, setUserSubscription] = useState([]);
+    const [user_roles, setUserRoles] = useState([]);
     const [search_params] = useSearchParams();
     const [posts, setPosts] = useState([]);
     const [following, setFollowing] = useState(null);
@@ -35,6 +37,8 @@ const UseProfile = () => {
                 setFollowing(response.data.following)
                 setUserName(response.data.name)
                 setUserAvatar(response.data.avatar)
+                setUserSubscription(response.data.subscriptions)
+                setUserRoles(response.data.role)
             }
         });
 
@@ -180,7 +184,9 @@ const UseProfile = () => {
         setPosts,
         followers,
         post,
-        follows_you
+        follows_you,
+        user_subscriptions,
+        user_roles
     });
 }
 

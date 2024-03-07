@@ -98,9 +98,11 @@ export const Post = ({ post, like, repost, unlike, unrepost, profile_user }) => 
 										<h1 className="text-xl font-sembold text-black dark:text-white">
 											{
 												is_repost ?
-													post.original_post.author.name
+													<span className="flex">{post.original_post.author.name} {post.original_post.author.subscriptions.indexOf('quicker') !== -1 && <span className='w-4 ml-1'><img src='quicker_badge.png' /></span>}</span>
+													// post.original_post.author.name
 													:
-													post.author.name
+													<span className="flex">{post.author.name} {post.author.subscriptions.indexOf('quicker') !== -1 && <span className='w-4 ml-1'><img src='quicker_badge.png' /></span>}</span>
+												// post.author.name
 											}
 										</h1>
 									</a>
@@ -116,14 +118,17 @@ export const Post = ({ post, like, repost, unlike, unrepost, profile_user }) => 
 									</h1>
 								</span>
 							</div>
-							<button>
-								<IoIosFlag onClick={() => {
-									axios.post(`http://localhost:3001/administration/flag/post/${post.id}`, {}, {
-										params: { requester_id: user.uid }
-									})
-										.then((response) => { })
-								}} />
-							</button>
+							{
+								user.role.indexOf('administrator') !== -1 &&
+								<button>
+									<IoIosFlag onClick={() => {
+										axios.post(`http://localhost:3001/administration/flag/post/${post.id}`, {}, {
+											params: { requester_id: user.uid }
+										})
+											.then((response) => { })
+									}} />
+								</button>
+							}
 						</div>
 					</div>
 					{/* Seccion para el post de las personas */}

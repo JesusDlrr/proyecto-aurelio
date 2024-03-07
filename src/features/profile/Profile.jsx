@@ -13,8 +13,8 @@ export const Profile = ({ name, avatar }) => {
             <div className=" dark:bg-quick4 dark:outline dark:outline-1 dark:outline-quick5 text-center text-3xl py-2 rounded-lg row-span-3 hidden lg:bg-white lg:dark:bg-quick4 lg:dark:outline lg:dark:outline-1 lg:dark:outline-quick5 lg:text-center lg:text-3xl lg:py-2 lg:rounded-lg lg:row-span-3 lg:block md:bg-white md:dark:bg-quick4 md:dark:outline md:dark:outline-1 md:dark:outline-quick5 md:text-center md:text-3xl md:py-2 md:rounded-lg md:row-span-3 md:block sm:hidden ">
                 <div className="p-2 flex flex-col items-center">
                     <img className="rounded-full cursor-pointer w-9/12 lg:w-1/2 aspect-square" src={avatar} onClick={() => { navigate("/profile?user=" + user.uid) }} />
-                    <h1 className="text-xl font-sembold text-black dark:text-white hover:underline hover:cursor-pointer mt-5" onClick={() => { navigate("/profile?user=" + user.uid) }}>
-                        {name}
+                    <h1 className="flex text-xl font-sembold text-black dark:text-white hover:underline hover:cursor-pointer mt-5" onClick={() => { navigate("/profile?user=" + user.uid) }}>
+                        {name} {user.subscriptions.indexOf('quicker') !== -1 && <span className='w-4 ml-1'><img src='quicker_badge.png' /></span>}
                     </h1>
                 </div>
                 <div className="mt-5 w-full h-screen antialiased flex flex-col hover:cursor-pointer">

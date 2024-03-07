@@ -51,7 +51,6 @@ const UseChat = () => {
         // axios.get(`https://quick-api-9c95.onrender.com/user/${user.uid}/chatrooms`, {}).then((response) => {
         axios.get(`http://localhost:3001/user/${user.uid}/chatrooms`, {}).then((response) => {
             if (response.status === 200) {
-                console.log(response.data);
                 setChatroomList(response.data);
                 response.data.forEach((chatroom) => {
                     openChatroomListener(chatroom.id);
@@ -120,10 +119,14 @@ const UseChat = () => {
         axios.post(`http://localhost:3001/chatrooms/`, {}, {
             params: {
                 chatroom_id: chatroom_id,
-                participants: users_id,
+                participants: users_id.join(','),
                 requester_id: user.uid,
             }
         }).then((response) => {
+            setChatroom({
+                ...chatroom,
+                participants: [...chatroom.participants, ...response.data]
+            })
         })
     }
 

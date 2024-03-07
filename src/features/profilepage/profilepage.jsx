@@ -30,6 +30,8 @@ export const ProfilePage = ({ name, avatar }) => {
     followUser,
     followers,
     follows_you,
+    user_subscriptions,
+    user_roles,
     post,
   } = UseProfile();
 
@@ -87,8 +89,8 @@ export const ProfilePage = ({ name, avatar }) => {
         {/* Username and folowwers */}
         <div className="lg:absolute lg:mt-16 lg:ml-16 left-40 px-8">
           <span className="flex items-center">
-            <p className="text-md font-semibold text-black dark:text-white p-0 lg:text-2xl md:text-2xl sm:text-2xl mr-5">
-              {user_name}
+            <p className="flex text-md font-semibold text-black dark:text-white p-0 lg:text-2xl md:text-2xl sm:text-2xl mr-5">
+              {user_name} {user_subscriptions.indexOf('quicker') !== -1 && <span className='w-4 ml-1'><img src='quicker_badge.png' /></span>}
             </p>
             {follows_you && <Chip variant="outlined" value="Follows You" className="text-black dark:text-white bg-slate-200 dark:bg-slate-700 p-1"></Chip>}
           </span>

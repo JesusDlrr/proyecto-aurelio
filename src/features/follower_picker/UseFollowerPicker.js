@@ -27,17 +27,13 @@ const UseFollowerPicker = () => {
     }
 
     const removeParticipant = (participan) => {
-        const participant_index = participan_list.findIndex((element) => element.id === participan.id)
-
-        setParticipantList([...participan_list.splice(participant_index, 0)])
-        setSearchResults([...participan_list])
+        setParticipantList([...participan_list.filter((e) => (e.id !== participan.id))])
+        setSearchResults([...search_results, participan])
     }
 
     const addParticipant = (participan) => {
-        const participant_index = search_results.findIndex((element) => element.id === participan.id)
-
         setParticipantList([...participan_list, participan])
-        setSearchResults([...participan_list.splice(participant_index, 0)])
+        setSearchResults([...search_results.filter((e) => (e.id !== participan.id))])
     }
 
     useEffect(() => {
