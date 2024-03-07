@@ -9,6 +9,7 @@ import { Chat } from './features/chat/chat';
 import { ProfilePage } from './features/profilepage/profilepage';
 import { Settings } from './features/settings/settings';
 import { NavBar } from './features/nav_bar/Navbar';
+import { AdminTools } from './features/admin_tools/AdminTools';
 // import { NavBar } from './features/nav_bar/Navbar';
 // import { Suggestions } from './features/suggestions/Suggestions';
 // import { Feed } from './features/feed/Feed';
@@ -109,6 +110,11 @@ function App() {
               <Route path="/settings" element={
                 <PrivateRoute isAllowed={user} redirectTo='/login'>
                   <Settings />
+                </PrivateRoute>
+              } />
+              <Route path="/admintools" element={
+                <PrivateRoute isAllowed={user} redirectTo='/login'>
+                  <AdminTools />
                 </PrivateRoute>
               } />
               <Route path="/login" element={
