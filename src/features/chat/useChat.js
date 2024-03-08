@@ -1,6 +1,6 @@
 import { collection, addDoc, getDocs, serverTimestamp, query, where, getDoc, doc, and, onSnapshot, or } from "firebase/firestore";
 import { db } from "../../firebase";
-import { useContext, useEffect } from "react";
+import { useContext, useEffect, useRef } from "react";
 import { UserContext } from "../../App";
 import { Navigate, resolvePath, useNavigate, useSearchParams } from "react-router-dom";
 import axios from "axios";
@@ -9,14 +9,15 @@ import useState from "react-usestateref";
 const UseChat = () => {
     const [new_messages, setNewMessages] = useState([]);
     const [new_chats, setNewChats] = useState([]);
-    const [messages, setMessages] = useState([]);
-    const [chat_list, setChatList] = useState([]);
-    const [chatroom_list, setChatroomList] = useState([]);
+    const [messages, setMessages, messages_ref] = useState([]);
+    const [chat_list, setChatList] = useState(null);
+    const [chatroom_list, setChatroomList, chatroom_list_ref] = useState(null);
     const [chat_name, setChatName] = useState("");
     const [chatroom, setChatroom, chatroom_ref] = useState(null);
     const { user } = useContext(UserContext);
     const [search_params] = useSearchParams();
     const [new_recipient, setNewRecipient] = useState(null);
+    const messages_end_ref = useRef(null)
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -37,29 +38,32 @@ const UseChat = () => {
     }
 
 
-    const openChatroomListener = (chatroom_id) => {
-        const unsub = onSnapshot(doc(db, "chatrooms", chatroom_id), (doc) => {
-            if (chatroom_ref.current != null) {
-                if (doc.id === chatroom_ref.current.id) {
-                    console.log(doc.data())
-                    setMessages(doc.data().messages.reverse());
-                }
-            }
-        });
-    }
+    // const openChatroomListener = (chatroom_id) => {
+    //     const unsub = onSnapshot(doc(db, "chatrooms", chatroom_id), (doc) => {
+    //         if (chatroom_ref.current != null) {
+    //             if (doc.id === chatroom_ref.current.id) {
+    //                 // console.log(doc.data())
+    //                 console.log('New message received')
+    //                 setMessages(doc.data().messages.reverse());
+    //             }
+    //         }
+    //     });
+    // }
 
-    const getChatrooms = () => {
-        // axios.get(`https://quick-api-9c95.onrender.com/user/${user.uid}/chatrooms`, {}).then((response) => {
-        axios.get(`https://quick-api-9c95.onrender.com/user/${user.uid}/chatrooms`, {}).then((response) => {
+    const getChatrooms = async () => {
+        try {
+            const response = await axios.get(`https://quick-api-9c95.onrender.com/user/${user.uid}/chatrooms`, {})
             if (response.status === 200) {
                 setChatroomList(response.data);
-                response.data.forEach((chatroom) => {
-                    openChatroomListener(chatroom.id);
+                // console.log('Opening ' + response.data.length + ' chatroom listeners...')
+                response.data.forEach(({ id }) => {
+                    // openChatroomListener(id);
                 });
             }
-        }).catch((error) => {
-            console.error(error);
-        });
+        } catch (error) {
+            console.error(error)
+        }
+        // axios.get(`https://quick-api-9c95.onrender.com/user/${user.uid}/chatrooms`, {}).then((response) => {
     }
 
     const getChatName = async () => {
@@ -267,51 +271,160 @@ const UseChat = () => {
 
 
     useEffect(() => {
-        if (search_params.get("to") !== null) {
-            if (search_params.get("to") !== user.uid) {
-                if (chatroom_list.findIndex((chatroom) => {
-                    if (chatroom.participants.length <= 2) {
-                        const to_index = chatroom.participants.findIndex(({ id }) => (id === search_params.get("to")));
-                        if (to_index !== -1) {
-                            setChatroom(chatroom);
-                            setNewRecipient(null);
-                            navigate("/dms")
-                            return true;
+        if (chatroom_list !== null) {
+
+            if (search_params.get("to") !== null) {
+                if (search_params.get("to") !== user.uid) {
+                    if (chatroom_list.findIndex((chatroom) => {
+                        if (chatroom.participants.length <= 2) {
+                            const to_index = chatroom.participants.findIndex(({ id }) => (id === search_params.get("to")));
+                            if (to_index !== -1) {
+                                setChatroom(chatroom);
+                                setNewRecipient(null);
+                                navigate("/dms")
+                                return true;
+                            } else {
+                                return false;
+                            }
                         } else {
                             return false;
                         }
-                    } else {
-                        return false;
-                    }
-                }) === -1) {
-                    axios.get(`https://quick-api-9c95.onrender.com/user/${search_params.get("to")}`, {}).then((response) => {
-                        if (response.status === 200) {
-                            setChatName(response.data.name);
-                            setNewRecipient(response.data);
-                        }
-                    }).catch((error) => {
-                        console.log(error);
-                    });
+                    }) === -1) {
+                        axios.get(`https://quick-api-9c95.onrender.com/user/${search_params.get("to")}`, {}).then((response) => {
+                            if (response.status === 200) {
+                                setChatName(response.data.name);
+                                setNewRecipient(response.data);
+                            }
+                        }).catch((error) => {
+                            console.log(error);
+                        });
 
+                    }
                 }
             }
         }
     }, [chatroom_list])
 
     const openCHatroomListListener = () => {
-        const unsub = onSnapshot(collection(db, "chatrooms"), async (doc) => {
-            getChatrooms();
+        /*
+            open a listener on the wholle chatrooms collection to get new chatrooms that may
+            contain the current user as participant
+        */
+        // return onSnapshot(collection(db, "chatrooms"), (change) => {
+        const q = query(collection(db, "chatrooms"), and(where('participants', 'array-contains', doc(db, "users", user.uid), where('messages', '!=', []))))
+        const s = onSnapshot(q, (snapshot) => {
+            if (chatroom_list_ref.current !== null) {
+                snapshot.docChanges().forEach((change) => {
+                    if (change.type === 'modified') {
+                        const updated_chatroom = { id: change.doc.id, ...change.doc.data() }
+                        // const updated_chatrooms_ids = updated_chatrooms.map(({ id }) => (id))
+                        const updated_user_chatrooms = chatroom_list_ref.current.filter(({ id }) => (
+                            id.indexOf(change.doc.id) !== -1)
+                        )
+                        // const new_user_chatrooms = change.doc.id.indexOf(chatroom_list_ref.current) !== -1)
+                        // )
+                        console.log('Updated chatroom related to current user:')
+
+                        if (chatroom_list_ref.current.findIndex((e) => (e.id === updated_chatroom.id)) === -1) {
+                            console.log('The updated chatroom is not in the chatroom list, appending...')
+
+
+                            axios.get('https://quick-api-9c95.onrender.com/chatrooms/' + updated_chatroom.id, {}).then((response) => {
+                                if (response.status === 200) {
+                                    console.log(response.data)
+                                    setChatroomList([response.data, ...chatroom_list_ref.current])
+
+                                }
+                            })
+
+                        } else {
+                            console.log('The chatroom is already in the chatroom list, retriving changes...')
+
+                            if (updated_chatroom.messages.length !== messages_ref.current.length) {
+                                setMessages(updated_chatroom.messages.reverse())
+                            }
+                            // if (updated_chatroom.participants.length !== chatroom_ref.current.participants.length) {
+                            //     axios.get('https://quick-api-9c95.onrender.com/chatrooms/' + updated_chatroom.id, {}).then((response) => {
+                            //         if (response.status === 200) {
+                            //             console.log('see')
+                            //             console.log(response.data)
+                            //             setChatroom(response.data)
+                            //         }
+                            //     })
+                            // }
+                        }
+
+                    }
+                })
+            }
+
+            // console.log('Chatrooms with the following IDs have updated:')
+            // console.log(updated_chatrooms)
+
+            // if (updated_user_chatrooms.length > 0) {
+            //     console.log('Updated chatrooms correspond to the following user\'s chatrooms:')
+            //     console.log(updated_user_chatrooms)
+
+            // }
+            // if (new_user_chatrooms.length > 0) {
+            //     console.log('New chatrooms for the current user opened:')
+            //     console.log(new_user_chatrooms)
+
+            //     Promise.all(new_user_chatrooms.map((chatroom) => {
+            //         return new Promise((resolve, reject) => {
+            //             axios.get('https://quick-api-9c95.onrender.com/chatrooms/' + chatroom.id, {}).then((response) => {
+            //                 if (response.status === 200) {
+            //                     resolve(response.data)
+            //                 }
+            //             }).catch((error) => {
+            //                 reject(console.log(error));
+            //             });
+            //         })
+            //     })).then((new_chatrooms) => {
+            //         setChatroomList([...new_chatrooms, ...chatroom_list_ref.current])
+            //     })
+            // }
+
+            // updated_user_chatrooms.forEach((updated_user_chatroom) => {
+            //     /*
+            //     if the updated chatroom is the current opened chatroom
+            //     */
+            //     if (chatroom_ref.current !== null && updated_user_chatroom.id === chatroom_ref.current.id) {
+            //         const updated_chatroom_messages = updated_chatrooms.find(ucr => (ucr.id === chatroom_ref.current.id)).messages
+            //         /*
+            //         check if the message array length is different between the updated and the current
+            //         opened chatroom so we only have to append the last message
+            //         */
+            //         if (messages_ref.current !== updated_chatroom_messages.length) {
+            //             setMessages([updated_chatroom_messages.pop(), ...messages_ref.current])
+            //         }
+            //     }
+            // })
+            // }
         })
     }
 
-    useEffect(() => {
+    /*
+        current user's chatrooms should be loaded before opening the listeners
+        so we can know weather an updated chatroom corresponds to any of the
+        current user's chatrooms
+    */
+    const startChatList = async () => {
+        getChatrooms();
         openCHatroomListListener();
+        // await openCHatroomListListener();
+    }
+
+    useEffect(() => {
+        startChatList()
+
         // getChatList();
         // openMessagesListener();
         // openChatListListener();
     }, [])
 
     return ({
+        messages_end_ref,
         messages,
         sendMessage,
         chat_list,
@@ -324,7 +437,7 @@ const UseChat = () => {
         getChatName,
         getMessages,
         getChatrooms,
-        openChatroomListener,
+        // openChatroomListener,
         addParticipants
     })
 }

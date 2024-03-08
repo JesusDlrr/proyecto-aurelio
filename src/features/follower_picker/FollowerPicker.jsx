@@ -21,9 +21,9 @@ export const FollowerPicker = ({ current_chatroom, handleAddParticipants, handle
 
 	return (
 		<>
-			<div class="flex bg-black bg-opacity-40 overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 max-h-full">
-				<div class="relative p-4 w-full max-w-2xl max-h-full">
-					<div class="relative bg-white shadow dark:bg-gray-700">
+			<div class="flex bg-black bg-opacity-40 overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-screen md:max-h-full">
+				<div class="relative p-0: md:p-4 w-full max-w-2xl max-h-full">
+					<div class="relative h-screen md:h-auto bg-white shadow dark:bg-gray-700">
 						<div class="flex items-center justify-between p-4 md:p-5 border-b rounded-t dark:border-gray-600">
 							<h3 class="text-xl font-semibold text-gray-900 dark:text-white">
 								Add participants

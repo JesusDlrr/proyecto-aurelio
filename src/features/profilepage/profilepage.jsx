@@ -8,7 +8,8 @@ import { useNavigate, useSearchParams } from "react-router-dom";
 import { UserContext } from "../../App";
 import { Repost } from "../repost/reposts";
 import { Speed_Dial } from "../speed_dial/speed_dial";
-import { Chip, SpeedDial } from "@material-tailwind/react";
+import { Button, Chip, SpeedDial } from "@material-tailwind/react";
+import { FaPaperPlane } from "react-icons/fa";
 
 export const ProfilePage = ({ name, avatar }) => {
   const ref = useRef();
@@ -19,6 +20,7 @@ export const ProfilePage = ({ name, avatar }) => {
   const navigate = useNavigate();
   const { user } = useContext(UserContext);
   const [search_params] = useSearchParams();
+  const [qt_active, setQtActive] = useState(false)
   const {
     user_name,
     user_avatar,
@@ -35,6 +37,10 @@ export const ProfilePage = ({ name, avatar }) => {
     post,
   } = UseProfile();
 
+  const qtClose = () => {
+    setQtActive(false)
+  }
+
   const handleChange = (e) => {
     const file = e.target.files[0];
     const file_type = file.type.split("/");
@@ -44,7 +50,7 @@ export const ProfilePage = ({ name, avatar }) => {
   };
   return (
     <div className="min-h-screen bg-gray-400 dark:bg-quick7 overflow-hidden">
-      {user.uid === search_params.get("user") ? <Speed_Dial /> : null}
+      {user.uid === search_params.get("user") ? <Speed_Dial clickHandler={() => { setQtActive(true) }} /> : null}
       <NavBar />
 
       <div className="bg-white h-20 w-full " />
@@ -58,10 +64,10 @@ export const ProfilePage = ({ name, avatar }) => {
       />
 
       {/* Avatar */}
-      <div className="flex flex-col items-center sm:flex-row sm:justify-center mt-24 lg:mt-6 lg:mb-24">
+      <div className="flex flex-col items-center flex-row sm:justify-center">
         {user.uid === search_params.get("user") ? (
           <div
-            className="absolute top-24 lg:z-40 lg:left-24
+            className="top-24 lg:z-40 lg:left-24
             cursor-pointer rounded-full h-40 w-40 mt-2 border-gray-400 dark:border-quick7 border-8 bg-cover bg-center"
             style={{ backgroundImage: `url("${user_avatar}")` }}
             onClick={handleClick}
@@ -77,7 +83,7 @@ export const ProfilePage = ({ name, avatar }) => {
           </div>
         ) : (
           <div
-            className="absolute top-24 lg:z-40 lg:left-24
+            className="top-24 lg:z-40 lg:left-24
             cursor-pointer rounded-full h-40 w-40 mt-2 border-gray-400 dark:border-quick7 border-8 bg-cover bg-center"
             style={{ backgroundImage: `url("${user_avatar}")` }}
             alt="user avatar"
@@ -92,7 +98,9 @@ export const ProfilePage = ({ name, avatar }) => {
             <p className="flex text-md font-semibold text-black dark:text-white p-0 lg:text-2xl md:text-2xl sm:text-2xl mr-5">
               {user_name} {user_subscriptions.indexOf('quicker') !== -1 && <span className='w-4 ml-1'><img src='quicker_badge.png' /></span>}
             </p>
-            {follows_you && user.uid !== search_params.get("user") && <Chip variant="outlined" value="Follows You" className="text-black dark:text-white bg-slate-200 dark:bg-slate-700 p-1"></Chip>}
+            <div>
+              {follows_you && user.uid !== search_params.get("user") && <Chip variant="outlined" value="Follows You" className="static text-black dark:text-white bg-slate-200 dark:bg-slate-700 p-1"></Chip>}
+            </div>
           </span>
           <span className="text-md text-black dark:text-white block lg:text-lg md:text-lg sm:text-lg mt-1">
             <span className="flex gap-5">
@@ -111,6 +119,12 @@ export const ProfilePage = ({ name, avatar }) => {
                       {following ? "Unfollow" : "Follow"}
                     </h1>
                   </button>
+                }
+                {
+                  follows_you &&
+                  <Button color="green" onClick={() => { navigate('/dms?to=' + search_params.get('user')) }} className="inline-block md:hidden ml-5">
+                    <FaPaperPlane />
+                  </Button>
                 }
               </div>
             </span>
@@ -147,11 +161,12 @@ export const ProfilePage = ({ name, avatar }) => {
         {/* POST Quick Thought */}
         <div className="col-span-3">
           <div className="text-xl rounded-lg col-span-2 grid gap-3">
-            {search_params.get("user") === user.uid && (
-              <div className="sm:block hidden">
-                <Quick_Thought makePost={post} />
-              </div>
-            )}
+            {
+              search_params.get("user") === user.uid &&
+              <span className={`${qt_active ? 'block' : 'hidden'} md:block`}>
+                <Quick_Thought makePost={post} handleClose={qtClose} />
+              </span>
+            }
             <div>
               <Feed posts={posts} setPosts={setPosts} />
             </div>

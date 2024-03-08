@@ -52,6 +52,7 @@ export const Post = ({ post, like, repost, unlike, unrepost, profile_user }) => 
 	// const time = out.toLocaleString('default');
 	const navigate = useNavigate();
 	const [search_params] = useSearchParams();
+	const [is_flagged, setFlagged] = useState(null)
 	const is_repost = post.original_post !== undefined
 
 	const {
@@ -67,69 +68,91 @@ export const Post = ({ post, like, repost, unlike, unrepost, profile_user }) => 
 		setUpdatingReposts(false);
 	}, [post.reposted])
 
+	useEffect(() => {
+		setFlagged(false)
+	},)
+
 	return (
 		(is_repost || (!is_repost && post.active === true)) &&
 		<>
 			<div className="bg-gray-50 dark:bg-quick4 dark:text-white sm:flex border-b border-quick5">
 				<div className="sm:mt-0 sm:text-left break-all w-full">
 					{/* Div para la foto de perfil, nombre y numero de followers */}
-					<div className="cursor-pointer hover:bg-slate-200 dark:hover:bg-quick5 hover:rounded p-3" onClick={() => { navigate("/profile?user=" + post.author.id) }}>
-						<p className="text-xl font-sembold text-slate-400 ml-2 mb-5">
-							{
-								is_repost ?
-									post.author.id === user.uid ?
-										"You reposted"
-										:
-										`${post.author.name} reposted`
-									:
-									""
-							}
-						</p>
-						<div className="flex items-center space-x-4">
-							{
-								is_repost ?
-									<img className="w-20 h-20 rounded-full" src={post.original_post.author.avatar} alt="user avatar" loading="lazy"></img>
-									:
-									<img className="w-20 h-20 rounded-full" src={post.author.avatar} alt="user avatar" loading="lazy"></img>
+					<div className="hover:rounded p-3" >
+						<span className="flex justify-between">
 
-							}
-							<div className="">
-								<div>
-									<a className="dark:text-white">
-										<h1 className="text-xl font-sembold text-black dark:text-white">
-											{
-												is_repost ?
-													<span className="flex">{post.original_post.author.name} {post.original_post.author.subscriptions.indexOf('quicker') !== -1 && <span className='w-4 ml-1'><img src='quicker_badge.png' /></span>}</span>
-													// post.original_post.author.name
-													:
-													<span className="flex">{post.author.name} {post.author.subscriptions.indexOf('quicker') !== -1 && <span className='w-4 ml-1'><img src='quicker_badge.png' /></span>}</span>
-												// post.author.name
-											}
-										</h1>
-									</a>
-								</div>
-								<span className="text-sm text-gray-500 dark:text-gray-400">
-									<h1 href="" class="flex items-center mt-1 space-x-2 text-gray-500 dark:text-gray-400">
-										{
-											is_repost ?
-												relativeDate(post.original_post.date._seconds * 1000)
-												:
-												relativeDate(post.date._seconds * 1000)
-										}
-									</h1>
-								</span>
-							</div>
+							<p className="text-xl font-sembold text-slate-400 ml-2 mb-5 hover:underline cursor-pointer" onClick={() => { navigate("/profile?user=" + post.author.id) }}>
+								{
+									is_repost ?
+
+										post.author.id === user.uid ?
+											"You reposted"
+
+											:
+											`${post.author.name} reposted`
+
+										:
+										""
+								}
+							</p>
 							{
-								user.role.indexOf('administrator') !== -1 &&
+								is_flagged !== null && user.role.indexOf('administrator') !== -1 &&
 								<button>
-									<IoIosFlag onClick={() => {
+									<IoIosFlag color={is_flagged ? '#facc15' : '#a8a29e'} onClick={() => {
 										axios.post(`https://quick-api-9c95.onrender.com/administration/flag/post/${post.id}`, {}, {
 											params: { requester_id: user.uid }
+										}).then((response) => {
+											if (response.status === 200) {
+												setFlagged(true)
+											}
 										})
-											.then((response) => { })
 									}} />
 								</button>
 							}
+						</span>
+						<div className="flex justify-between">
+							<span className="flex items-center space-x-4">
+								{
+									is_repost ?
+										<img className="w-20 h-20 rounded-full cursor-pointer" onClick={() => { navigate("/profile?user=" + post.original_post.author.id) }} src={post.original_post.author.avatar} alt="user avatar" loading="lazy"></img>
+										:
+										<img className="w-20 h-20 rounded-full cursor-pointer" onClick={() => { navigate("/profile?user=" + post.author.id) }} src={post.author.avatar} alt="user avatar" loading="lazy"></img>
+
+								}
+								<div className="">
+									<div>
+										{/* <a className="dark:text-white"> */}
+										{
+											is_repost ?
+												<h1 className="text-xl font-sembold text-black dark:text-white hover:underline cursor-pointer" onClick={() => { navigate("/profile?user=" + post.original_post.author.id) }}>
+													<span className="flex">{post.original_post.author.name} {post.original_post.author.subscriptions.indexOf('quicker') !== -1 && <span className='w-4 ml-1'><img src='quicker_badge.png' /></span>}</span>
+												</h1>
+												// post.original_post.author.name
+												:
+												<h1 className="text-xl font-sembold text-black dark:text-white hover:underline cursor-pointer" onClick={() => { navigate("/profile?user=" + post.author.id) }}>
+													<span className="flex">{post.author.name} {post.author.subscriptions.indexOf('quicker') !== -1 && <span className='w-4 ml-1'><img src='quicker_badge.png' /></span>}</span>
+												</h1>
+											// post.author.name
+										}
+										{/* </a> */}
+									</div>
+									<span className="text-sm text-gray-500 dark:text-gray-400">
+										<h1 href="" class="flex items-center mt-1 space-x-2 text-gray-500 dark:text-gray-400">
+											{
+												is_repost ?
+													relativeDate(post.original_post.date._seconds * 1000)
+													:
+													relativeDate(post.date._seconds * 1000)
+											}
+										</h1>
+									</span>
+								</div>
+							</span>
+							<span>
+								{
+
+								}
+							</span>
 						</div>
 					</div>
 					{/* Seccion para el post de las personas */}

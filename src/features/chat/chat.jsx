@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useContext } from 'react';
 import UseChat from './useChat';
 import './chat.modules.css';
-import { FaImage, FaPaperPlane, FaSignOutAlt } from 'react-icons/fa';
+import { FaArrowLeft, FaImage, FaPaperPlane, FaSignOutAlt } from 'react-icons/fa';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import { UserContext } from '../../App';
 import { NavBar } from '../nav_bar/Navbar';
@@ -10,6 +10,7 @@ import { IoMdPersonAdd } from 'react-icons/io';
 import { Button, Input, button } from '@material-tailwind/react';
 import { IoIosClose } from 'react-icons/io';
 import { FollowerPicker } from '../follower_picker/FollowerPicker';
+import Message from './Message';
 
 export const Chat = () => {
   const [newMessage, setNewMessage] = useState('');
@@ -22,6 +23,7 @@ export const Chat = () => {
   const [message_enabled, setMessageEnabled] = useState(false);
   const [search_user, setSearchUser] = useState(false)
   const {
+    messages_end_ref,
     messages,
     sendMessage,
     chat_list,
@@ -34,7 +36,7 @@ export const Chat = () => {
     getMessages,
     getChatrooms,
     setChatroom,
-    openChatroomListener,
+    // openChatroomListener,
     addParticipants
   } = UseChat();
 
@@ -74,6 +76,11 @@ export const Chat = () => {
       setMessageEnabled(true);
     }
   }
+  const scrollToBottom = () => {
+    if (messages_end_ref.current.scrollHeight - messages_end_ref.current.scrollTop < 800) {
+      messages_end_ref.current.scrollTop = messages_end_ref.current.scrollHeight
+    }
+  }
 
   useEffect(() => {
     if (chatroom !== null) {
@@ -89,28 +96,38 @@ export const Chat = () => {
     }
   }, [chatroom])
 
-  useEffect(() => {
-  }, []);
+  // useEffect(() => {
+  // }, []);
 
   useEffect(() => {
     getMessages();
     // getChatName();
   }, [search_params]);
 
+  useEffect(() => {
+    scrollToBottom()
+  }, [messages])
+
   return (
     <>
       {search_user && <FollowerPicker current_chatroom={chatroom} handleAddParticipants={addParticipants} handleClose={HandlecloseSearchModal} />}
       <div className="w-full h-screen flex flex-col ">
         <input type='file' ref={file_input_ref} accept='image/*,video/mp4' multiple hidden onChange={(e) => { handleSetMessageMedia(e.target.files) }} />
-        <NavBar />
+        {/* <NavBar/> */}
         <div className="flex flex-grow max-h-max overflow-hidden dark:bg-quick5">
-          <div className="w-screen sm:w-32 lg:w-1/4 pl-4 pr-4 bg-gray-100 dark:bg-quick4 border-r border-quick5">
+          <div className={`${chatroom === null && !new_recipient ? 'block' : 'hidden lg:block'} w-screen sm:w-32 lg:w-1/4 pl-4 pr-4 bg-gray-100 dark:bg-quick4 border-r border-quick5`}>
             {/* Encabezado de Chats en la barra lateral izquierda */}
             <div className="bg-gray-100 dark:bg-quick4 h-16 dark:text-white text-black flex items-center justify-between border-b border-quick5">
-              <h1 className="text-lg font-semibold">Chats</h1>
+              <span className="flex items-center gap-5">
+                <button onClick={() => { navigation(-1) }} className="block md:hidden">
+                  <FaArrowLeft />
+                </button>
+                <h1 className="text-lg font-semibold">Chats</h1>
+
+              </span>
             </div>
             {/* Contenido de la barra lateral izquierda */
-              chatroom_list.map((chatroom) => (
+              chatroom_list !== null && chatroom_list.map((chatroom) => (
                 <div key={chatroom.id} className={`flex items-center gap-2 p-2 cursor-pointer dark:hover:bg-quick5`} onClick={() => { setChatroom(chatroom) }}>
                   <div className='flex '>
                     {
@@ -137,20 +154,35 @@ export const Chat = () => {
               ))}
           </div>
 
-          <div className="w-full hidden sm:flex flex-col max-h-max overflow-hidden dark:bg-quick4">
+          <div className={`${chatroom === null && !new_recipient ? 'hidden' : 'block'} w-full flex flex-col max-h-max overflow-hidden dark:bg-quick4`}>
             {/* Rectángulo superior */}
             <div className="flex pl-4 pr-4 h-16 dark:text-white shrink-0 justify-between items-center dark:border-b dark:border-quick5">
               {
                 chatroom === null ?
                   new_recipient ?
-                    <p>
-                      {`Start a new chat with ${chat_name}`}
-                    </p>
+                    <span className="flex items-center gap-5">
+                      <button onClick={() => { navigation(-1) }} className="block md:hidden">
+                        <FaArrowLeft />
+                      </button>
+                      <p>
+                        {`New chat with ${chat_name}`}
+                      </p>
+                    </span>
                     :
-                    <p>Select a chatroom to start chatting!</p>
+                    <span className="flex items-center gap-5">
+                      <button onClick={() => { navigation(-1) }} className="block md:hidden">
+                        <FaArrowLeft />
+                      </button>
+                      <p>Select a chatroom to start chatting!</p>
+                    </span>
                   :
                   <>
-                    <p>{chat_name}</p>
+                    <span className="flex items-center gap-5">
+                      <button onClick={() => { setChatroom(null) }} className="block md:hidden">
+                        <FaArrowLeft />
+                      </button>
+                      <p>{chat_name}</p>
+                    </span>
                     {
                       chatroom.participants.find((participant) => (participant.id === user.uid)).chatroom_role === 'owner' &&
                       <>
@@ -163,32 +195,14 @@ export const Chat = () => {
               }
               {/* <p>{user.uid === search_params.get("to") ? "Select a user to start a conversation" : chat_name}</p> */}
             </div>
-            <div className="p-4 grow bg-gray-100 dark:bg-neutral-800 overflow-y-auto">
+            <div ref={messages_end_ref} className="p-4 grow bg-gray-100 dark:bg-neutral-800 overflow-y-auto">
               {
                 chatroom === null ?
                   <img src={'./quicker.png'} className='h-full w-full object-contain' />
                   :
                   <div className="flex flex-col-reverse">
                     {messages.map((message, index) => (
-                      <>
-                        <div key={index} className={`mb-2 ${message.from_user === user.uid ? 'self-end message-bubble' : 'self-start message-bubble other'}`}>
-                          {message.message}
-                          <div className={message.media.length > 1 && 'grid grid-cols-2 gap-1'}>
-                            {message.media.slice(0, 4).map((file) => (
-                              file.mimetype.split('/')[0] === 'image' ?
-                                <div className={`bg-black h-40 ${message.media.length > 1 ? 'w-40' : 'max-w-lg'}`}>
-                                  <img src={file.url} className='object-cover h-full w-full max-w-xs' />
-                                </div>
-                                :
-                                file.mimetype.split('/')[0] === 'video' &&
-                                <video className='object-cover h-full w-full max-w-xs' controls>
-                                  <source src={file.url}>
-                                  </source>
-                                </video>
-                            ))}
-                          </div>
-                        </div>
-                      </>
+                      <Message key={message.id} index={index} content={message} by_user={message.from_user === user.uid} />
                     ))}
                   </div>
               }

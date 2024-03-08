@@ -7,7 +7,7 @@ const useAdminTools = () => {
     const [flagged_posts, setFlaggedPosts] = useState(null)
 
     const getFlaggedPosts = () => {
-        axios.get(`https://quick-api-9c95.onrender.com/administration/administrator/${user.uid}/flagged`).then((response) => {
+        axios.get(`https://quick-api-9c95.onrender.com/administration/flagged/posts`).then((response) => {
             if (response.status === 200) {
                 setFlaggedPosts(response.data)
             }

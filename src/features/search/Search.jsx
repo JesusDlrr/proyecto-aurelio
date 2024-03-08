@@ -8,7 +8,7 @@ export const Search = ({ children, results }) => {
 
   return (
     <>
-      <div className="container w-80 ml-24  absolute mt-11 z-50">
+      <div className="container w-full md:w-80 absolute mt-11 z-50">
         <ul className="list-disc flex-col dark:bg-zinc-800 rounded-lg font-normal text-black bg-white">
           {results != null && results.map((result) => {
             return (
